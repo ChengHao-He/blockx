@@ -1,26 +1,35 @@
 <html>
-    <head>
-        <title>blockX</title>
-        <link rel="stylesheet" href="./style.css">
-    </head>
-    <body>
-        <header>
-            <div class="nav-bar">
-                <ul>
-                    <li>
-                        <p id="blockxVersion">blockX 1.0</p>
-                    </li>
-                    <li>
-                        <label>python:</label>
-                        <select id="pythonVersionSelector">
-                            <option>3.7</option>
-                            <option>3.8</option>
-                            <option>3.9</option>
-                            <option>3.10</option>
-                        </select>
-                    </li>
-                </ul>
-            </div>
-        </header>
-    </body>
+
+<head>
+    <title>blockX</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <header>
+        <div class="nav-bar">
+            <ul>
+                <li id="blockxVersion">
+                    <p>blockX 1.0</p>
+                </li>
+                <li id="pythonVersionSelector">
+                    <label>python:</label>
+                    <select>
+                        <option>3.7</option>
+                        <option>3.8</option>
+                        <option>3.9</option>
+                        <option>3.10</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="main">
+        <!-- 整体 画布+代码编辑区 -->
+        <div class="blockly-area">
+        </div>
+        <div class="blockly-canvas"></div>
+    </div>
+</body>
+
 </html>
