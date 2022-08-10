@@ -1,38 +1,92 @@
 <html>
 
-<head>
-    <title>blockX</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
+    <head>
+        <title>blockX</title>
+        <link rel="stylesheet" href="./style.css">
+    </head>
 
-<body>
-    <header>
-        <div class="nav-bar">
-            <ul>
-                <li id="blockxVersion">
-                    <p>blockX 1.0</p>
-                </li>
-                <li id="pythonVersionSelector">
-                    <label>python:</label>
-                    <select>
-                        <option>3.7</option>
-                        <option>3.8</option>
-                        <option>3.9</option>
-                        <option>3.10</option>
-                    </select>
-                </li>
-            </ul>
-        </div>
-    </header>
-    <div class="main">
-        <!-- 整体 画布+代码编辑区 -->
-        <div class="blockly-area">
-        </div>
-        <div class="blockly-canvas">
-            <!-- 积木区幕布 -->
-            <svg id="blocklySvg"></svg>
-        </div>
-    </div>
-</body>
+    <body>
+        <header>
+            <div class="nav-bar">
+                <ul>
+                    <li id="blockxVersion">
+                        <p>blockX 1.0</p>
+                    </li>
+                    <li id="pythonVersionSelector">
+                        <label>python:</label>
+                        <select>
+                            <option>3.7</option>
+                            <option>3.8</option>
+                            <option>3.9</option>
+                            <option>3.10</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <div class="main">
+            <!-- 整体 画布+代码编辑区 -->
+            <div class="blockly-area">
+                <!-- 左侧画布(积木区框架) -->
+                <div class="blockly-list">
+                    <!-- 积木区列表 -->
+                    <ul>
+                        <li>
+                            <div class="color-blocks" id=""></div>
+                            <div class="blockly-name">Variables</div>
+                        </li>
+                        <li>
+                            <div class="color-blocks"></div>
+                            <div class="blockly-name">Decisions</div>
+                        </li>
+                        <li>
+                            <div class="color-blocks"></div>
+                            <div class="blockly-name">Iteration</div>
+                        </li>
+                        <li>
+                            <div class="color-blocks"></div>
+                            <div class="blockly-name">Function</div>
+                        </li>
+                        <li>
+                            <div class="color-blocks"></div>
+                            <div class="blockly-name">Calculation</div>
+                        </li>
+                        <li>
+                            <div class="color-blocks"></div>
+                            <div class="blockly-name">Input</div>
+                        </li>
+                        <li>
+                            <div class="color-blocks"></div>
+                            <div class="blockly-name">Output</div>
+                        </li>
+                        <li>
+                            <div class="color-blocks"></div>
+                            <div class="blockly-name">Turtles</div>
+                        </li>
+                        <li>
+                            <div class="color-blocks"></div>
+                            <div class="blockly-name">Values</div>
+                        </li>
+                        <li>
+                            <div class="color-blocks"></div>
+                            <div class="blockly-name">Conversion</div>
+                        </li>
+                        <li>
+                            <div class="color-blocks"></div>
+                            <div class="blockly-name">Lists</div>
+                        </li>
+                        <li>
+                            <div class="color-blocks"></div>
+                            <div class="blockly-name">Dictionaries</div>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="blockly-canvas">
+                    <!-- 积木区幕布 -->
+                    <svg id="blocklySvg"></svg>
+                </div>
+            </div>
+    </body>
 
 </html>
