@@ -115,3 +115,10 @@ header ul li {
 button {
   margin-left: 50px;
 }
+
+.run-button {
+  background-color: rgb(116, 210, 116);
+  border-radius: 15%;
+  width: 50px;
+  border-color: rgb(116, 210, 116);
+}
