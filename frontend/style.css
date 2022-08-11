@@ -41,3 +41,23 @@ header ul li {
 #pythonVersionSelector {
   margin: auto;
 }
+
+.main {
+  width: 1600px;
+  background-color: #f2f4f7;
+  margin-top: 20px;
+}
+
+.blockly-area {
+  width: 800px;
+  height: 100%;
+  float: left;
+}
+
+.blockly-list {
+  margin-left: 10px;
+  height: 600px;
+  background-color: rgb(224, 224, 224);
+  width: 130px;
+  position: absolute;
+}
