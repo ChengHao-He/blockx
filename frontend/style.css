@@ -61,3 +61,11 @@ header ul li {
   width: 130px;
   position: absolute;
 }
+
+.blockly-canvas {
+  margin-left: 140px;
+  background-color: white;
+  height: 600px;
+  width: 660px;
+  float: left;
+}
