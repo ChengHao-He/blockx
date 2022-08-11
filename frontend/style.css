@@ -109,4 +109,9 @@ header ul li {
 #codeMirrorSelector {
   margin-left: 20px;
   width: 100px;
+  font-size: large;
+}
+
+button {
+  margin-left: 50px;
 }
