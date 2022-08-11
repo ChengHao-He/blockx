@@ -22,3 +22,22 @@ header .nav-bar {
   justify-content: space-between;
   background-color: #41b146;
 }
+
+header ul {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header ul li {
+  float: left;
+}
+
+#blockxVersion {
+  margin: 20px;
+}
+
+#pythonVersionSelector {
+  margin: auto;
+}
