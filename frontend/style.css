@@ -88,3 +88,25 @@ header ul li {
   width: 5px;
   height: 28px
 }
+
+.code-area {
+  width: 800px;
+  height: 100%;
+  float: left;
+}
+
+.code-toolbar {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  justify-content: center;
+  float: left;
+  height: 40px;
+  width: 800px;
+  background-color: rgb(224, 224, 224);
+}
+
+#codeMirrorSelector {
+  margin-left: 20px;
+  width: 100px;
+}
