@@ -122,3 +122,10 @@ button {
   width: 50px;
   border-color: rgb(116, 210, 116);
 }
+
+.reset-button {
+  background-color: rgb(210, 209, 116);
+  border-radius: 15%;
+  width: 50px;
+  border-color: rgb(210, 209, 116);
+}
