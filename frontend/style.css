@@ -69,3 +69,22 @@ header ul li {
   width: 660px;
   float: left;
 }
+
+.blockly-list li {
+  height: 28px;
+  margin-top: 5px;
+}
+
+.blockly-name {
+  width: auto;
+  height: 28px;
+  float: left;
+  margin-left: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.color-blocks {
+  width: 5px;
+  height: 28px
+}
