@@ -129,3 +129,10 @@ button {
   width: 50px;
   border-color: rgb(210, 209, 116);
 }
+
+#settingButton {
+  background-color: rgb(120, 192, 216);
+  border-radius: 15%;
+  width: 50px;
+  border-color: rgb(120, 192, 216);
+}
