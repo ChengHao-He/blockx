@@ -11,3 +11,8 @@ function eventCloseSetting(){
     backGround.style.display = "none";
 }
 //重置按钮实现
+const resetButton = document.getElementById("reset-button");
+document.querySelector('.reset-button').onclick = eventRestButton;
+function eventRestButton() {
+    alert('重置成功');
+}
