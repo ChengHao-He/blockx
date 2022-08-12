@@ -22,3 +22,15 @@ document.querySelector('.run-button').onclick = eventRunButton;
 function eventRunButton() {
     alert('运行成功');
 }
+//积木区注入功能实现
+function blocklyAdd() {
+    alert('注入功能实现');
+}
+//积木区列表选择实现
+function blocklyChoose() {
+    alert('列表选择实现');
+}
+//积木区框架导入
+function blocklyImport() {
+    alert('框架导入实现');
+}
