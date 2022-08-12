@@ -18,4 +18,7 @@ function eventRestButton() {
 }
 //运行按钮实现
 const runButton = document.getElementById("run-button");
-
+document.querySelector('.run-button').onclick = eventRunButton;
+function eventRunButton() {
+    alert('运行成功');
+}
