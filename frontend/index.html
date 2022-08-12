@@ -1,8 +1,21 @@
 <html>
-
     <head>
         <title>blockX</title>
         <link rel="stylesheet" href="./style.css">
+
+    <!-- Blockly -->
+    <script src="../node_modules/blockly/blockly_compressed.js" type="text/javascript"></script>
+    <script src="../node_modules/blockly/blocks_compressed.js" type="text/javascript"></script>
+    <script src="../node_modules/blockly/msg/js/en.js" type="text/javascript"></script>
+    <script src="../node_modules/blockly/python_compressed.js" type="text/javascript"></script>
+
+    <!-- Skulpt -->
+    <script src="lib/skulpt/dist/skulpt.js" type="text/javascript"></script>
+    <script src="lib/skulpt/dist/skulpt-stdlib.js" type="text/javascript"></script>
+
+    <!-- BlockMirror -->
+    <link rel="stylesheet" href="blockx/blockx.css">
+    <script src="blockx/blockx.js" type="text/javascript"></script>
     </head>
 
     <body>
@@ -28,60 +41,7 @@
             <!-- 整体 画布+代码编辑区 -->
             <div class="blockly-area">
                 <!-- 左侧画布(积木区框架) -->
-                <div class="blockly-list">
-                    <!-- 积木区列表 -->
-                    <ul>
-                        <li>
-                            <div class="color-blocks"></div>
-                            <div class="blockly-name">Variables</div>
-                        </li>
-                        <li>
-                            <div class="color-blocks"></div>
-                            <div class="blockly-name">Decisions</div>
-                        </li>
-                        <li>
-                            <div class="color-blocks"></div>
-                            <div class="blockly-name">Iteration</div>
-                        </li>
-                        <li>
-                            <div class="color-blocks"></div>
-                            <div class="blockly-name">Function</div>
-                        </li>
-                        <li>
-                            <div class="color-blocks"></div>
-                            <div class="blockly-name">Calculation</div>
-                        </li>
-                        <li>
-                            <div class="color-blocks"></div>
-                            <div class="blockly-name">Input</div>
-                        </li>
-                        <li>
-                            <div class="color-blocks"></div>
-                            <div class="blockly-name">Output</div>
-                        </li>
-                        <li>
-                            <div class="color-blocks"></div>
-                            <div class="blockly-name">Turtles</div>
-                        </li>
-                        <li>
-                            <div class="color-blocks"></div>
-                            <div class="blockly-name">Values</div>
-                        </li>
-                        <li>
-                            <div class="color-blocks"></div>
-                            <div class="blockly-name">Conversion</div>
-                        </li>
-                        <li>
-                            <div class="color-blocks"></div>
-                            <div class="blockly-name">Lists</div>
-                        </li>
-                        <li>
-                            <div class="color-blocks"></div>
-                            <div class="blockly-name">Dictionaries</div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="blockly-canvas">
+                <div class="blockly-canvas" id="blockly-area">
                     <!-- 积木区幕布 -->
                     <svg id="blockly-svg"></svg>
                 </div>
@@ -126,6 +86,7 @@
                 </div>
                 <div id="code-mirror">
                     <!-- 代码编辑器 -->
+                    <textarea name="" id="code-text" cols="100" rows="35"></textarea>
                 </div>
             </div>
         </div>
