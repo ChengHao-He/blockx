@@ -16,3 +16,6 @@ document.querySelector('.reset-button').onclick = eventRestButton;
 function eventRestButton() {
     alert('重置成功');
 }
+//运行按钮实现
+const runButton = document.getElementById("run-button");
+
