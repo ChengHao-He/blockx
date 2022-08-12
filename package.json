@@ -5,13 +5,19 @@
     "eslint": "^8.21.0",
     "eslint-config-google": "^0.14.0",
     "husky": "^8.0.1",
+    "jest": "^28.1.3",
     "lint-staged": "^13.0.3"
   },
   "dependencies": {
     "stylelint": "^14.10.0",
-    "stylelint-config-standard": "^26.0.0"
+    "stylelint-config-standard": "^26.0.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "scripts": {
+    "test1": "jest",
+    "test": "jest  --watchAll",
+    "coverage": "jest --coverage",
     "prepare": "husky install",
     "lint": "eslint src",
     "dev": "webpack --mode=development",
