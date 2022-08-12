@@ -9,10 +9,10 @@
         <header>
             <div class="nav-bar">
                 <ul>
-                    <li id="blockxVersion">
+                    <li id="blockx-version">
                         <p>blockX 1.0</p>
                     </li>
-                    <li id="pythonVersionSelector">
+                    <li id="python-version-selector">
                         <label>python:</label>
                         <select>
                             <option>3.7</option>
@@ -83,14 +83,14 @@
                 </div>
                 <div class="blockly-canvas">
                     <!-- 积木区幕布 -->
-                    <svg id="blocklySvg"></svg>
+                    <svg id="blockly-svg"></svg>
                 </div>
             </div>
             <div class="code-area">
                 <!-- 右侧代码编辑区 框架-->
                 <div class="code-toolbar">
                     <!-- 上方 代码编辑器选择框 + 按钮-->
-                    <div id="codeMirrorSelector">
+                    <div id="code-mirror-selector">
                         <select>
                             <option>CodeMirror 5</option>
                             <option>CodeMirror 6</option>
@@ -103,12 +103,12 @@
                         <button class="reset-button">Reset</button>
                     </div>
                     <div>
-                        <button id="settingButton">Settings</button>
+                        <button id="setting-button">Settings</button>
                         <!-- 弹窗内容开始 -->
-                        <div id="backGround" class="back">
+                        <div id="back-ground" class="back">
                             <div class="content">
                                 <div id="close">
-                                    <span id="closeButton">×</span>
+                                    <span id="close-button">×</span>
                                     <h2>Settings</h2>
                                 </div>
                             </div>
@@ -116,11 +116,12 @@
                         <!-- 弹窗内容结束 -->
                     </div>
                 </div>
-                <div id="codeMirror">
+                <div id="code-mirror">
                     <!-- 代码编辑器 -->
                 </div>
             </div>
         </div>
+        <script src="./main.js"></script>
     </body>
 
 </html>

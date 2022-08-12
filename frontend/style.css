@@ -34,11 +34,11 @@ header ul li {
   float: left;
 }
 
-#blockxVersion {
+#blockx-version {
   margin: 20px;
 }
 
-#pythonVersionSelector {
+#python-version-selector {
   margin: auto;
 }
 
@@ -106,7 +106,7 @@ header ul li {
   background-color: rgb(224, 224, 224);
 }
 
-#codeMirrorSelector {
+#code-mirror-selector {
   margin-left: 20px;
   width: 100px;
   font-size: large;
@@ -130,16 +130,26 @@ button {
   border-color: rgb(210, 209, 116);
 }
 
-#settingButton {
+#setting-button {
   background-color: rgb(120, 192, 216);
   border-radius: 15%;
   width: 50px;
   border-color: rgb(120, 192, 216);
 }
 
-#codeMirror {
+#code-mirror {
   background-color: white;
   height: 560px;
   width: 800px;
   margin: 40px 10px;
+}
+#back-ground {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1000;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  left: 200px;
 }
