@@ -50,3 +50,27 @@ Sk.configure({// 配置?
     return Sk.builtinFiles['files'][filename];
   },
 });
+const mathChangeJson = {
+  'message0': 'for each item %1 in list %2',
+  'args0': [
+    {
+      'type': 'input_variable',
+      'name': 'DELTA', 'variable': 'item', 'variableTypes': ['']},
+    {'type': 'input_value', 'name': 'DELTA', 'check': 'Number'},
+  ],
+  'previousStatement': null,
+  'nextStatement': null,
+  'colour': 230,
+};
+
+Blockly.Blocks['math_change'] = {
+  init: function() {
+    this.jsonInit(mathChangeJson);
+    // Assign 'this' to a variable for use in the tooltip closure below.
+    const thisBlock = this;
+    this.setTooltip(function() {
+      return 'Add a number to variable "%1".'.replace('%1',
+          thisBlock.getFieldValue('VAR'));
+    });
+  },
+};
