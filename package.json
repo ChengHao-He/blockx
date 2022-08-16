@@ -9,6 +9,7 @@
     "lint-staged": "^13.0.3"
   },
   "dependencies": {
+    "blockly": "^8.0.5",
     "stylelint": "^14.10.0",
     "stylelint-config-standard": "^26.0.0",
     "webpack": "^5.74.0",

@@ -1,0 +1,44 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Custom Blocks</title>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <!-- Blockly -->
+  <script src="../../node_modules/blockly/blockly_compressed.js"></script>
+  <script src="../../node_modules/blockly/blocks_compressed.js"></script>
+  <script src="../../node_modules/blockly/javascript_compressed.js"></script>
+  <script src="../../node_modules/blockly/python_compressed.js"></script>
+  <script src="../../node_modules/blockly/msg/en.js"></script>
+
+  <script type="text/javascript" src="CustomBlocks/type_number.js"></script>
+  <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+<body>
+  <header></header>
+  <div id="tran-space">
+    <div id="blockly-div"></div>
+    <div id="code-div">
+      <textarea id="python-code"></textarea>
+    </div>
+  </div>
+  <xml id="toolbox" style="display: none">
+    <category name="Variables" colour="225" custom="VARIABLE"></category>
+    <category name="Literal Values" colour="30">
+      <block type="int_number" line_number="1">
+        <field name="NUM">0</field>
+      </block>
+      <block type="float_number" line_number="1">
+        <field name="NUM">0.0</field>
+      </block>
+    </category>
+  </xml>
+  <script type="text/javascript">
+
+const workSpace = Blockly.inject('blockly-div', {
+    toolbox: document.getElementById('toolbox')
+});
+  </script>
+
+
+</body>
+</html>
