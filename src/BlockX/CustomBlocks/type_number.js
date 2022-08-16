@@ -24,6 +24,8 @@ const floatNumberConfig = {
   'output': 'Number',
   'colour': 195,
 };
+
+// 块初始化及扩展信息
 Blockly.Blocks['int_number'] = {
   init: function() {
     this.jsonInit(intNumberConfig);
