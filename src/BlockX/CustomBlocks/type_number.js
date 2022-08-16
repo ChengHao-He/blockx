@@ -1,4 +1,5 @@
-const intNumber = {
+// 块基本信息
+const intNumberConfig = {
   'message0': 'int: %1',
   'args0': [
     {
@@ -11,7 +12,7 @@ const intNumber = {
   'output': 'Number',
   'colour': 190,
 };
-const floatNumber = {
+const floatNumberConfig = {
   'message0': 'float: %1',
   'args0': [
     {
@@ -35,9 +36,10 @@ const astFor = {
   'colour': 230,
 };
 
+// 块初始化及扩展信息
 Blockly.Blocks['int_number'] = {
   init: function() {
-    this.jsonInit(intNumber);
+    this.jsonInit(intNumberConfig);
     // Assign 'this' to a variable for use in the tooltip closure below.
     const thisBlock = this;
     this.setTooltip(function() {
@@ -49,7 +51,7 @@ Blockly.Blocks['int_number'] = {
 
 Blockly.Blocks['float_number'] = {
   init: function() {
-    this.jsonInit(floatNumber);
+    this.jsonInit(floatNumberConfig);
     // Assign 'this' to a variable for use in the tooltip closure below.
     const thisBlock = this;
     this.setTooltip(function() {
