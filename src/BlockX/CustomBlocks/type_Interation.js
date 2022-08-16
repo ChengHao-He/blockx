@@ -22,7 +22,14 @@ const whileConfig = {
   'colour': 230,
 };
 const breakConfig = {
-  'message0': 'Break',
+  'message0': 'break',
+  'args0': [],
+  'previousStatement': null,
+  'nextStatement': null,
+  'colour': 230,
+};
+const continueConfig = {
+  'message0': 'continue',
   'args0': [],
   'previousStatement': null,
   'nextStatement': null,
@@ -58,6 +65,18 @@ Blockly.Blocks['while'] = {
 Blockly.Blocks['break'] = {
   init: function() {
     this.jsonInit(breakConfig);
+    // Assign 'this' to a variable for use in the tooltip closure below.
+    const thisBlock = this;
+    this.setTooltip(function() {
+      return 'Add a number to variable "%1".'.replace('%1',
+          thisBlock.getFieldValue('VAR'));
+    });
+  },
+};
+
+Blockly.Blocks['continue'] = {
+  init: function() {
+    this.jsonInit(continueConfig);
     // Assign 'this' to a variable for use in the tooltip closure below.
     const thisBlock = this;
     this.setTooltip(function() {
