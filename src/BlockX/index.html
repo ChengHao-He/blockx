@@ -45,7 +45,6 @@
       <block type="type_doc_string"></block>
       <block type="constant_none"></block>
       <block type="constant_bool"></block>
-      
     </category>
     <category name="Iteration" colour="111">
       <block type="for" ></block>
@@ -56,6 +55,18 @@
       <block type="raise" ></block>
       <block type="assert" ></block>
       <block type="with" ></block>
+      <block type="for" line_number="1">
+        <field name="NUM">0.0</field>
+      </block>
+      <block type="while" line_number="1">
+        <field name="NUM">0.0</field>
+      </block>
+      <block type="break" line_number="1">
+        <field name="NUM">0.0</field>
+      </block>
+      <block type="continue" line_number="1">
+        <field name="NUM">0.0</field>
+      </block>
     </category>
     <category name="Classes" colour="240">
       <block type="attribute" line_number="1">
@@ -95,6 +106,12 @@
         <field name="ASNAME0">___</field>
         <field name="MODULE">___</field>
       </block>
+      <block type="raise" line_number="1">
+        <field name="NUM">0.0</field>
+      </block>
+      <block type="assert" line_number="1">
+        <field name="NUM">0.0</field>
+      </block>
     </category>
   </xml>
   <script type="text/javascript">
@@ -103,6 +120,7 @@ const workSpace = Blockly.inject('blockly-div', {
     toolbox: document.getElementById('toolbox')
 });
   </script>
+
 
 </body>
 </html>
