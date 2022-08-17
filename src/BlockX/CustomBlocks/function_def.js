@@ -1,236 +1,79 @@
-// TODO: what if a user deletes a parameter through the context menu?
-
-// The mutator container
-const functionHeaderMutatorConfig = {
+const functionHeaderMutatorCofig = {
   'message0': 'Setup parameters below: %1 %2 returns %3',
   'args0': [
     {'type': 'input_dummy'},
     {'type': 'input_statement', 'name': 'STACK', 'align': 'RIGHT'},
-    {'type': 'field_checkbox',
-      'name': 'RETURNS', 'checked': true, 'align': 'RIGHT'},
+    {'type': 'field_checkbox', 'name':
+    'RETURNS', 'checked': true, 'align': 'RIGHT'},
   ],
   'colour': 210,
   'enableContextMenu': false,
+};
+Blockly.Blocks['FunctionHeaderMutator'] = ({
+  init: function() {
+    this.jsonInit(functionHeaderMutatorCofig);
+  },
+});
 
-};
-Blockly.Blocks['function_headerMutator'] = {
-  init: function() {
-    this.jsonInit(functionHeaderMutatorConfig);
-  }};
+// The elements you can put into the mutator
+[
+  ['Parameter', 'Parameter', '', false, false],
+  ['ParameterType', 'Parameter with type', '', true, false],
+  ['ParameterDefault', 'Parameter with default value', '', false, true],
+  ['ParameterDefaultType',
+    'Parameter with type and default value', '', true, true],
+  ['ParameterVararg', 'Variable length parameter', '*', false, false],
+  ['ParameterVarargType',
+    'Variable length parameter with type', '*', true, false],
+  ['ParameterKwarg', 'Keyworded Variable length parameter', '**', false],
+  ['ParameterKwargType',
+    'Keyworded Variable length parameter with type', '**', true, false],
+].forEach(function(parameterTypeTuple) {
+  const parameterType = parameterTypeTuple[0];
+  const parameterDescription = parameterTypeTuple[1];
+  const parameterPrefix = parameterTypeTuple[2];
+  const parameterTyped = parameterTypeTuple[3];
+  const parameterDefault = parameterTypeTuple[4];
+  const functionMutantConfig = {
+    'message0': parameterDescription,
+    'previousStatement': null,
+    'nextStatement': null,
+    'colour': 210,
+    'enableContextMenu': false,
+  };
+  Blockly.Blocks['FunctionMutant' + parameterType] = {
+    'init': function() {
+      this.jsonInit(functionMutantConfig);
+    },
+  };
 
-/**
- * FunctionMutant
- */
-const functionMutantParameterConfig = {
-  'message0': 'Parameter',
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 210,
-  'enableContextMenu': false,
-};
-Blockly.Blocks['functionMutant_parameter'] = {
-  init: function() {
-    this.jsonInit(functionMutantParameterConfig);
-  }};
+  const realParameterBlock = {
+    'output': 'Parameter',
+    'message0': parameterPrefix + (parameterPrefix ? ' ' : '') + '%1',
+    'args0': [{'type': 'field_variable', 'name': 'NAME', 'variable': 'param'}],
+    'colour': 210,
+    'enableContextMenu': false,
+    'inputsInline': (parameterTyped && parameterDefault),
+  };
+  if (parameterTyped) {
+    realParameterBlock['message0'] += ' : %2';
+    realParameterBlock['args0'].push({'type': 'input_value', 'name': 'TYPE'});
+  }
+  if (parameterDefault) {
+    realParameterBlock['message0'] += ' = %' + (parameterTyped ? 3 : 2);
+    realParameterBlock['args0']
+        .push({'type': 'input_value', 'name': 'DEFAULT'});
+  }
 
-const functionMutantParameterTypeConfig = {
-  'message0': 'Parameter with type',
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 210,
-  'enableContextMenu': false,
-};
-Blockly.Blocks['functionMutant_parameterType'] = {
-  init: function() {
-    this.jsonInit(functionMutantParameterTypeConfig);
-  }};
-
-const functionMutantParameterDefaultConfig = {
-  'message0': 'Parameter with default value',
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 210,
-  'enableContextMenu': false,
-};
-Blockly.Blocks['functionMutant_parameterDefault'] = {
-  init: function() {
-    this.jsonInit(functionMutantParameterDefaultConfig);
-  }};
-const functionMutantParameterDefaultTypeConfig = {
-  'message0': 'Parameter with type and default value',
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 210,
-  'enableContextMenu': false,
-};
-Blockly.Blocks['functionMutant_parameterDefaultType'] = {
-  init: function() {
-    this.jsonInit(functionMutantParameterDefaultTypeConfig);
-  }};
-const functionMutantParameterVarargConfig = {
-  'message0': 'Variable length parameter',
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 210,
-  'enableContextMenu': false,
-};
-Blockly.Blocks['functionMutant_parameterVararg'] = {
-  init: function() {
-    this.jsonInit(functionMutantParameterVarargConfig);
-  }};
-const functionMutantParameterVarargTypeConfig = {
-  'message0': 'Variable length parameter with type',
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 210,
-  'enableContextMenu': false,
-};
-Blockly.Blocks['functionMutant_parameterVarargType'] = {
-  init: function() {
-    this.jsonInit(functionMutantParameterVarargTypeConfig);
-  }};
-const functionMutantParameterKwargConfig = {
-  'message0': 'Keyworded Variable length parameter',
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 210,
-  'enableContextMenu': false,
-};
-Blockly.Blocks['functionMutant_parameterKwarg'] = {
-  init: function() {
-    this.jsonInit(functionMutantParameterKwargConfig);
-  }};
-const functionMutantParameterKwargTypeConfig = {
-  'message0': 'Keyworded Variable length parameter with type',
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 210,
-  'enableContextMenu': false,
-};
-Blockly.Blocks['functionMutant_parameterKwargType'] = {
-  init: function() {
-    this.jsonInit(functionMutantParameterKwargTypeConfig);
-  }};
-
-/**
- * Function--realParameterBlock
- */
-const functionParameterConfig = {
-  'output': 'Parameter',
-  'message0': '%1',
-  'args0': [{'type': 'field_variable', 'name': 'NAME', 'variable': 'param'}],
-  'colour': 210,
-  'enableContextMenu': false,
-  'inputsInline': (parameterTyped && parameterDefault),
-};
-Blockly.Blocks['function_parameter'] = {
-  init: function() {
-    this.jsonInit(functionParameterConfig);
-  }};
-const functionParameterTypeConfig = {
-  'output': 'ParameterType',
-  'message0': '%1 : %2',
-  'args0': [
-    {'type': 'field_variable', 'name': 'NAME', 'variable': 'param'},
-    {'type': 'input_value', 'name': 'TYPE'}],
-  'colour': 210,
-  'enableContextMenu': false,
-  'inputsInline': false,
-};
-Blockly.Blocks['function_parameterType'] = {
-  init: function() {
-    this.jsonInit(functionParameterTypeConfig);
-  }};
-
-const functionParameterDefaultConfig = {
-  'output': 'ParameterType',
-  'message0': '%1 = %2',
-  'args0': [
-    {'type': 'field_variable', 'name': 'NAME', 'variable': 'param'},
-    {'type': 'input_value', 'name': 'DEFAULT'}],
-  'colour': 210,
-  'enableContextMenu': false,
-  'inputsInline': false,
-};
-Blockly.Blocks['function_parameterDefault'] = {
-  init: function() {
-    this.jsonInit(functionParameterDefaultConfig);
-  }};
-
-const functionParameterDefaultTypeConfig = {
-  'output': 'ParameterType',
-  'message0': '%1 : %2 = %3',
-  'args0': [
-    {'type': 'field_variable', 'name': 'NAME', 'variable': 'param'},
-    {'type': 'input_value', 'name': 'TYPE'},
-    {'type': 'input_value', 'name': 'DEFAULT'}],
-  'colour': 210,
-  'enableContextMenu': false,
-  'inputsInline': true,
-};
-Blockly.Blocks['function_parameterDefaultType'] = {
-  init: function() {
-    this.jsonInit(functionParameterDefaultTypeConfig);
-  }};
-
-const functionParameterVarargConfig = {
-  'output': 'ParameterType',
-  'message0': '* %1',
-  'args0': [{'type': 'field_variable', 'name': 'NAME', 'variable': 'param'}],
-  'colour': 210,
-  'enableContextMenu': false,
-  'inputsInline': false,
-};
-Blockly.Blocks['function_parameterVararg'] = {
-  init: function() {
-    this.jsonInit(functionParameterVarargConfig);
-  }};
+  Blockly.Blocks['Function' + parameterType] = {
+    'init': function() {
+      this.jsonInit(realParameterBlock);
+    },
+  };// (realParameterBlock);
+});
 
 
-const functionParameterVarargTypeConfig = {
-  'output': 'ParameterType',
-  'message0': '* %1 : %2',
-  'args0': [
-    {'type': 'field_variable', 'name': 'NAME', 'variable': 'param'},
-    {'type': 'input_value', 'name': 'TYPE'}],
-  'colour': 210,
-  'enableContextMenu': false,
-  'inputsInline': false,
-};
-Blockly.Blocks['function_parameterVarargType'] = {
-  init: function() {
-    this.jsonInit(functionParameterVarargTypeConfig);
-  }};
-
-const functionParameterKwargConfig = {
-  'output': 'ParameterType',
-  'message0': '** %1',
-  'args0': [{'type': 'field_variable', 'name': 'NAME', 'variable': 'param'}],
-  'colour': 210,
-  'enableContextMenu': false,
-  'inputsInline': false,
-};
-Blockly.Blocks['function_parameterKwarg'] = {
-  init: function() {
-    this.jsonInit(functionParameterKwargConfig);
-  }};
-const functionParameterKwargTypeConfig = {
-  'output': 'ParameterType',
-  'message0': '** %1 : %2',
-  'args0': [
-    {'type': 'field_variable', 'name': 'NAME', 'variable': 'param'},
-    {'type': 'input_value', 'name': 'TYPE'}],
-  'colour': 210,
-  'enableContextMenu': false,
-  'inputsInline': false,
-};
-Blockly.Blocks['function_parameterKwargType'] = {
-  init: function() {
-    this.jsonInit(functionParameterKwargTypeConfig);
-  }};
-
-
-Blockly.Blocks['function_def'] = {
+Blockly.Blocks['FunctionDef'] = {
   init: function() {
     this.appendDummyInput()
         .appendField('define')
@@ -244,10 +87,10 @@ Blockly.Blocks['function_def'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(BlockMirrorTextToBlocks.COLOR.FUNCTIONS);
+    this.setColour(210);
     this.updateShape_();
-    this.setMutator(new Blockly.Mutator(['functionMutant_parameter',
-      'functionMutant_parameterType']));
+    this.setMutator(new Blockly.Mutator(['FunctionMutantParameter',
+      'FunctionMutantParameterType']));
   },
   /**
    * Create XML to represent list inputs.
@@ -288,7 +131,7 @@ Blockly.Blocks['function_def'] = {
     this.hasReturn_ = status;
   },
   updateShape_: function() {
-  // Set up decorators and parameters
+    // Set up decorators and parameters
     const block = this;
     [
       ['DECORATOR', 'decoratorsCount_', null, 'decorated by'],
@@ -298,11 +141,12 @@ Blockly.Blocks['function_def'] = {
       const countVariable = childTypeTuple[1];
       const inputCheck = childTypeTuple[2];
       const childTypeMessage = childTypeTuple[3];
-      for (let i = 0; i < block[countVariable]; i++) {
+      let i = 0;
+      for (; i < block[countVariable]; i++) {
         if (!block.getInput(childTypeName + i)) {
-          const input =
-          block.appendValueInput(childTypeName +
-            i).setCheck(inputCheck).setAlign(Blockly.ALIGN_RIGHT);
+          const input = block.appendValueInput(childTypeName + i)
+              .setCheck(inputCheck)
+              .setAlign(Blockly.ALIGN_RIGHT);
           if (i === 0) {
             input.appendField(childTypeMessage);
           }
@@ -325,7 +169,7 @@ Blockly.Blocks['function_def'] = {
    * @this Blockly.Block
    */
   decompose: function(workspace) {
-    const containerBlock = workspace.newBlock('function_headerMutator');
+    const containerBlock = workspace.newBlock('FunctionHeaderMutator');
     containerBlock.initSvg();
 
     // Check/uncheck the allow statement box.
@@ -333,8 +177,8 @@ Blockly.Blocks['function_def'] = {
       containerBlock.setFieldValue(
               this.hasReturn_ ? 'TRUE' : 'FALSE', 'RETURNS');
     } else {
-    // TODO: set up 'canReturns' for lambda mode
-    //  containerBlock.getField('RETURNS').setVisible(false);
+      // TODO: set up "canReturns" for lambda mode
+      // containerBlock.getField('RETURNS').setVisible(false);
     }
 
     // Set up parameters
@@ -344,7 +188,7 @@ Blockly.Blocks['function_def'] = {
       const parameter = this.getInput('PARAMETER' + i).connection;
       const sourceType = parameter.targetConnection.getSourceBlock().type;
       const createName =
-      'functionMutant' + sourceType.substring('function'.length);
+      'FunctionMutant' + sourceType.substring('Function'.length);
       const itemBlock = workspace.newBlock(createName);
       itemBlock.initSvg();
       connection.connect(itemBlock.previousConnection);
@@ -392,14 +236,14 @@ Blockly.Blocks['function_def'] = {
     for (let i = 0; i < this.parametersCount_; i++) {
       Blockly.Mutator.reconnect(connections[i], this, 'PARAMETER' + i);
       if (!connections[i]) {
-        const createName = 'function' +
-        blockTypes[i].substring('functionMutant'.length);
+        const createName =
+        'Function' + blockTypes[i].substring('FunctionMutant'.length);
         const itemBlock = this.workspace.newBlock(createName);
         itemBlock.setDeletable(false);
         itemBlock.setMovable(false);
         itemBlock.initSvg();
-        this.getInput('PARAMETER' + i).
-            connection.connect(itemBlock.outputConnection);
+        this.getInput('PARAMETER' + i)
+            .connection.connect(itemBlock.outputConnection);
         itemBlock.render();
         // this.get(itemBlock, 'ADD'+i)
       }
