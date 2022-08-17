@@ -58,12 +58,8 @@ const exceptConfig = {
   'colour': 230,
 };
 const elseConfig = {
-  'message0': 'else %1',
-  'args0': [
-    {
-      'type': 'input_value', 'name': 'DELTA', 'check': 'Number',
-    },
-  ],
+  'message0': 'else',
+  'args0': [],
   'previousStatement': null,
   'nextStatement': null,
   'colour': 230,
