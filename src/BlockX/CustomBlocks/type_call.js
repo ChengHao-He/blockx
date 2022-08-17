@@ -1,8 +1,8 @@
 Blockly.Blocks['Call'] = {
   /**
-       * Block for calling a procedure with no return value.
-       * @this Blockly.Block
-       */
+   * Block for calling a procedure with no return value.
+   * @this Blockly.Block
+   */
   init: function() {
     this.givenColour_ = 210;
     this.setInputsInline(true);
@@ -22,21 +22,21 @@ Blockly.Blocks['Call'] = {
   },
 
   /**
-       * Returns the name of the procedure this block calls.
-       * @return {string} Procedure name.
-       * @this Blockly.Block
-       */
+   * Returns the name of the procedure this block calls.
+   * @return {string} Procedure name.
+   * @this Blockly.Block
+   */
   getProcedureCall: function() {
     return this.name_;
   },
   /**
-       * Notification that a procedure is renaming.
-       * If the name matches this block's procedure, rename it.
-       * Also rename if it was previously null.
-       * @param {string} oldName Previous name of procedure.
-       * @param {string} newName Renamed procedure.
-       * @this Blockly.Block
-       */
+   * Notification that a procedure is renaming.
+   * If the name matches this block's procedure, rename it.
+   * Also rename if it was previously null.
+   * @param {string} oldName Previous name of procedure.
+   * @param {string} newName Renamed procedure.
+   * @this Blockly.Block
+   */
   renameProcedure: function(oldName, newName) {
     if (this.name_ === null ||
               Blockly.Names.equals(oldName, this.name_)) {
@@ -105,10 +105,10 @@ Blockly.Blocks['Call'] = {
     return true;
   },
   /**
-       * Modify this block to have the correct number of arguments.
-       * @private
-       * @this Blockly.Block
-       */
+   * Modify this block to have the correct number of arguments.
+   * @private
+   * @this Blockly.Block
+   */
   updateShape_: function() {
     if (this.isMethod_ && !this.getInput('FUNC')) {
       const func = this.appendValueInput('FUNC');
@@ -188,10 +188,10 @@ Blockly.Blocks['Call'] = {
     this.setColour(this.givenColour_);
   },
   /**
-       * Create XML to represent the (non-editable) name and arguments.
-       * @return {!Element} XML storage element.
-       * @this Blockly.Block
-       */
+   * Create XML to represent the (non-editable) name and arguments.
+   * @return {!Element} XML storage element.
+   * @this Blockly.Block
+   */
   mutationToDom: function() {
     const container = document.createElement('mutation');
     const name = this.getProcedureCall();
@@ -212,10 +212,10 @@ Blockly.Blocks['Call'] = {
     return container;
   },
   /**
-       * Parse XML to restore the (non-editable) name and parameters.
-       * @param {!Element} xmlElement XML storage element.
-       * @this Blockly.Block
-       */
+   * Parse XML to restore the (non-editable) name and parameters.
+   * @param {!Element} xmlElement XML storage element.
+   * @this Blockly.Block
+   */
   domToMutation: function(xmlElement) {
     this.name_ = xmlElement.getAttribute('name');
     this.name_ = this.name_ === '*' ? null : this.name_;
@@ -245,18 +245,18 @@ Blockly.Blocks['Call'] = {
     }
   },
   /**
-       * Return all variables referenced by this block.
-       * @return {!Array.<!Blockly.VariableModel>} List of variable models.
-       * @this Blockly.Block
-       */
+   * Return all variables referenced by this block.
+   * @return {!Array.<!Blockly.VariableModel>} List of variable models.
+   * @this Blockly.Block
+   */
   getVarModels: function() {
     return this.argumentVarModels_;
   },
   /**
-       * Add menu option to find the definition block for this call.
-       * @param {!Array} options List of menu options to add to.
-       * @this Blockly.Block
-       */
+   * Add menu option to find the definition block for this call.
+   * @param {!Array} options List of menu options to add to.
+   * @this Blockly.Block
+   */
   customContextMenu: function(options) {
     if (!this.workspace.isMovable()) {
       return;
