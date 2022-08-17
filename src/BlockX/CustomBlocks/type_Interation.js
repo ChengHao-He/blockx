@@ -68,6 +68,13 @@ const elseConfig = {
   'nextStatement': null,
   'colour': 230,
 };
+const raiseConfig = {
+  'message0': 'raise',
+  'args0': [],
+  'previousStatement': null,
+  'nextStatement': null,
+  'colour': 230,
+};
 Blockly.Blocks['for'] = {
   init: function() {
     this.setInputsInline(true);
@@ -133,5 +140,17 @@ Blockly.Blocks['try'] = {
     this.appendStatementInput('DO');
     this.jsonInit(elseConfig);
     this.appendStatementInput('DO');
+  },
+};
+
+Blockly.Blocks['raise'] = {
+  init: function() {
+    this.jsonInit(raiseConfig);
+    // Assign 'this' to a variable for use in the tooltip closure below.
+    const thisBlock = this;
+    this.setTooltip(function() {
+      return 'Add a number to variable "%1".'.replace('%1',
+          thisBlock.getFieldValue('VAR'));
+    });
   },
 };
