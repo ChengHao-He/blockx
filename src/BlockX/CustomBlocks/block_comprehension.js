@@ -39,3 +39,48 @@ Blockly.Blocks['ComprehensionIf'] = {
   },
 };
 
+Blockly.Blocks['Comp_create_with_container'] = {
+  /**
+   * 变形器容器
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.setColour(15);
+    this.appendDummyInput()
+        .appendField('Add new comprehensions below');
+    this.appendDummyInput()
+        .appendField('   For clause');
+    this.appendStatementInput('STACK');
+    this.contextMenu = false;
+  },
+};
+
+Blockly.Blocks['Comp_create_with_for'] = {
+  /**
+   * 变形器零件for
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.setColour(15);
+    this.appendDummyInput()
+        .appendField('For clause');
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.contextMenu = false;
+  },
+};
+
+Blockly.Blocks['Comp_create_with_if'] = {
+  /**
+   * 变形器零件if
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.setColour(15);
+    this.appendDummyInput()
+        .appendField('If clause');
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.contextMenu = false;
+  },
+};
