@@ -87,6 +87,18 @@ const assertConfig = {
   'nextStatement': null,
   'colour': 230,
 };
+const withConfig = {
+  'message0': 'with %1 as %2 ',
+  'args0': [
+    {
+      'type': 'input_value', 'name': 'DELTA', 'check': 'Number',
+    },
+    {'type': 'input_value', 'name': 'DELTA', 'check': 'Number'},
+  ],
+  'previousStatement': null,
+  'nextStatement': null,
+  'colour': 230,
+};
 Blockly.Blocks['for'] = {
   init: function() {
     this.setInputsInline(true);
@@ -171,6 +183,20 @@ Blockly.Blocks['assert'] = {
   init: function() {
     this.setInputsInline(true);
     this.jsonInit(assertConfig);
+    // Assign 'this' to a variable for use in the tooltip closure below.
+    const thisBlock = this;
+    this.setTooltip(function() {
+      return 'Add a number to variable "%1".'.replace('%1',
+          thisBlock.getFieldValue('VAR'));
+    });
+  },
+};
+
+Blockly.Blocks['with'] = {
+  init: function() {
+    this.setInputsInline(true);
+    this.jsonInit(withConfig);
+    this.appendStatementInput('DO');
     // Assign 'this' to a variable for use in the tooltip closure below.
     const thisBlock = this;
     this.setTooltip(function() {
