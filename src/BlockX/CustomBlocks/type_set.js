@@ -2,10 +2,10 @@ const setConfig = {
   'output': 'Set',
   'colour': 10,
 };
-const setCreateWithContainer = {
+const setCreateWithContainerConfig = {
   'colour': 10,
 };
-const setCreateWithItem = {
+const setCreateWithItemConfig = {
   'colour': 10,
 };
 
@@ -147,7 +147,7 @@ Blockly.Blocks['Set_create_with_container'] = {
    * @this Blockly.Block
    */
   init: function() {
-    this.jsonInit(setCreateWithContainer);
+    this.jsonInit(setCreateWithContainerConfig);
     this.appendDummyInput()
         .appendField('Add new set elements below');
     this.appendStatementInput('STACK');
@@ -161,7 +161,7 @@ Blockly.Blocks['Set_create_with_item'] = {
    * @this Blockly.Block
    */
   init: function() {
-    this.jsonInit(setCreateWithItem);
+    this.jsonInit(setCreateWithItemConfig);
     this.appendDummyInput()
         .appendField('Element');
     this.setPreviousStatement(true);
