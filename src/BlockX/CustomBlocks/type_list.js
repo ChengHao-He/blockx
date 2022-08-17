@@ -17,9 +17,9 @@ const ListCreateWithItemConfig = {
 
 Blockly.Blocks['List'] = {
   /**
-     * Block for creating a list with any number of elements of any type.
-     * @this Blockly.Block
-     */
+   * Block for creating a list with any number of elements of any type.
+   * @this Blockly.Block
+   */
   init: function() {
     this.jsonInit(listConfig);
     this.itemCount_ = 3;
@@ -27,30 +27,30 @@ Blockly.Blocks['List'] = {
     this.setMutator(new Blockly.Mutator(['List_create_with_item']));
   },
   /**
-     * Create XML to represent list inputs.
-     * @return {!Element} XML storage element.
-     * @this Blockly.Block
-     */
+   * Create XML to represent list inputs.
+   * @return {!Element} XML storage element.
+   * @this Blockly.Block
+   */
   mutationToDom: function() {
     const container = document.createElement('mutation');
     container.setAttribute('items', this.itemCount_);
     return container;
   },
   /**
-     * Parse XML to restore the list inputs.
-     * @param {!Element} xmlElement XML storage element.
-     * @this Blockly.Block
-     */
+   * Parse XML to restore the list inputs.
+   * @param {!Element} xmlElement XML storage element.
+   * @this Blockly.Block
+   */
   domToMutation: function(xmlElement) {
     this.itemCount_ = parseInt(xmlElement.getAttribute('items'), 10);
     this.updateShape_();
   },
   /**
-     * Populate the mutator's dialog with this block's components.
-     * @param {!Blockly.Workspace} workspace Mutator's workspace.
-     * @return {!Blockly.Block} Root block in mutator.
-     * @this Blockly.Block
-     */
+   * Populate the mutator's dialog with this block's components.
+   * @param {!Blockly.Workspace} workspace Mutator's workspace.
+   * @return {!Blockly.Block} Root block in mutator.
+   * @this Blockly.Block
+   */
   decompose: function(workspace) {
     const containerBlock = workspace.newBlock('List_create_with_container');
     containerBlock.initSvg();
@@ -64,10 +64,10 @@ Blockly.Blocks['List'] = {
     return containerBlock;
   },
   /**
-     * Reconfigure this block based on the mutator dialog's components.
-     * @param {!Blockly.Block} containerBlock Root block in mutator.
-     * @this Blockly.Block
-     */
+   * Reconfigure this block based on the mutator dialog's components.
+   * @param {!Blockly.Block} containerBlock Root block in mutator.
+   * @this Blockly.Block
+   */
   compose: function(containerBlock) {
     let itemBlock = containerBlock.getInputTargetBlock('STACK');
     // Count number of inputs.
@@ -92,10 +92,10 @@ Blockly.Blocks['List'] = {
     }
   },
   /**
-     * Store pointers to any connected child blocks.
-     * @param {!Blockly.Block} containerBlock Root block in mutator.
-     * @this Blockly.Block
-     */
+   * Store pointers to any connected child blocks.
+   * @param {!Blockly.Block} containerBlock Root block in mutator.
+   * @this Blockly.Block
+   */
   saveConnections: function(containerBlock) {
     let itemBlock = containerBlock.getInputTargetBlock('STACK');
     let i = 0;
@@ -108,10 +108,10 @@ Blockly.Blocks['List'] = {
     }
   },
   /**
-     * Modify this block to have the correct number of inputs.
-     * @private
-     * @this Blockly.Block
-     */
+   * Modify this block to have the correct number of inputs.
+   * @private
+   * @this Blockly.Block
+   */
   updateShape_: function() {
     if (this.itemCount_ && this.getInput('EMPTY')) {
       this.removeInput('EMPTY');
@@ -150,9 +150,9 @@ Blockly.Blocks['List'] = {
 
 Blockly.Blocks['List_create_with_container'] = {
   /**
-     * Mutator block for list container.
-     * @this Blockly.Block
-     */
+   * Mutator block for list container.
+   * @this Blockly.Block
+   */
   init: function() {
     this.jsonInit(ListCreateWithContainerConfig);
     this.setColour(30);
@@ -165,9 +165,9 @@ Blockly.Blocks['List_create_with_container'] = {
 
 Blockly.Blocks['List_create_with_item'] = {
   /**
-     * Mutator block for adding items.
-     * @this Blockly.Block
-     */
+   * Mutator block for adding items.
+   * @this Blockly.Block
+   */
   init: function() {
     this.jsonInit(ListCreateWithItemConfig);
     this.setColour(30);
