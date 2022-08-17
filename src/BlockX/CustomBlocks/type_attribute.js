@@ -17,7 +17,7 @@ const attributeConfig = {
   'colour': 240,
 };
 
-Blockly.Blocks['Attribute'] = {
+Blockly.Blocks['attribute'] = {
   init: function() {
     this.jsonInit(attributeConfig);
     // Assign 'this' to a variable for use in the tooltip closure below

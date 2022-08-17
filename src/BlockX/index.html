@@ -18,7 +18,8 @@
   <script type="text/javascript" src="CustomBlocks/type_attribute.js"></script>
   <script type="text/javascript" src="CustomBlocks/type_string.js"></script>
   <script type="text/javascript" src="CustomBlocks/type_constant.js"></script>
-  <script type="text/javascript" src="CustomBlocks/type_annAssignFull"></script>
+  <script type="text/javascript" src="CustomBlocks/annotation_assign.js"></script>
+  <script type="text/javascript" src="CustomBlocks/type_import.js"></script>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 <body>
@@ -47,6 +48,7 @@
       
     </category>
     <category name="Iteration" colour="111">
+<<<<<<< HEAD
       <block type="for" ></block>
       <block type="while" ></block>
       <block type="break" ></block>
@@ -55,6 +57,65 @@
       <block type="raise" ></block>
       <block type="assert" ></block>
       <block type="with" ></block>
+=======
+      <block type="for" line_number="1">
+        <field name="NUM">0.0</field>
+      </block>
+      <block type="while" line_number="1">
+        <field name="NUM">0.0</field>
+      </block>
+      <block type="break" line_number="1">
+        <field name="NUM">0.0</field>
+      </block>
+      <block type="continue" line_number="1">
+        <field name="NUM">0.0</field>
+      </block>
+    </category>
+    <category name="Classes" colour="240">
+      <block type="attribute" line_number="1">
+        <field name="VALUE">___</field>
+        <field name="ATTR">___</field>
+      </block>
+      <block type="annotation_assign" line_number="1" inline="true">
+        <mutation initialized="false"></mutation>
+      </block>
+    </category>
+    <category name="Imports" colour="60">
+      <block type="import" line_number="1" inline="true">
+        <mutation names="1" from="false">
+          <regular name="true"></regular>
+        </mutation>
+        <field name="NAME0">___</field>
+      </block>
+      <block type="import" line_number="1" inline="true">
+        <mutation names="1" from="true">
+          <regular name="true"></regular>
+        </mutation>
+        <field name="NAME0">___</field>
+        <field name="MODULE">___</field>
+      </block>
+      <block type="import" line_number="1" inline="true">
+        <mutation names="1" from="false">
+          <regular name="false"></regular>
+        </mutation>
+        <field name="NAME0">___</field>
+        <field name="ASNAME0">___</field>
+      </block>
+      <block type="import" line_number="1" inline="true">
+        <mutation names="1" from="true">
+          <regular name="false"></regular>
+        </mutation>
+        <field name="NAME0">___</field>
+        <field name="ASNAME0">___</field>
+        <field name="MODULE">___</field>
+      </block>
+      <block type="raise" line_number="1">
+        <field name="NUM">0.0</field>
+      </block>
+      <block type="assert" line_number="1">
+        <field name="NUM">0.0</field>
+      </block>
+>>>>>>> a0e1c91 (feature: Add import block. Closes #126)
     </category>
   </xml>
   <script type="text/javascript">
