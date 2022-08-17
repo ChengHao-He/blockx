@@ -1,11 +1,19 @@
 Blockly.UNARYOPS = [
   [
     '+', 'UAdd',
-    'Do nothing to the number'
+    'Do nothing to the number',
+  ],
+  [
+    '-', 'USub',
+    'Make the number negative',
+  ],
+  [
+    'not', 'Not',
+    'Return the logical opposite of the value.',
   ],
   [
     '~', 'Invert',
-    'Take the bit inversion of the number'
+    'Take the bit inversion of the number',
   ],
 ];
 
