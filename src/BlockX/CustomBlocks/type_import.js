@@ -22,7 +22,8 @@ Blockly.Blocks['import'] = {
       this.removeInput('FROM');
     }
     // Import clauses
-    for (let i = 0; i < this.nameCount_; i++) {
+    let i = 0;
+    for ( ; i < this.nameCount_; i++) {
       let input = this.getInput('CLAUSE' + i);
       if (!input) {
         input = this.appendDummyInput('CLAUSE' + i)
