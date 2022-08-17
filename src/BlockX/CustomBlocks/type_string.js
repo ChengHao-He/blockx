@@ -1,5 +1,5 @@
 const stringConfig = {
-  'message0': 'string: %1',
+  'message0': 'String %1',
   'args0': [
     {
       'type': 'field_input',
@@ -13,7 +13,7 @@ const stringConfig = {
 };
 
 const charConfig = {
-  'message0': 'char: %1',
+  'message0': 'char %1',
   'args0': [
     {
       'type': 'field_dropdown',
@@ -30,11 +30,13 @@ const charConfig = {
 };
 
 const multilineStringConfig = {
-  'message0': 'multiline string: %1',
+  'message0': 'multiline string %1',
   'args0': [
-    {'type': 'field_multilinetext',
+    {
+      'type': 'field_multilinetext',
       'name': 'TEXT',
-      'value': ''},
+      'value': '',
+    },
   ],
   'output': 'String',
   'colour': 123,
@@ -42,7 +44,7 @@ const multilineStringConfig = {
 };
 
 const docStringConfig = {
-  'message0': 'Doc string: %1 %2',
+  'message0': 'Docstring: %1 %2',
   'args0': [
     {'type': 'input_dummy'},
     {
@@ -53,7 +55,7 @@ const docStringConfig = {
   ],
   'previousStatement': null,
   'nextStatement': null,
-  'colour': 122,
+  'colour': 121,
 };
 
 Blockly.Blocks['type_string'] = {
@@ -69,7 +71,7 @@ Blockly.Blocks['type_char'] = {
   init: function() {
     this.jsonInit(charConfig);
     this.setTooltip(function() {
-      return 'Add a character.';
+      return 'Add a char.';
     });
   },
 };
@@ -90,4 +92,13 @@ Blockly.Blocks['type_doc_string'] = {
       return 'Add doc string.';
     });
   },
+};
+
+
+// 代码生成器
+Blockly.Python['type_string'] = function(block) {
+  // Text value
+  let code = Blockly.Python.quote_(block.getFieldValue('TEXT'));
+  code = code.replace('\n', 'n');
+  return [code, Blockly.Python.ORDER_ATOMIC];
 };

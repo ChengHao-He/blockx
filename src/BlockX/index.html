@@ -20,6 +20,11 @@
   <script type="text/javascript" src="CustomBlocks/type_constant.js"></script>
   <script type="text/javascript" src="CustomBlocks/annotation_assign.js"></script>
   <script type="text/javascript" src="CustomBlocks/type_import.js"></script>
+  <script type="text/javascript" src="CustomBlocks/type_string.js"></script>
+  <script type="text/javascript" src="CustomBlocks/type_string.js"></script>
+  <script type="text/javascript" src="CustomBlocks/type_constant.js"></script>
+  <script type="text/javascript" src="CustomBlocks/test_block.js"></script>
+  <script type="text/javascript" src="CustomBlocks/block_comprehension.js"></script>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 <body>
@@ -45,6 +50,10 @@
       <block type="type_doc_string"></block>
       <block type="constant_none"></block>
       <block type="constant_bool"></block>
+      <block type="constant_none"></block>
+      <block type="constant_bool"></block>
+      <block type="constant_none"></block>
+      <block type="constant_bool"></block>
     </category>
     <category name="Iteration" colour="111">
       <block type="for" ></block>
@@ -65,6 +74,10 @@
         <field name="NUM">0.0</field>
       </block>
       <block type="continue" line_number="1">
+      <block type="For" line_number="1">
+        <field name="NUM">0.0</field>
+      </block>
+      <block type="While" line_number="1">
         <field name="NUM">0.0</field>
       </block>
     </category>
@@ -112,6 +125,15 @@
       <block type="assert" line_number="1">
         <field name="NUM">0.0</field>
       </block>
+    </category>
+    <category name="Generators" colour="15">
+        <block type="ComprehensionFor"></block>
+        <block type="ListComp" line_number="1" inline="false">
+          <mutation items="1"></mutation>
+          <value name="GENERATOR0">
+            <block type="ComprehensionFor" line_number="1" inline="true" deletable="false" movable="false"></block>
+          </value>
+        </block>
     </category>
   </xml>
   <script type="text/javascript">

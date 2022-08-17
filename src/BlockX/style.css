@@ -17,12 +17,13 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-style: double;
 }
 
 #blockly-div {
   margin: auto;
-  height: 600px;
-  width: 600px;
+  height: 666px;
+  flex: 0 0 60%;
   display: inline-block;
 }
 
@@ -30,12 +31,12 @@ h1 {
   margin: auto;
   background-color: wheat;
   display: inline-block;
-  height: 600px;
-  width: 600px;
+  height: 666px;
+  flex: 0 0 30%;
 }
 
 #python-code {
   margin: 10px;
-  height: 580px;
+  height: 600px;
   width: 580px;
 }
