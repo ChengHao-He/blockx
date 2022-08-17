@@ -9,7 +9,7 @@ const returnFullConfig = {
   'colour': 210,
 };
 
-Blockly.Blocks['retrun_full'] = {
+Blockly.Blocks['return_full'] = {
   init: function() {
     this.jsonInit(returnFullConfig);
   }};
