@@ -6,46 +6,10 @@ const listConfig = {
   'helpUrl': 'LISTS_CREATE_WITH_HELPURL',
 };
 const ListCreateWithContainerConfig = {
-  'message0': 'List create with container %1 %2 %3',
-  'args0': [
-    {
-      'type': 'input_dummy',
-      'name': 'DUMMY',
-      'value': 0,
-      'precision': 1,
-    },
-    {
-      'type': 'field_input',
-      'name': 'FIELD',
-      'value': 0,
-      'precision': 1,
-    },
-    {
-      'type': 'input_statement',
-      'name': 'STATEMENT',
-      'value': 0,
-      'precision': 1,
-    },
-  ],
   'colour': 30,
   'helpUrl': 'LISTS_CREATE_WITH_HELPURL',
 };
 const ListCreateWithItemConfig = {
-  'message0': 'List create with item %1 %2',
-  'args0': [
-    {
-      'type': 'input_dummy',
-      'name': 'DUMMY',
-      'value': 0,
-      'precision': 1,
-    },
-    {
-      'type': 'field_input',
-      'name': 'ELEMENT',
-      'value': 0,
-      'precision': 1,
-    },
-  ],
   'colour': 30,
   'previousStatement': null,
   'nextStatement': null,
@@ -191,7 +155,7 @@ Blockly.Blocks['List_create_with_container'] = {
      */
   init: function() {
     this.jsonInit(ListCreateWithContainerConfig);
-    this.setColour(190);
+    this.setColour(30);
     this.appendDummyInput()
         .appendField('Add new list elements below: ');
     this.appendStatementInput('STACK');
@@ -206,7 +170,7 @@ Blockly.Blocks['List_create_with_item'] = {
      */
   init: function() {
     this.jsonInit(ListCreateWithItemConfig);
-    this.setColour(190);
+    this.setColour(30);
     this.appendDummyInput()
         .appendField('Element');
     this.setPreviousStatement(true);
