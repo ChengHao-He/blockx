@@ -35,6 +35,39 @@ const continueConfig = {
   'nextStatement': null,
   'colour': 230,
 };
+const tryConfig = {
+  'message0': 'try %1',
+  'args0': [
+    {
+      'type': 'input_value', 'name': 'DELTA', 'check': 'Number',
+    },
+  ],
+  'previousStatement': null,
+  'nextStatement': null,
+  'colour': 230,
+};
+const exceptConfig = {
+  'message0': 'except %1',
+  'args0': [
+    {
+      'type': 'input_value', 'name': 'DELTA', 'check': 'Number',
+    },
+  ],
+  'previousStatement': null,
+  'nextStatement': null,
+  'colour': 230,
+};
+const elseConfig = {
+  'message0': 'else %1',
+  'args0': [
+    {
+      'type': 'input_value', 'name': 'DELTA', 'check': 'Number',
+    },
+  ],
+  'previousStatement': null,
+  'nextStatement': null,
+  'colour': 230,
+};
 Blockly.Blocks['for'] = {
   init: function() {
     this.setInputsInline(true);
@@ -83,5 +116,22 @@ Blockly.Blocks['continue'] = {
       return 'Add a number to variable "%1".'.replace('%1',
           thisBlock.getFieldValue('VAR'));
     });
+  },
+};
+
+Blockly.Blocks['try'] = {
+  init: function() {
+    this.jsonInit(tryConfig);
+    this.appendStatementInput('DO');
+    // Assign 'this' to a variable for use in the tooltip closure below.
+    const thisBlock = this;
+    this.setTooltip(function() {
+      return 'Add a number to variable "%1".'.replace('%1',
+          thisBlock.getFieldValue('VAR'));
+    });
+    this.jsonInit(exceptConfig);
+    this.appendStatementInput('DO');
+    this.jsonInit(elseConfig);
+    this.appendStatementInput('DO');
   },
 };
