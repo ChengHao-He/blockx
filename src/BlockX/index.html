@@ -20,9 +20,6 @@
   <script type="text/javascript" src="CustomBlocks/type_constant.js"></script>
   <script type="text/javascript" src="CustomBlocks/annotation_assign.js"></script>
   <script type="text/javascript" src="CustomBlocks/type_import.js"></script>
-  <script type="text/javascript" src="CustomBlocks/type_string.js"></script>
-  <script type="text/javascript" src="CustomBlocks/type_string.js"></script>
-  <script type="text/javascript" src="CustomBlocks/type_constant.js"></script>
   <script type="text/javascript" src="CustomBlocks/test_block.js"></script>
   <script type="text/javascript" src="CustomBlocks/block_comprehension.js"></script>
   <link rel="stylesheet" type="text/css" href="./style.css">
@@ -113,11 +110,13 @@
     </category>
   </xml>
   <script type="text/javascript">
-const workSpace = Blockly.inject('blockly-div', {
-    toolbox: document.getElementById('toolbox')
-});
+   const workSpace = Blockly.inject('blockly-div', {
+       toolbox: document.getElementById('toolbox')
+  });
+    function myUpdateFunction(event) {
+    var code = Blockly.Python.workspaceToCode(workSpace);   document.getElementById('python-code').value = code;
+    }
+    workSpace.addChangeListener(myUpdateFunction);
   </script>
-
-
 </body>
 </html>
