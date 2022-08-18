@@ -1,3 +1,4 @@
+// 字典元素块
 Blockly.Blocks['dict_item'] = {
   init: function() {
     this.appendValueInput('KEY')
@@ -6,25 +7,55 @@ Blockly.Blocks['dict_item'] = {
         .setCheck(null)
         .appendField(':');
     this.setInputsInline(true);
-    this.setOutput(true, 'DictPair');
+    this.setOutput(true, 'dict_pair');
     this.setColour(0);
   },
 };
-Blockly.Blocks['Dict'] = {
+
+Blockly.Blocks['dict_create_with_container'] = {
   /**
-   * Block for creating a dict with any number of elements of any type.
+   * 字典变形器顶级块
    * @this Blockly.Block
    */
   init: function() {
     this.setColour(0);
-    this.itemCount_ = 3;
+    this.appendDummyInput()
+        .appendField('Add new dict elements below');
+    this.appendStatementInput('STACK');
+    this.contextMenu = false;
+  },
+};
+
+Blockly.Blocks['dict_create_with_item'] = {
+  /**
+   * 字典变形器子块
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.setColour(0);
+    this.appendDummyInput()
+        .appendField('Element');
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.contextMenu = false;
+  },
+};
+
+Blockly.Blocks['dict'] = {
+  /**
+   * 字典对象实例（默认带有2个元素）
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.setColour(0);
+    this.itemCount_ = 2;
     this.updateShape_();
-    this.setOutput(true, 'Dict');
-    this.setMutator(new Blockly.Mutator(['Dict_create_with_item']));
+    this.setOutput(true, 'dict');
+    this.setMutator(new Blockly.Mutator(['dict_create_with_item']));
   },
   /**
-   * Create XML to represent dict inputs.
-   * @return {!Element} XML storage element.
+   * 存储实例块的已有信息
+   * @return {!Element} 返回一个XML对象。
    * @this Blockly.Block
    */
   mutationToDom: function() {
@@ -33,8 +64,8 @@ Blockly.Blocks['Dict'] = {
     return container;
   },
   /**
-   * Parse XML to restore the dict inputs.
-   * @param {!Element} xmlElement XML storage element.
+   * 恢复实例块的已有信息
+   * @param {!Element} xmlElement 传入mutationToDOM得到的XML对象。
    * @this Blockly.Block
    */
   domToMutation: function(xmlElement) {
@@ -42,17 +73,17 @@ Blockly.Blocks['Dict'] = {
     this.updateShape_();
   },
   /**
-   * Populate the mutator's dialog with this block's components.
-   * @param {!Blockly.Workspace} workspace Mutator's workspace.
-   * @return {!Blockly.Block} Root block in mutator.
+   * 依照实例块结构生成变形器对话框中的“虚拟字典模板块”
+   * @param {!Blockly.Workspace} workspace 传入变形器所在工作区
+   * @return {!Blockly.Block} 返回变形器的顶级块
    * @this Blockly.Block
    */
   decompose: function(workspace) {
-    const containerBlock = workspace.newBlock('Dict_create_with_container');
+    const containerBlock = workspace.newBlock('dict_create_with_container');
     containerBlock.initSvg();
     let connection = containerBlock.getInput('STACK').connection;
     for (let i = 0; i < this.itemCount_; i++) {
-      const itemBlock = workspace.newBlock('Dict_create_with_item');
+      const itemBlock = workspace.newBlock('dict_create_with_item');
       itemBlock.initSvg();
       connection.connect(itemBlock.previousConnection);
       connection = itemBlock.nextConnection;
@@ -60,18 +91,17 @@ Blockly.Blocks['Dict'] = {
     return containerBlock;
   },
   /**
-   * Reconfigure this block based on the mutator dialog's components.
-   * @param {!Blockly.Block} containerBlock Root block in mutator.
+   * 依照变形器对话框中的块生成实例块的结构
+   * @param {!Blockly.Block} containerBlock 变形器顶级块
    * @this Blockly.Block
    */
   compose: function(containerBlock) {
     let itemBlock = containerBlock.getInputTargetBlock('STACK');
-    // Count number of inputs.
     const connections = [];
     while (itemBlock) {
       connections.push(itemBlock.valueConnection_);
       itemBlock = itemBlock.nextConnection &&
-                itemBlock.nextConnection.targetBlock();
+              itemBlock.nextConnection.targetBlock();
     }
     // Disconnect any children that don't belong.
     for (let i = 0; i < this.itemCount_; i++) {
@@ -118,7 +148,7 @@ Blockly.Blocks['Dict'] = {
       itemBlock.valueConnection_ = input && input.connection.targetConnection;
       i++;
       itemBlock = itemBlock.nextConnection &&
-                itemBlock.nextConnection.targetBlock();
+              itemBlock.nextConnection.targetBlock();
     }
   },
   /**
@@ -138,7 +168,7 @@ Blockly.Blocks['Dict'] = {
     for (; i < this.itemCount_; i++) {
       if (!this.getInput('ADD' + i)) {
         const input = this.appendValueInput('ADD' + i)
-            .setCheck('DictPair');
+            .setCheck('dict_pair');
         if (i === 0) {
           input.appendField('create dict with').setAlign(Blockly.ALIGN_RIGHT);
         }
@@ -152,31 +182,54 @@ Blockly.Blocks['Dict'] = {
   },
 };
 
-Blockly.Blocks['Dict_create_with_container'] = {
-  /**
-   * Mutator block for dict container.
-   * @this Blockly.Block
-   */
-  init: function() {
-    this.setColour(0);
-    this.appendDummyInput()
-        .appendField('Add new dict elements below');
-    this.appendStatementInput('STACK');
-    this.contextMenu = false;
-  },
-};
+// Blockly.Python['dict'] = function(block) {
+//   // Create a dict with any number of elements of any type.
+//   const elements = new Array(block.itemCount_);
+//   for (let i = 0; i < block.itemCount_; i++) {
+//     const child = block.getInputTargetBlock('ADD' + i);
+//     if (child === null || child.type != 'dict_item') {
+//       elements[i] = (Blockly.Python.blank + ': '+ Blockly.Python.blank);
+//       continue;
+//     }
+//     const key = Blockly.Python
+//         .valueToCode(child, 'KEY', Blockly.Python.ORDER_NONE) ||
+//           Blockly.Python.blank;
+//     const value = Blockly.Python
+//         .valueToCode(child, 'VALUE', Blockly.Python.ORDER_NONE) ||
+//           Blockly.Python.blank;
+//     elements[i] = (key+ ': '+value);
+//   }
+//   const code = '{' + elements.join(', ') + '}';
+//   return [code, Blockly.Python.ORDER_ATOMIC];
+// };
 
-Blockly.Blocks['Dict_create_with_item'] = {
-  /**
-   * Mutator block for adding items.
-   * @this Blockly.Block
-   */
-  init: function() {
-    this.setColour(0);
-    this.appendDummyInput()
-        .appendField('Element');
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
-    this.contextMenu = false;
-  },
-};
+// BlockMirrorTextToBlocks.prototype['dict'] = function(node, parent) {
+//   const keys = node.keys;
+//   const values = node.values;
+
+//   if (keys === null) {
+//     return BlockMirrorTextToBlocks.create_block('dict', node.lineno, {},
+//         {}, {'inline': 'false'}, {'@items': 0});
+//   }
+
+//   const elements = {};
+//   for (let i = 0; i < keys.length; i++) {
+//     const key = keys[i];
+//     const value = values[i];
+//     elements['ADD' + i] =
+//     BlockMirrorTextToBlocks.create_block('dict_item', node.lineno, {},
+//         {
+//           'KEY': this.convert(key, node),
+//           'VALUE': this.convert(value, node),
+//         },
+//         this.LOCKED_BLOCK);
+//   }
+
+//   return BlockMirrorTextToBlocks.create_block('dict', node.lineno, {},
+//       elements,
+//       {
+//         'inline': 'false',
+//       }, {
+//         '@items': keys.length,
+//       });
+// };
