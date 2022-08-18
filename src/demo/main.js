@@ -8,7 +8,7 @@ Blockly.Xml.domToWorkspace(document.getElementById('toolbox'), workSpace);
  * @param {*} event
  */
 function updateFunction(event) {
-  const code = Blockly.python.workspaceToCode(workSpace);
+  const code = Blockly.Python.workspaceToCode(workSpace);
   document.getElementById('python-code').value = code;
 }
 workSpace.addChangeListener(updateFunction);

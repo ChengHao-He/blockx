@@ -2,3 +2,4 @@
 /.husky/
 .DS_Store
 .vscode
+src/demo/lib

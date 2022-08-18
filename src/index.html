@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BlockX demo</title>
+
+  <!-- Blockly -->
+  <script src="../../node_modules/blockly/blockly_compressed.js"></script>
+  <script src="../../node_modules/blockly/blocks_compressed.js"></script>
+  <script src="../../node_modules/blockly/javascript_compressed.js"></script>
+  <script src="../../node_modules/blockly/python_compressed.js"></script>
+  <script src="../../node_modules/blockly/msg/en.js"></script>
+
+  <!-- import CustomBlocks  -->
+  <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+
+<body>
+  <header></header>
+  <div id="tran-space">
+    <div id="blockly-div"></div>
+    <div id="code-div">
+      <textarea id="python-code"></textarea>
+    </div>
+  </div>
+  <xml id="toolbox" style="display:none">
+    <category name="Variables" colour="225" custom="VARIABLE"></category>
+    <category name="Literal Values" colour="30"></category>
+    <category name="Calculations" colour="190"></category>
+    <category name="Logic" colour="345"></category>
+    <sep></sep>
+    <category name="Classes" colour="240"></category>
+    <category name="Functions" colour="210"></category>
+    <category name="Imports" colour="60"></category>
+    <sep></sep>
+    <category name="Control Flow" colour="270"></category>
+    <sep></sep>
+    <category name="Output" colour="140"></category>
+    <category name="Input" colour="120"></category>
+    <category name="Files" colour="170"></category>
+    <sep></sep>
+    <category name="Conversion" colour="120"></category>
+    <category name="Builtin Functions" colour="15"></category>
+    <category name="List Methods" colour="30"></category>
+    <category name="String Methods" colour="120"></category>
+    <category name="Subscripting" colour="15"></category>
+    <category name="Generators" colour="15"></category>
+    <category name="Comments" colour="60"></category>
+  </xml>
+  <script type="text/javascript">
+// test for code
+const workSpace = Blockly.inject('blockly-div', {
+  toolbox: document.getElementById('toolbox'),
+});
+
+Blockly.Xml.domToWorkspace(document.getElementById('toolbox'), workSpace);
+function updateFunction(event) {
+  const code = Blockly.Python.workspaceToCode(workSpace);
+  document.getElementById('python-code').value = code;
+}
+workSpace.addChangeListener(updateFunction);
+
+  </script>
+</body>
+
+</html>
