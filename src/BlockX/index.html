@@ -15,6 +15,32 @@
   <script src="../../node_modules/blockly/msg/en.js"></script>
 
   <!-- import CustomBlocks  -->
+  <script type="text/javascript" src="CustomBlocks/function_def.js"></script>
+  <script type="text/javascript" src="../../node_modules/blockly/blocks/procedures.js"></script>
+  <script type="text/javascript" src="CustomBlocks/return.js"></script>
+  <script type="text/javascript" src="CustomBlocks/yield.js"></script>
+  <script type="text/javascript" src="CustomBlocks/yield_from.js"></script>
+  <script type="text/javascript" src="CustomBlocks/set.js"></script>
+  <script type="text/javascript" src="CustomBlocks/subscript.js"></script>
+  <script type="text/javascript" src="CustomBlocks/comment.js"></script>
+  <script type="text/javascript" src="CustomBlocks/binOp.js"></script>
+  <script type="text/javascript" src="CustomBlocks/unaryOpNot.js"></script>
+  <script type="text/javascript" src="CustomBlocks/compare.js"></script>
+  <script type="text/javascript" src="CustomBlocks/boolOp.js"></script>
+  <script type="text/javascript" src="CustomBlocks/classdef.js"></script>
+  <!-- import CodeGenerators  -->
+  <script type="text/javascript" src="CodeGenerators/function_def.js"></script>
+  <script type="text/javascript" src="CodeGenerators/boolOp.js"></script>
+  <script type="text/javascript" src="CodeGenerators/binOp.js"></script>
+  <script type="text/javascript" src="CodeGenerators/unaryOpNot.js"></script>
+  <script type="text/javascript" src="CodeGenerators/comment.js"></script>
+  <script type="text/javascript" src="CodeGenerators/subscript.js"></script>
+  <script type="text/javascript" src="CodeGenerators/set.js"></script>
+  <script type="text/javascript" src="CodeGenerators/rerurn.js"></script>
+  <script type="text/javascript" src="CodeGenerators/compare.js"></script>
+  <script type="text/javascript" src="CodeGenerators/yield.js"></script>
+  <script type="text/javascript" src="CodeGenerators/yield_from.js"></script>
+  <script type="text/javascript" src="CodeGenerators/classdef.js"></script>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
@@ -29,7 +55,26 @@
   <?xml version="1.0" encoding="utf-8"?>
   <xml id="toolbox" style="display:none">
     <category name="Variables" colour="225" custom="VARIABLE"></category>
-    <category name="Literal Values" colour="30"></category>
+    <category name="Literal Values" colour="30">
+      <block type="procedures_defreturn"></block>
+      <block type="FunctionDef"></block>
+      <block type="return"></block>
+      <block type="return_full"></block>
+      <block type="yield"></block>
+      <block type="yield_from"></block>
+      <block type="Set"></block>
+      <block type="Subscript"></block>
+      <block type="Comment"></block>
+      <block type="BinOp"></block>
+      <block type="BinOpFull"></block>
+      <block type="BoolOp"></block>
+      <block type="UnaryOpUAdd"></block>
+      <block type="UnaryOpUSub"></block>
+      <block type="UnaryOpNot"></block>
+      <block type="UnaryOpInvert"></block>
+      <block type="Compare"></block>
+      <block type="ClassDef"></block>
+    </category>
     <category name="Calculations" colour="190"></category>
     <category name="Logic" colour="345"></category>
     <sep></sep>

@@ -19,23 +19,12 @@ Blockly.UNARYOPS = [
 
 Blockly.UNARYOPS.forEach(function(unaryop) {
   const fullName = 'UnaryOp' + unaryop[1];
-  console.log(fullName);
-  const initBlockConfig = {
-    'message0': unaryop[0] + ' %1',
-    'args0': [
-      {
-        'type': 'input_value',
-        'name': 'VALUE',
-      },
-    ],
-    'inputsInline': false,
-    'output': null,
-    'colour': (unaryop[1] === 'Not' ? 345 : 190),
-  };
-  Blockly.Blocks[fullName] = {
-    init: function() {
-      this.jsonInit(initBlockConfig);
-    },
+  Blockly.Python[fullName] = function(block) {
+    const order = (unaryop[1] === 'Not' ?
+      Blockly.Python.ORDER_LOGICAL_NOT : Blockly.Python.ORDER_UNARY_SIGN);
+    const argument1 =
+      Blockly.Python.valueToCode(block, 'VALUE', order) || Blockly.Python.blank;
+    const code = unaryop[0] + (unaryop[1] === 'Not' ? ' ' : '') + argument1;
+    return [code, order];
   };
 });
-

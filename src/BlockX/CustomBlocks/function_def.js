@@ -70,6 +70,22 @@ Blockly.Blocks['FunctionHeaderMutator'] = ({
       this.jsonInit(realParameterBlock);
     },
   };// (realParameterBlock);
+  Blockly.Python['Function' + parameterType] = function(block) {
+    const name = Blockly.Python.variableDB_.getName(block.getFieldValue('NAME'),
+        Blockly.Variables.NAME_TYPE);
+    let typed = '';
+    if (parameterTyped) {
+      typed = ': ' + (Blockly.Python.valueToCode(block, 'TYPE',
+          Blockly.Python.ORDER_NONE) || Blockly.Python.blank);
+    }
+    let defaulted = '';
+    if (parameterDefault) {
+      defaulted = '=' + (Blockly.Python.valueToCode(block, 'DEFAULT',
+          Blockly.Python.ORDER_NONE) || Blockly.Python.blank);
+    }
+    return [parameterPrefix + name +
+       typed + defaulted, Blockly.Python.ORDER_ATOMIC];
+  };
 });
 
 
