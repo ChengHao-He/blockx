@@ -24,11 +24,7 @@
   <link href="codemirror/codemirror5/theme/elegant.css" rel="stylesheet" type="text/css">
   <link href="codemirror/codemirror5/addon/display/fullscreen.css" rel="stylesheet" type="text/css">
   <!-- core file -->
-<<<<<<< HEAD
-  <script src="lib/codemirror5/lib/codemirror.js"></script>
-=======
   <script src="codemirror/codemirror5/lib/codemirror.js"></script>
->>>>>>> b88b2aa (fix: Change some files' path in demo. Ref #164)
   <!-- language import -->
   <script type="text/javascript" src="codemirror/codemirror5/mode/javascript/javascript.js"></script>
   <script type="text/javascript" src="codemirror/codemirror5/mode/xml/xml.js"></script>
@@ -42,11 +38,66 @@
 </head>
 
 <body>
-  <header></header>
+  <header>
+    <div class="nav-bar">
+      <ul>
+          <li id="blockx-version">
+              <p>blockX 1.0</p>
+          </li>
+          <li id="python-version">
+              <label>python:</label>
+              <select>
+                  <option>3.7</option>
+                  <option>3.8</option>
+                  <option>3.9</option>
+                  <option>3.10</option>
+              </select>
+          </li>
+      </ul>
+  </div>    
+  </header>
   <div id="tran-space">
     <div id="blockly-div"></div>
     <div id="code-div">
+      <div class="code-toolbar">
+        <!-- 上方 代码编辑器选择框 + 按钮-->
+        <div id="code-mirror-selector">
+            <select>
+                <option>CodeMirror 5</option>
+                <option>CodeMirror 6</option>
+            </select>
+        </div>
+        <div>
+            <button class="run-button">Run</button>
+        </div>
+        <div>
+            <button class="reset-button">Reset</button>
+        </div>
+        <div>
+            <button id="setting-button">Settings</button>
+            <!-- 弹窗内容开始 -->
+            <div id="back-ground" class="back">
+                <div class="content">
+                    <div id="close">
+                        <span id="close-button">×</span>
+                        <h2>Settings</h2>
+                        <div id="setting-button-color">
+                            <label>color:</label>
+                            <select>
+                                <option>black</option>
+                                <option>white</option>
+                                <option>blue</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 弹窗内容结束 -->
+        </div>
+    </div>
+    <div id="code-texteditor">
       <textarea id="python-code"></textarea>
+    </div>
     </div>
   </div>
   <xml id="toolbox" style="display:none">
