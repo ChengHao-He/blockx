@@ -3,4 +3,3 @@
 .DS_Store
 .vscode
 src/demo/codemirror
-package-lock.json

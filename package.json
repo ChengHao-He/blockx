@@ -25,5 +25,15 @@
     "dev": "webpack --mode=development",
     "lint-staged": "lint-staged",
     "commitlint": "commitlint --config commitlint.config.js -e -V"
-  }
+  },
+  "name": "blockx",
+  "description": "",
+  "version": "1.0.0",
+  "private":false,
+  "repository": {
+    "type": "git",
+    "url": "git@se.jisuanke.com:project1/dawnWarrior/blockx.git"
+  },
+  "author": "",
+  "license": "MIT"
 }
