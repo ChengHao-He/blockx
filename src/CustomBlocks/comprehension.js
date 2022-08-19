@@ -85,26 +85,6 @@ Blockly.Blocks['comp_create_with_if'] = {
   },
 };
 
-Blockly.COMPREHENSION_SETTINGS = {
-  'list_comp': {
-    start: '[',
-    end: ']',
-    color: 30,
-  }, 'set_comp': {
-    start: '{',
-    end: '}',
-    color: 30,
-  }, 'dict_comp': {
-    start: '{',
-    end: '}',
-    color: 0,
-  }, 'generator_expr': {
-    start: '(',
-    end: ')',
-    color: 15,
-  },
-};
-
 ['list_comp', 'set_comp',
   'dict_comp', 'generator_expr'].forEach(function(kind) {
   Blockly.Blocks[kind] = {

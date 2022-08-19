@@ -1,22 +1,3 @@
-Blockly.COMPREHENSION_SETTINGS = {
-  'list_comp': {
-    start: '[',
-    end: ']',
-    color: 30,
-  }, 'set_comp': {
-    start: '{',
-    end: '}',
-    color: 30,
-  }, 'dict_comp': {
-    start: '{',
-    end: '}',
-    color: 0,
-  }, 'generator_expr': {
-    start: '(',
-    end: ')',
-    color: 15,
-  },
-};
 ['list_comp', 'set_comp',
   'generator_expr', 'dict_comp'].forEach(function(kind) {
   Blockly.Python[kind] = function(block) {
