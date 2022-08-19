@@ -32,7 +32,7 @@ const compareConfig = {
     {'type': 'input_value', 'name': 'B'},
   ],
   'inputsInline': true,
-  'output': null,
+  'output': 'Boolean',
   'colour': 345,
 };
 Blockly.Blocks['Compare'] = {
