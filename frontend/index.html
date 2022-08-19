@@ -2,24 +2,24 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>blockX</title>
-        <link rel="stylesheet" href="./style.css">
 
-    <!-- Blockly -->
-    <script src="../node_modules/blockly/blockly_compressed.js" type="text/javascript"></script>
-    <script src="../node_modules/blockly/blocks_compressed.js" type="text/javascript"></script>
-    <script src="../node_modules/blockly/msg/js/en.js" type="text/javascript"></script>
-    <script src="../node_modules/blockly/python_compressed.js" type="text/javascript"></script>
 
-    <!-- Skulpt -->
-    <script src="dist/skulpt/skulpt.js" type="text/javascript"></script>
-    <script src="dist/skulpt/skulpt-stdlib.js" type="text/javascript"></script>
+        <script src="../node_modules/blockly/blockly_compressed.js" type="text/javascript"></script>
+        <script src="../node_modules/blockly/blocks_compressed.js" type="text/javascript"></script>
+        <script src="../node_modules/blockly/javascript_compressed.js"></script>
+        <script src="../node_modules/blockly/python_compressed.js" type="text/javascript"></script>
+        <script src="../node_modules/blockly/msg/en.js" type="text/javascript"></script>
 
-    <!-- BlockMirror -->
-    <link rel="stylesheet" href="dist/blockx/blockx.css">
-    <script src="dist/blockx/blockx.js" type="text/javascript"></script>
+         <!-- globalConst -->
+        <script src="../src/globalConst.js"></script>
+
+        <!-- import CustomBlocks  -->
+        <script src="../src/CustomBlocks/binOp.js"></script>
+        <script src="../src/CodeGenerators/binOp.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="./style.css">
     </head>
 
     <body>
@@ -29,7 +29,7 @@
                     <li id="blockx-version">
                         <p>blockX 1.0</p>
                     </li>
-                    <li id="python-version-selector">
+                    <li id="python-version">
                         <label>python:</label>
                         <select>
                             <option>3.7</option>
@@ -41,15 +41,10 @@
                 </ul>
             </div>
         </header>
-        <div class="main">
+        <div id="tran-space">
             <!-- 整体 画布+代码编辑区 -->
-            <div class="blockly-area">
-                <!-- 左侧画布(积木区框架) -->
-                <div class="blockly-canvas" id="blockly-area">
-                    <!-- 积木区幕布 -->
-                </div>
-            </div>
-            <div class="code-area">
+            <div id="blockly-div"></div>
+            <div id="code-div">
                 <!-- 右侧代码编辑区 框架-->
                 <div class="code-toolbar">
                     <!-- 上方 代码编辑器选择框 + 按钮-->
@@ -87,12 +82,37 @@
                         <!-- 弹窗内容结束 -->
                     </div>
                 </div>
-                <div id="code-mirror">
+                <div id="code-texteditor">
                     <!-- 代码编辑器 -->
-                    <textarea name="" id="code-text" cols="100" rows="35"></textarea>
+                    <textarea id="python-code"></textarea>
                 </div>
             </div>
         </div>
+        <xml id="toolbox" style="display:none">
+            <category name="Variables" colour="225" custom="VARIABLE"></category>
+            <category name="Literal Values" colour="30">
+            </category>
+            <category name="Calculations" colour="190"></category>
+            <category name="Logic" colour="345"></category>
+            <sep></sep>
+            <category name="Classes" colour="240"><block type="BinOp"></block></category>
+            <category name="Functions" colour="210"></category>
+            <category name="Imports" colour="60"></category>
+            <sep></sep>
+            <category name="Control Flow" colour="270"></category>
+            <sep></sep>
+            <category name="Output" colour="140"></category>
+            <category name="Input" colour="120"></category>
+            <category name="Files" colour="170"></category>
+            <sep></sep>
+            <category name="Conversion" colour="120"></category>
+            <category name="Builtin Functions" colour="15"></category>
+            <category name="List Methods" colour="30"></category>
+            <category name="String Methods" colour="120"></category>
+            <category name="Subscripting" colour="15"></category>
+            <category name="Generators" colour="15"></category>
+            <category name="Comments" colour="60"></category>
+          </xml>        
         <script src="./main.js"></script>
     </body>
 

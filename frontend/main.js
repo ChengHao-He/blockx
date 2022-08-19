@@ -1,5 +1,18 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable require-jsdoc */
+
+// test for code
+const workSpace = Blockly.inject('blockly-div', {
+  toolbox: document.getElementById('toolbox'),
+});
+
+Blockly.Xml.domToWorkspace(document.getElementById('toolbox'), workSpace);
+function updateFunction(event) {
+  const code = Blockly.Python.workspaceToCode(workSpace);
+  document.getElementById('python-code').value = code;
+}
+workSpace.addChangeListener(updateFunction);
+
 // 设置弹窗
 document.querySelector('#setting-button').onclick = eventSettingClick;
 const backGround = document.getElementById('back-ground');

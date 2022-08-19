@@ -4,8 +4,8 @@
 }
 
 body {
-  background: #fafaf8;
-  font-size: 16px;
+  background-color: #fff;
+  font-family: sans-serif;
 }
 
 header {
@@ -38,62 +38,38 @@ header ul li {
   margin: 20px;
 }
 
-#python-version-selector {
+#python-version {
   margin: auto;
 }
 
-.main {
+h1 {
+  font-weight: normal;
+  font-size: 140%;
+}
+
+#tran-space {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-style: double;
   width: 1600px;
   background-color: #f2f4f7;
   margin-top: 20px;
 }
 
-.blockly-area {
-  width: 800px;
-  height: 100%;
-  float: left;
+#blockly-div {
+  margin: auto;
+  height: 666px;
+  flex: 0 0 60%;
+  display: inline-block;
 }
 
-.blockly-list {
-  margin-left: 10px;
-  height: 600px;
-  background-color: rgb(224, 224, 224);
-  width: 130px;
-  position: absolute;
-}
-
-.blockly-canvas {
-  margin-top: 48px;
-  margin-left: 20px;
-  background-color: white;
-  height: 900px;
-  width: 1260px;
-  float: left;
-}
-
-.blockly-list li {
-  height: 28px;
-  margin-top: 5px;
-}
-
-.blockly-name {
-  width: auto;
-  height: 28px;
-  float: left;
-  margin-left: 20px;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.color-blocks {
-  width: 5px;
-  height: 28px
-}
-
-.code-area {
-  width: 800px;
-  height: 100%;
-  float: left;
+#code-div {
+  margin: auto;
+  background-color: wheat;
+  display: inline-block;
+  height: 666px;
+  flex: 0 0 30%;
 }
 
 .code-toolbar {
@@ -103,8 +79,8 @@ header ul li {
   justify-content: center;
   float: left;
   height: 40px;
-  width: 800px;
-  background-color: rgb(224, 224, 224);
+  width: 820px;
+  background-color: rgb(224 224 224);
 }
 
 #code-mirror-selector {
@@ -118,32 +94,26 @@ button {
 }
 
 .run-button {
-  background-color: rgb(116, 210, 116);
+  background-color: rgb(116 210 116);
   border-radius: 15%;
   width: 50px;
-  border-color: rgb(116, 210, 116);
+  border-color: rgb(116 210 116);
 }
 
 .reset-button {
-  background-color: rgb(210, 209, 116);
+  background-color: rgb(210 209 116);
   border-radius: 15%;
   width: 50px;
-  border-color: rgb(210, 209, 116);
+  border-color: rgb(210 209 116);
 }
 
 #setting-button {
-  background-color: rgb(120, 192, 216);
+  background-color: rgb(120 192 216);
   border-radius: 15%;
   width: 50px;
-  border-color: rgb(120, 192, 216);
+  border-color: rgb(120 192 216);
 }
 
-#code-mirror {
-  background-color: white;
-  height: 560px;
-  width: 800px;
-  margin: 40px 10px;
-}
 #back-ground {
   display: none;
   width: 100%;
@@ -151,6 +121,19 @@ button {
   position: fixed;
   z-index: 1000;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgb(0 0 0 / 40%);
   left: 200px;
+}
+
+#code-texteditor {
+  background-color: white;
+  height: 560px;
+  width: 800px;
+  margin: 40px 10px;
+}
+
+#python-code {
+  margin: 10px;
+  height: 600px;
+  width: 580px;
 }
