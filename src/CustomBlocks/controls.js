@@ -2,9 +2,14 @@ const forConfig = {
   'message0': 'for each item %1 in list %2 :',
   'args0': [
     {
-      'type': 'input_value', 'name': 'DELTA', 'check': 'Number',
+      'type': 'input_value',
+      'name': 'DELTA',
+      'check': 'Number',
     },
-    {'type': 'input_value', 'name': 'DELTA', 'check': 'Number'},
+    {
+      'type': 'input_value',
+      'name': 'DELTA',
+      'check': 'Number'},
   ],
   'previousStatement': null,
   'nextStatement': null,
@@ -14,7 +19,9 @@ const whileConfig = {
   'message0': 'while %1',
   'args0': [
     {
-      'type': 'input_value', 'name': 'DELTA', 'check': 'Number',
+      'type': 'input_value',
+      'name': 'DELTA',
+      'check': 'Number',
     },
   ],
   'previousStatement': null,
@@ -39,7 +46,9 @@ const tryConfig = {
   'message0': 'try %1',
   'args0': [
     {
-      'type': 'input_value', 'name': 'DELTA', 'check': 'Number',
+      'type': 'input_value',
+      'name': 'DELTA',
+      'check': 'Number',
     },
   ],
   'previousStatement': null,
@@ -50,7 +59,9 @@ const exceptConfig = {
   'message0': 'except %1',
   'args0': [
     {
-      'type': 'input_value', 'name': 'DELTA', 'check': 'Number',
+      'type': 'input_value',
+      'name': 'DELTA',
+      'check': 'Number',
     },
   ],
   'previousStatement': null,
@@ -75,9 +86,15 @@ const assertConfig = {
   'message0': 'assert %1 , %2 ',
   'args0': [
     {
-      'type': 'input_value', 'name': 'DELTA', 'check': 'Number',
+      'type': 'input_value',
+      'name': 'DELTA',
+      'check': 'Number',
     },
-    {'type': 'input_value', 'name': 'DELTA', 'check': 'Number'},
+    {
+      'type': 'input_value',
+      'name': 'DELTA',
+      'check': 'Number',
+    },
   ],
   'previousStatement': null,
   'nextStatement': null,
@@ -87,47 +104,21 @@ const withConfig = {
   'message0': 'with %1 as %2 ',
   'args0': [
     {
-      'type': 'input_value', 'name': 'DELTA', 'check': 'Number',
+      'type': 'input_value',
+      'name': 'DELTA',
+      'check': 'Number',
     },
-    {'type': 'input_value', 'name': 'DELTA', 'check': 'Number'},
-  ],
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 230,
-};
-const deleteConfig = {
-  'message0': 'delete %1',
-  'args0': [
     {
-      'type': 'input_value', 'name': 'DELTA', 'check': 'Number',
+      'type': 'input_value',
+      'name': 'DELTA',
+      'check': 'Number',
     },
   ],
   'previousStatement': null,
   'nextStatement': null,
   'colour': 230,
 };
-const globalConfig = {
-  'message0': 'global %1',
-  'args0': [
-    {
-      'type': 'input_value', 'name': 'DELTA', 'check': 'Number',
-    },
-  ],
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 230,
-};
-const starredConfig = {
-  'message0': '* %1',
-  'args0': [
-    {
-      'type': 'input_value', 'name': 'DELTA', 'check': 'Number',
-    },
-  ],
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 230,
-};
+
 Blockly.Blocks['for'] = {
   init: function() {
     this.setInputsInline(true);
@@ -226,45 +217,6 @@ Blockly.Blocks['with'] = {
     this.setInputsInline(true);
     this.jsonInit(withConfig);
     this.appendStatementInput('DO');
-    // Assign 'this' to a variable for use in the tooltip closure below.
-    const thisBlock = this;
-    this.setTooltip(function() {
-      return 'Add a number to variable "%1".'.replace('%1',
-          thisBlock.getFieldValue('VAR'));
-    });
-  },
-};
-
-Blockly.Blocks['delete'] = {
-  init: function() {
-    this.setInputsInline(true);
-    this.jsonInit(deleteConfig);
-    // Assign 'this' to a variable for use in the tooltip closure below.
-    const thisBlock = this;
-    this.setTooltip(function() {
-      return 'Add a number to variable "%1".'.replace('%1',
-          thisBlock.getFieldValue('VAR'));
-    });
-  },
-};
-
-Blockly.Blocks['global'] = {
-  init: function() {
-    this.setInputsInline(true);
-    this.jsonInit(globalConfig);
-    // Assign 'this' to a variable for use in the tooltip closure below.
-    const thisBlock = this;
-    this.setTooltip(function() {
-      return 'Add a number to variable "%1".'.replace('%1',
-          thisBlock.getFieldValue('VAR'));
-    });
-  },
-};
-
-Blockly.Blocks['starred'] = {
-  init: function() {
-    this.setInputsInline(true);
-    this.jsonInit(starredConfig);
     // Assign 'this' to a variable for use in the tooltip closure below.
     const thisBlock = this;
     this.setTooltip(function() {

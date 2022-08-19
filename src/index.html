@@ -20,6 +20,10 @@
   <script src="./CodeGenerators/function.js"></script>
   <script src="./CustomBlocks/lambda.js"></script>
   <script src="./CodeGenerators/lambda.js"></script>
+  <script src="./CustomBlocks/import.js"></script>
+  <script src="./CodeGenerators/import.js"></script>
+  <script src="CustomBlocks/keyword.js"></script>
+  <script src="CustomBlocks/controls.js"></script>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
@@ -34,6 +38,7 @@
   <xml id="toolbox" style="display:none">
     <category name="Variables" colour="225" custom="VARIABLE"></category>
     <category name="Literal Values" colour="30">
+      <block type="starred"></block>
     </category>
     <category name="Calculations" colour="190"></category>
     <category name="Logic" colour="345"></category>
@@ -51,9 +56,58 @@
     </category>
     <category name="Functions" colour="210">
     </category>
-    <category name="Imports" colour="60"></category>
+    <category name="Imports" colour="60">
+      <block type="import" line_number="1" inline="true">
+        <mutation names="1" from="false">
+          <regular name="true" />
+        </mutation>
+        <field name="NAME0">___</field>
+      </block>
+      <block type="import" line_number="1" inline="true">
+        <mutation names="1" from="true">
+          <regular name="true" />
+        </mutation>
+        <field name="NAME0">___</field>
+        <field name="MODULE">___</field>
+      </block>
+      <block type="import" line_number="1" inline="true">
+        <mutation names="1" from="false">
+          <regular name="false" />
+        </mutation>
+        <field name="NAME0">___</field>
+        <field name="ASNAME0">___</field>
+      </block>
+      <block type="import" line_number="1" inline="true">
+        <mutation names="1" from="true">
+          <regular name="false" />
+        </mutation>
+        <field name="NAME0">___</field>
+        <field name="ASNAME0">___</field>
+        <field name="MODULE">___</field>
+      </block>
+    </category>
     <sep></sep>
-    <category name="Control Flow" colour="270"></category>
+    <category name="Control Flow" colour="270">
+      <block type="controls_if" line_number="1">
+        <mutation orelse="false" elifs="0" />
+      </block>
+      <block type="for" line_number="1"></block>
+      <block type="while" line_number="1">
+        <mutation orelse="false" />
+      </block>
+      <block type="break" line_number="1"></block>
+      <block type="continue" line_number="1"></block>
+      <block type="try" line_number="1">
+        <mutation orelse="false" finalbody="false" handlers="1">
+          <arg name="3" />
+        </mutation>
+        <field name="NAME0">___</field>
+      </block>
+      <block type="raise" line_number="1">
+        <mutation exc="true" cause="false" />
+      </block>
+      <block type="assert" line_number="1"></block>
+    </category>
     <sep></sep>
     <category name="Output" colour="140"></category>
     <category name="Input" colour="120"></category>
