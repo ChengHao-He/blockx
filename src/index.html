@@ -13,12 +13,9 @@
   <script src="../node_modules/blockly/python_compressed.js"></script>
   <script src="../node_modules/blockly/msg/en.js"></script>
 
-  <!-- globalConst -->
-  <script src="./globalConst.js"></script>
-
   <!-- import CustomBlocks  -->
-  <script src="./CustomBlocks/binOp.js"></script>
-  <script src="./CodeGenerators/binOp.js"></script>
+  <script src="./CustomBlocks/call.js"></script>
+  <script src="./CodeGenerators/call.js"></script>
 
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
@@ -38,8 +35,14 @@
     <category name="Calculations" colour="190"></category>
     <category name="Logic" colour="345"></category>
     <sep></sep>
-    <category name="Classes" colour="240"><block type="BinOp"></block></category>
-    <category name="Functions" colour="210"></category>
+    <category name="Classes" colour="240"></category>
+    <category name="Functions" colour="210">
+      <block type="Call" line_number="1" inline="true">
+        <mutation arguments="1" returns="true" parameters="true" method="false" name="iter" message="iter" premessage="" colour="190" module="">
+        <arg name="UNKNOWN_ARG:0"/>
+        </mutation>
+      </block>
+    </category>
     <category name="Imports" colour="60"></category>
     <sep></sep>
     <category name="Control Flow" colour="270"></category>
