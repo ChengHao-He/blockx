@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BlockX demo</title>
-
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
   <!-- Blockly -->
   <script src="../../node_modules/blockly/blockly_compressed.js"></script>
   <script src="../../node_modules/blockly/blocks_compressed.js"></script>
@@ -13,25 +13,32 @@
   <script src="../../node_modules/blockly/python_compressed.js"></script>
   <script src="../../node_modules/blockly/msg/en.js"></script>
 
+  <!-- import CustomBlocks  -->
+  <script type="text/javascript" src="CustomBlocks/type_number.js"></script>
+  <script type="text/javascript" src="CustomBlocks/str_char.js"></script>
+  <link rel="stylesheet" type="text/css" href="./style.css">
+
   <!-- Code Mirror -->
   <!-- layout -->
-  <link href="lib/codemirror5/lib/codemirror.css" rel="stylesheet" type="text/css">
-  <link href="lib/codemirror5/theme/elegant.css" rel="stylesheet" type="text/css">
-  <link href="lib/codemirror5/addon/display/fullscreen.css" rel="stylesheet" type="text/css">
+  <link href="codemirror/codemirror5/lib/codemirror.css" rel="stylesheet" type="text/css">
+  <link href="codemirror/codemirror5/theme/elegant.css" rel="stylesheet" type="text/css">
+  <link href="codemirror/codemirror5/addon/display/fullscreen.css" rel="stylesheet" type="text/css">
   <!-- core file -->
-  <script src="lib/codemirror5/src/codemirror.js"></script>
+<<<<<<< HEAD
+  <script src="lib/codemirror5/lib/codemirror.js"></script>
+=======
+  <script src="codemirror/codemirror5/lib/codemirror.js"></script>
+>>>>>>> b88b2aa (fix: Change some files' path in demo. Ref #164)
   <!-- language import -->
-  <script type="text/javascript" src="lib/codemirror5/mode/javascript/javascript.js"></script>
-  <script type="text/javascript" src="lib/codemirror5/mode/xml/xml.js"></script>
-  <script type="text/javascript" src="lib/codemirror5/mode/css/css.js"></script>
-  <script type="text/javascript" src="lib/codemirror5/mode/htmlmixed/htmlmixed.js"></script>
-  <script type="text/javascript" src="lib/codemirror5/mode/python/python.js"></script>
+  <script type="text/javascript" src="codemirror/codemirror5/mode/javascript/javascript.js"></script>
+  <script type="text/javascript" src="codemirror/codemirror5/mode/xml/xml.js"></script>
+  <script type="text/javascript" src="codemirror/codemirror5/mode/css/css.js"></script>
+  <script type="text/javascript" src="codemirror/codemirror5/mode/htmlmixed/htmlmixed.js"></script>
+  <script type="text/javascript" src="codemirror/codemirror5/mode/python/python.js"></script>
   <!-- extend options -->
-  <script type="text/javascript" src="lib/codemirror5/addon/selection/active-line.js"></script>
-  <script type="text/javascript" src="lib/codemirror5/addon/edit/matchbrackets.js"></script>
+  <script type="text/javascript" src="codemirror/codemirror5/addon/selection/active-line.js"></script>
+  <script type="text/javascript" src="codemirror/codemirror5/addon/edit/matchbrackets.js"></script>
 
-  <!-- import CustomBlocks  -->
-  <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
 <body>
@@ -44,7 +51,14 @@
   </div>
   <xml id="toolbox" style="display:none">
     <category name="Variables" colour="225" custom="VARIABLE"></category>
-    <category name="Literal Values" colour="30"></category>
+    <category name="Literal Values" colour="30">
+        <block type="int_number" line_number="1">
+          <field name="NUM">0</field>
+        </block>
+        <block type="float_number" line_number="1">
+          <field name="NUM">0.0</field>
+        </block>
+      </category>
     <category name="Calculations" colour="190"></category>
     <category name="Logic" colour="345"></category>
     <sep></sep>
