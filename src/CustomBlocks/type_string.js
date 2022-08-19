@@ -12,23 +12,6 @@ const stringConfig = {
   'extensions': ['text_quotes'],
 };
 
-const charConfig = {
-  'message0': 'char %1',
-  'args0': [
-    {
-      'type': 'field_dropdown',
-      'name': 'TEXT',
-      'options': [
-        ['\\n', '\n'],
-        ['\\t', '\t'],
-      ],
-    },
-  ],
-  'output': 'String',
-  'colour': 125,
-  'extensions': ['text_quotes'],
-};
-
 const multilineStringConfig = {
   'message0': 'multiline string %1',
   'args0': [
@@ -63,15 +46,6 @@ Blockly.Blocks['type_string'] = {
     this.jsonInit(stringConfig);
     this.setTooltip(function() {
       return 'Add a string.';
-    });
-  },
-};
-
-Blockly.Blocks['type_char'] = {
-  init: function() {
-    this.jsonInit(charConfig);
-    this.setTooltip(function() {
-      return 'Add a char.';
     });
   },
 };

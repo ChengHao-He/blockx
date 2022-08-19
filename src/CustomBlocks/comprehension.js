@@ -1,5 +1,5 @@
 // 推导式comprehensions
-const ComprehensionForConfig = {
+const comprehensionForConfig = {
   'message0': 'for %1 in %2',
   'args0': [
     {
@@ -12,16 +12,16 @@ const ComprehensionForConfig = {
     },
   ],
   'inputsInline': true,
-  'output': 'ComprehensionFor',
+  'output': 'comprehension_for',
   'colour': 15,
 };
-Blockly.Blocks['ComprehensionFor'] = {
+Blockly.Blocks['comprehension_for'] = {
   init: function() {
-    this.jsonInit(ComprehensionForConfig);
+    this.jsonInit(comprehensionForConfig);
   },
 };
 
-const ComprehensionIfConfig = {
+const comprehensionIfConfig = {
   'message0': 'if %1',
   'args0': [
     {
@@ -30,16 +30,16 @@ const ComprehensionIfConfig = {
     },
   ],
   'inputsInline': true,
-  'output': 'ComprehensionIf',
+  'output': 'comprehension_if',
   'colour': 15,
 };
-Blockly.Blocks['ComprehensionIf'] = {
+Blockly.Blocks['comprehension_if'] = {
   init: function() {
-    this.jsonInit(ComprehensionIfConfig);
+    this.jsonInit(comprehensionIfConfig);
   },
 };
 
-Blockly.Blocks['Comp_create_with_container'] = {
+Blockly.Blocks['comp_create_with_container'] = {
   /**
    * 变形器容器
    * @this Blockly.Block
@@ -55,7 +55,7 @@ Blockly.Blocks['Comp_create_with_container'] = {
   },
 };
 
-Blockly.Blocks['Comp_create_with_for'] = {
+Blockly.Blocks['comp_create_with_for'] = {
   /**
    * 变形器零件for
    * @this Blockly.Block
@@ -70,7 +70,7 @@ Blockly.Blocks['Comp_create_with_for'] = {
   },
 };
 
-Blockly.Blocks['Comp_create_with_if'] = {
+Blockly.Blocks['comp_create_with_if'] = {
   /**
    * 变形器零件if
    * @this Blockly.Block
@@ -85,47 +85,50 @@ Blockly.Blocks['Comp_create_with_if'] = {
   },
 };
 
-const COMPREHENSION_SETTINGS = {
-  'ListComp': {
+Blockly.COMPREHENSION_SETTINGS = {
+  'list_comp': {
     start: '[',
     end: ']',
     color: 30,
-  }, 'SetComp': {
+  }, 'set_comp': {
     start: '{',
     end: '}',
     color: 30,
-  }, 'DictComp': {
+  }, 'dict_comp': {
     start: '{',
     end: '}',
     color: 0,
-  }, 'GeneratorExp': {
+  }, 'generator_expr': {
     start: '(',
     end: ')',
     color: 15,
   },
 };
 
-['ListComp', 'SetComp', 'DictComp', 'GeneratorExp'].forEach(function(kind) {
-  Blockly.Blocks['' + kind] = {
+['list_comp', 'set_comp',
+  'dict_comp', 'generator_expr'].forEach(function(kind) {
+  Blockly.Blocks[kind] = {
     /**
-     * 四个Python推导式块
+     * 四个Python推导式块，其中生成器表达式较为特殊，
+     * 它拥有自己的特性，并非元组推导式，但在句法上与
+     * 列表、集合、字典推导式相同，因此归入同一类。
      * @this Blockly.Block
      */
     init: function() {
       this.setStyle('loop_blocks');
-      this.setColour(COMPREHENSION_SETTINGS[kind].color);
+      this.setColour(Blockly.COMPREHENSION_SETTINGS[kind].color);
       this.itemCount_ = 3;
       const input = this.appendValueInput('ELT')
-          .appendField(COMPREHENSION_SETTINGS[kind].start);
-      if (kind === 'DictComp') {
-        input.setCheck('DictPair');
+          .appendField(Blockly.COMPREHENSION_SETTINGS[kind].start);
+      if (kind === 'dict_comp') {
+        input.setCheck('dict_pair');
       }
       this.appendDummyInput('END_BRACKET')
-          .appendField(COMPREHENSION_SETTINGS[kind].end);
+          .appendField(Blockly.COMPREHENSION_SETTINGS[kind].end);
       this.updateShape_();
       this.setOutput(true);
       this.setMutator(new
-      Blockly.Mutator(['Comp_create_with_for', 'Comp_create_with_if']));
+      Blockly.Mutator(['comp_create_with_for', 'comp_create_with_if']));
     },
     /**
      * Create XML to represent dict inputs.
@@ -153,7 +156,7 @@ const COMPREHENSION_SETTINGS = {
      * @this Blockly.Block
      */
     decompose: function(workspace) {
-      const containerBlock = workspace.newBlock('Comp_create_with_container');
+      const containerBlock = workspace.newBlock('comp_create_with_container');
       containerBlock.initSvg();
       let connection = containerBlock.getInput('STACK').connection;
       const generators = [];
@@ -161,11 +164,11 @@ const COMPREHENSION_SETTINGS = {
         const generator = this.getInput('GENERATOR' + i).connection;
         let createName;
         if (generator.targetConnection.getSourceBlock().type ===
-            'ComprehensionIf') {
-          createName = 'Comp_create_with_if';
+            'comprehension_if') {
+          createName = 'comp_create_with_if';
         } else if (generator.targetConnection.getSourceBlock().type ===
-            'ComprehensionFor') {
-          createName = 'Comp_create_with_for';
+            'comprehension_for') {
+          createName = 'comp_create_with_for';
         } else {
           throw Error('Unknown block type: ' +
                 generator.targetConnection.getSourceBlock().type);
@@ -187,7 +190,7 @@ const COMPREHENSION_SETTINGS = {
       let itemBlock = containerBlock.getInputTargetBlock('STACK');
       // Count number of inputs.
       const connections = [containerBlock.valueConnection_];
-      const blockTypes = ['Comp_create_with_for'];
+      const blockTypes = ['comp_create_with_for'];
       while (itemBlock) {
         connections.push(itemBlock.valueConnection_);
         blockTypes.push(itemBlock.type);
@@ -200,7 +203,7 @@ const COMPREHENSION_SETTINGS = {
             this.getInput('GENERATOR' + i).connection.targetConnection;
         if (connection && connections.indexOf(connection) === -1) {
           const connectedBlock = connection.getSourceBlock();
-          if (connectedBlock.type === 'ComprehensionIf') {
+          if (connectedBlock.type === 'comprehension_if') {
             const testField = connectedBlock.getInput('TEST');
             if (testField.connection.targetConnection) {
               testField.connection
@@ -208,7 +211,7 @@ const COMPREHENSION_SETTINGS = {
                   .getSourceBlock()
                   .unplug(true);
             }
-          } else if (connectedBlock.type === 'ComprehensionFor') {
+          } else if (connectedBlock.type === 'comprehension_for') {
             const iterField = connectedBlock.getInput('ITERATOR');
             if (iterField.connection.targetConnection) {
               iterField.connection
@@ -238,10 +241,10 @@ const COMPREHENSION_SETTINGS = {
         // TODO: glitch when inserting into middle, deletes children values
         if (!connections[i]) {
           let createName;
-          if (blockTypes[i] === 'Comp_create_with_if') {
-            createName = 'ComprehensionIf';
-          } else if (blockTypes[i] === 'Comp_create_with_for') {
-            createName = 'ComprehensionFor';
+          if (blockTypes[i] === 'comp_create_with_if') {
+            createName = 'comprehension_if';
+          } else if (blockTypes[i] === 'comp_create_with_for') {
+            createName = 'comprehension_for';
           } else {
             throw Error('Unknown block type: ' + blockTypes[i]);
           }
@@ -287,9 +290,9 @@ const COMPREHENSION_SETTINGS = {
         if (!this.getInput('GENERATOR' + i)) {
           const input = this.appendValueInput('GENERATOR' + i);
           if (i === 0) {
-            input.setCheck('ComprehensionFor');
+            input.setCheck('comprehension_for');
           } else {
-            input.setCheck(['ComprehensionFor', 'ComprehensionIf']);
+            input.setCheck(['comprehension_for', 'comprehension_if']);
           }
           this.moveInputBefore('GENERATOR' + i, 'END_BRACKET');
         }
