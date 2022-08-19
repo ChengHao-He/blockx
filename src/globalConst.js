@@ -1,0 +1,1 @@
+Blockly.Python.blank = '__';

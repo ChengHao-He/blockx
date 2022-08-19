@@ -5,7 +5,7 @@ Blockly.Python['lists_create_with'] = function(block) {
     elements[i] =
           Blockly.Python
               .valueToCode(block, 'ADD' + i, Blockly.Python.ORDER_NONE) ||
-          pythonBlank;
+          Blockly.Python.blank;
   }
   const code = '[' + elements.join(', ') + ']';
   return [code, Blockly.Python.ORDER_ATOMIC];
