@@ -1,6 +1,6 @@
 Blockly.Blocks['with'] = {
   init: function() {
-    this.init;
+    this.init();
     this.appendValueInput('ITEM0')
         .appendField('with');
     this.appendStatementInput('BODY')
