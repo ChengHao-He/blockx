@@ -193,13 +193,11 @@ Blockly.Blocks['FunctionDef'] = {
       containerBlock.setFieldValue(
               this.hasReturn_ ? 'TRUE' : 'FALSE', 'RETURNS');
     } else {
-      // TODO: set up "canReturns" for lambda mode
       // containerBlock.getField('RETURNS').setVisible(false);
     }
 
     // Set up parameters
     let connection = containerBlock.getInput('STACK').connection;
-    const parameters = [];
     for (let i = 0; i < this.parametersCount_; i++) {
       const parameter = this.getInput('PARAMETER' + i).connection;
       const sourceType = parameter.targetConnection.getSourceBlock().type;
@@ -209,7 +207,6 @@ Blockly.Blocks['FunctionDef'] = {
       itemBlock.initSvg();
       connection.connect(itemBlock.previousConnection);
       connection = itemBlock.nextConnection;
-      parameters.push(itemBlock);
     }
     return containerBlock;
   },
@@ -254,7 +251,7 @@ Blockly.Blocks['FunctionDef'] = {
       if (!connections[i]) {
         const createName =
         'Function' + blockTypes[i].substring('FunctionMutant'.length);
-        const itemBlock = this.workspace.newBlock(createName);
+        itemBlock = this.workspace.newBlock(createName);
         itemBlock.setDeletable(false);
         itemBlock.setMovable(false);
         itemBlock.initSvg();

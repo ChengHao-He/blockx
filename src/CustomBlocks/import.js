@@ -10,7 +10,6 @@ Blockly.Blocks['import'] = {
     this.updateShape_();
   },
 
-  // TODO: Not mutable currently
   updateShape_: function() {
     // Possible FROM part
     if (this.from_ && !this.getInput('FROM')) {

@@ -35,7 +35,7 @@ Blockly.Blocks['annotation_assign_full'] = {
     this.updateShape_();
   },
 
-  updateShape_: function(block) {
+  updateShape_: function(_block) {
     // Add new inputs.
     if (this.initialized_ && !this.getInput('VALUE')) {
       this.appendValueInput('VALUE')
@@ -103,7 +103,7 @@ Blockly.Blocks['annotation_assign'] = {
     this.updateShape_();
   },
 
-  updateShape_: function(block) {
+  updateShape_: function(_block) {
     // Add new inputs.
     if (this.initialized_ && !this.getInput('VALUE')) {
       this.appendValueInput('VALUE')

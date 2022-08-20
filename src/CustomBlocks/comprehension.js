@@ -139,7 +139,6 @@ Blockly.Blocks['comp_create_with_if'] = {
       const containerBlock = workspace.newBlock('comp_create_with_container');
       containerBlock.initSvg();
       let connection = containerBlock.getInput('STACK').connection;
-      const generators = [];
       for (let i = 1; i < this.itemCount_; i++) {
         const generator = this.getInput('GENERATOR' + i).connection;
         let createName;
@@ -157,7 +156,6 @@ Blockly.Blocks['comp_create_with_if'] = {
         itemBlock.initSvg();
         connection.connect(itemBlock.previousConnection);
         connection = itemBlock.nextConnection;
-        generators.push(itemBlock);
       }
       return containerBlock;
     },
@@ -218,7 +216,6 @@ Blockly.Blocks['comp_create_with_if'] = {
       // Reconnect any child blocks.
       for (let i = 1; i < this.itemCount_; i++) {
         Blockly.Mutator.reconnect(connections[i], this, 'GENERATOR' + i);
-        // TODO: glitch when inserting into middle, deletes children values
         if (!connections[i]) {
           let createName;
           if (blockTypes[i] === 'comp_create_with_if') {
@@ -228,7 +225,7 @@ Blockly.Blocks['comp_create_with_if'] = {
           } else {
             throw Error('Unknown block type: ' + blockTypes[i]);
           }
-          const itemBlock = this.workspace.newBlock(createName);
+          itemBlock = this.workspace.newBlock(createName);
           itemBlock.setDeletable(false);
           itemBlock.setMovable(false);
           itemBlock.initSvg();

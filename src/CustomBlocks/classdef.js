@@ -24,8 +24,6 @@ Blockly.Blocks['ClassDef'] = {
         .appendField('Class')
         .appendField(new Blockly.FieldVariable('item'), 'NAME');
     this.jsonInit(ClassDefConfig);
-    // this.appendStatementInput('BODY')
-    //     .setCheck(null);
     this.updateShape_();
   },
   updateShape_: function() {

@@ -5,9 +5,9 @@ const workSpace = Blockly.inject('blockly-div', {
 Blockly.Xml.domToWorkspace(document.getElementById('toolbox'), workSpace);
 /**
  *
- * @param {*} event
+ * @param {*} _event
  */
-function updateFunction(event) {
+function updateFunction(_event) {
   const code = Blockly.Python.workspaceToCode(workSpace);
   document.getElementById('python-code').value = code;
 }

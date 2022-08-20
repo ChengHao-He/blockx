@@ -125,7 +125,7 @@ Blockly.Blocks['dict'] = {
     for (let i = 0; i < this.itemCount_; i++) {
       Blockly.Mutator.reconnect(connections[i], this, 'ADD' + i);
       if (!connections[i]) {
-        const itemBlock = this.workspace.newBlock('dict_item');
+        itemBlock = this.workspace.newBlock('dict_item');
         itemBlock.setDeletable(false);
         itemBlock.setMovable(false);
         itemBlock.initSvg();
@@ -181,55 +181,3 @@ Blockly.Blocks['dict'] = {
     }
   },
 };
-
-// Blockly.Python['dict'] = function(block) {
-//   // Create a dict with any number of elements of any type.
-//   const elements = new Array(block.itemCount_);
-//   for (let i = 0; i < block.itemCount_; i++) {
-//     const child = block.getInputTargetBlock('ADD' + i);
-//     if (child === null || child.type != 'dict_item') {
-//       elements[i] = (Blockly.Python.blank + ': '+ Blockly.Python.blank);
-//       continue;
-//     }
-//     const key = Blockly.Python
-//         .valueToCode(child, 'KEY', Blockly.Python.ORDER_NONE) ||
-//           Blockly.Python.blank;
-//     const value = Blockly.Python
-//         .valueToCode(child, 'VALUE', Blockly.Python.ORDER_NONE) ||
-//           Blockly.Python.blank;
-//     elements[i] = (key+ ': '+value);
-//   }
-//   const code = '{' + elements.join(', ') + '}';
-//   return [code, Blockly.Python.ORDER_ATOMIC];
-// };
-
-// BlockMirrorTextToBlocks.prototype['dict'] = function(node, parent) {
-//   const keys = node.keys;
-//   const values = node.values;
-
-//   if (keys === null) {
-//     return BlockMirrorTextToBlocks.create_block('dict', node.lineno, {},
-//         {}, {'inline': 'false'}, {'@items': 0});
-//   }
-
-//   const elements = {};
-//   for (let i = 0; i < keys.length; i++) {
-//     const key = keys[i];
-//     const value = values[i];
-//     elements['ADD' + i] =
-//     BlockMirrorTextToBlocks.create_block('dict_item', node.lineno, {},
-//         {
-//           'KEY': this.convert(key, node),
-//           'VALUE': this.convert(value, node),
-//         },
-//         this.LOCKED_BLOCK);
-//   }
-
-//   return BlockMirrorTextToBlocks.create_block('dict', node.lineno, {},
-//       elements,
-//       {
-//         'inline': 'false',
-//       }, {
-//         '@items': keys.length,
-//       });
-// };
