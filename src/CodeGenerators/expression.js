@@ -1,10 +1,8 @@
 Blockly.Python['expression'] = function(block) {
   // Numeric value.
-  const value = Blockly.Python
+  return Blockly.Python
       .valueToCode(block, 'VALUE', Blockly.Python.ORDER_ATOMIC) ||
       Blockly.Python.blank;
-  // TODO: Assemble JavaScript into code variable.
-  return value;
 };
 
 Blockly.Python['if_expr'] = function(block) {
