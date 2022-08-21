@@ -9,31 +9,13 @@ Blockly.Blocks['import'] = {
     this.setColour(180);
     this.updateShape_();
   },
-  possibleFromPart: function() {
-    if (this.from_ && !this.getInput('FROM')) {
-      this.appendDummyInput('FROM')
-          .setAlign(Blockly.ALIGN_RIGHT)
-          .appendField('from')
-          .appendField(new Blockly.FieldTextInput('module'), 'MODULE');
-    } else if (!this.from_ && this.getInput('FROM')) {
-      this.removeInput('FROM');
-    }
-  },
-  removeDeletedInputs: function(i) {
-    while (this.getInput('CLAUSE' + i)) {
-      this.removeInput('CLAUSE' + i);
-      i++;
-    }
-  },
-  repositionEverything: function(i) {
-    if (this.from_ && this.nameCount_ > 0) {
-      this.moveInputBefore('FROM', 'CLAUSE0');
-    }
-    for (i = 0; i + 1 < this.nameCount_; i++) {
+  runmoveInputBefore: function() {
+    for (let i = 0; i + 1 < this.nameCount_; i++) {
       this.moveInputBefore('CLAUSE' + i, 'CLAUSE' + (i + 1));
     }
   },
-  importClauses: function() {
+  runImportClauses: function() {
+    // Import clauses
     let i = 0;
     for ( ; i < this.nameCount_; i++) {
       let input = this.getInput('CLAUSE' + i);
@@ -53,18 +35,28 @@ Blockly.Blocks['import'] = {
             .appendField(new Blockly.FieldVariable('alias'), 'ASNAME' + i);
       }
     }
-    // Remove deleted inputs
-    this.removeDeletedInputs(i);
-
-    // Reposition everything
-    this.repositionEverything(i);
+    // Remove deleted inputs.
+    while (this.getInput('CLAUSE' + i)) {
+      this.removeInput('CLAUSE' + i);
+      i++;
+    }
   },
   updateShape_: function() {
     // Possible FROM part
-    this.possibleFromPart();
-
-    // Import clauses
-    this.importClauses();
+    if (this.from_ && !this.getInput('FROM')) {
+      this.appendDummyInput('FROM')
+          .setAlign(Blockly.ALIGN_RIGHT)
+          .appendField('from')
+          .appendField(new Blockly.FieldTextInput('module'), 'MODULE');
+    } else if (!this.from_ && this.getInput('FROM')) {
+      this.removeInput('FROM');
+    }
+    this.runImportClauses();
+    // Reposition everything
+    if (this.from_ && this.nameCount_ > 0) {
+      this.moveInputBefore('FROM', 'CLAUSE0');
+    }
+    this.runmoveInputBefore();
   },
 
   /**
