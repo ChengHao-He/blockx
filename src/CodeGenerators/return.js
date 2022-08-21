@@ -1,4 +1,4 @@
-Blockly.Python['return'] = function(block) {
+Blockly.Python['return'] = function(_block) {
   return 'return\n';
 };
 

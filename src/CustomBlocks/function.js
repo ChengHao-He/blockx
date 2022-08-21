@@ -87,8 +87,17 @@ Blockly.Blocks['FunctionHeaderMutator'] = ({
        typed + defaulted, Blockly.Python.ORDER_ATOMIC];
   };
 });
-
-
+const disconnect = function(connection, connections) {
+  return connection && connections.indexOf(connection) === -1;
+};
+const runDisconnect = function(connectedBlock) {
+  for (const coInputList of connectedBlock.inputList) {
+    const field = coInputList.connection;
+    if (field && field.targetConnection) {
+      field.targetConnection.getSourceBlock().unplug(true);
+    }
+  }
+};
 Blockly.Blocks['FunctionDef'] = {
   init: function() {
     this.appendDummyInput()
@@ -192,10 +201,7 @@ Blockly.Blocks['FunctionDef'] = {
     if (this.getInput('RETURNS')) {
       containerBlock.setFieldValue(
               this.hasReturn_ ? 'TRUE' : 'FALSE', 'RETURNS');
-    } else {
-      // containerBlock.getField('RETURNS').setVisible(false);
     }
-
     // Set up parameters
     let connection = containerBlock.getInput('STACK').connection;
     for (let i = 0; i < this.parametersCount_; i++) {
@@ -209,6 +215,33 @@ Blockly.Blocks['FunctionDef'] = {
       connection = itemBlock.nextConnection;
     }
     return containerBlock;
+  },
+  /**
+   * 描述
+   * @date 2022-08-21
+   * @param {any} containerBlock
+   */
+  showOrhideReturns: function(containerBlock) {
+    let hasReturns = containerBlock.getFieldValue('RETURNS');
+    if (hasReturns !== null) {
+      hasReturns = hasReturns === 'TRUE';
+      if (this.hasReturn_ != hasReturns) {
+        if (hasReturns) {
+          this.setReturnAnnotation_(true);
+          Blockly.Mutator.reconnect(this.returnConnection_, this, 'RETURNS');
+          this.returnConnection_ = null;
+        } else {
+          const returnConnection = this.getInput('RETURNS').connection;
+          this.returnConnection_ = returnConnection.targetConnection;
+          if (this.returnConnection_) {
+            const returnBlock = returnConnection.targetBlock();
+            returnBlock.unplug();
+            returnBlock.bumpNeighbours_();
+          }
+          this.setReturnAnnotation_(false);
+        }
+      }
+    }
   },
   /**
    * Reconfigure this block based on the mutator dialog's components.
@@ -230,15 +263,10 @@ Blockly.Blocks['FunctionDef'] = {
     for (let i = 0; i < this.parametersCount_; i++) {
       const connection =
       this.getInput('PARAMETER' + i).connection.targetConnection;
-      if (connection && connections.indexOf(connection) === -1) {
+      if (disconnect(connection, connections)) {
         // Disconnect all children of this block
         const connectedBlock = connection.getSourceBlock();
-        for (let j = 0; j < connectedBlock.inputList.length; j++) {
-          const field = connectedBlock.inputList[j].connection;
-          if (field && field.targetConnection) {
-            field.targetConnection.getSourceBlock().unplug(true);
-          }
-        }
+        runDisconnect(connectedBlock);
         connection.disconnect();
         connection.getSourceBlock().dispose();
       }
@@ -262,26 +290,7 @@ Blockly.Blocks['FunctionDef'] = {
       }
     }
     // Show/hide the returns annotation
-    let hasReturns = containerBlock.getFieldValue('RETURNS');
-    if (hasReturns !== null) {
-      hasReturns = hasReturns === 'TRUE';
-      if (this.hasReturn_ != hasReturns) {
-        if (hasReturns) {
-          this.setReturnAnnotation_(true);
-          Blockly.Mutator.reconnect(this.returnConnection_, this, 'RETURNS');
-          this.returnConnection_ = null;
-        } else {
-          const returnConnection = this.getInput('RETURNS').connection;
-          this.returnConnection_ = returnConnection.targetConnection;
-          if (this.returnConnection_) {
-            const returnBlock = returnConnection.targetBlock();
-            returnBlock.unplug();
-            returnBlock.bumpNeighbours_();
-          }
-          this.setReturnAnnotation_(false);
-        }
-      }
-    }
+    this.showOrhideReturns(containerBlock);
   },
   /**
    * Store pointers to any connected child blocks.

@@ -1,4 +1,4 @@
-Blockly.Python['yield'] = function(block) {
+Blockly.Python['yield'] = function(_block) {
   return ['yield', Blockly.Python.ORDER_LAMBDA];
 };
 

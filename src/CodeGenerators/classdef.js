@@ -19,14 +19,14 @@ Blockly.Python['ClassDef'] = function(block) {
   // Keywords
   const keywords = new Array(block.keywords_);
   for (let i = 0; i < block.keywords_; i++) {
-    const name = block.getFieldValue('KEYWORDNAME' + i);
+    const name_ = block.getFieldValue('KEYWORDNAME' + i);
     const value = (Blockly.Python.valueToCode(block, 'KEYWORDVALUE' + i,
         Blockly.Python.ORDER_NONE) ||
             Blockly.Python.blank);
-    if (name == '**') {
+    if (name_ == '**') {
       keywords[i] = '**' + value;
     } else {
-      keywords[i] = name + '=' + value;
+      keywords[i] = name_ + '=' + value;
     }
   }
   // Body:
