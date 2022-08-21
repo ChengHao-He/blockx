@@ -24,7 +24,6 @@ const sliceFunctionFactory = function(type, defaultValue) {
         at1 = Blockly.Python.getAdjustedInt(block, 'AT1', 1, true);
         break;
       case 'FIRST':
-        at1 = '';
         break;
       default:
         throw Error(`Unhandled option (${type}s_getSub${type})`);
@@ -45,7 +44,6 @@ const sliceFunctionFactory = function(type, defaultValue) {
         }
         break;
       case 'LAST':
-        at2 = '';
         break;
       default:
         throw Error(`Unhandled option (${type}s_getSub${type})`);

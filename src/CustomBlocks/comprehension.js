@@ -91,7 +91,8 @@ Blockly.Blocks['comp_create_with_if'] = {
     /**
      * 四个Python推导式块，其中生成器表达式较为特殊，
      * 它拥有自己的特性，并非元组推导式，但在句法上与
-     * 列表、集合、字典推导式相同，因此归入同一类。
+     * 列表、集合推导式相同，因此写在一起。
+     * 注：字典推导式在赋值表达式部分需要进行类型检查
      * @this Blockly.Block
      */
     init: function() {
@@ -141,17 +142,9 @@ Blockly.Blocks['comp_create_with_if'] = {
       let connection = containerBlock.getInput('STACK').connection;
       for (let i = 1; i < this.itemCount_; i++) {
         const generator = this.getInput('GENERATOR' + i).connection;
-        let createName;
-        if (generator.targetConnection.getSourceBlock().type ===
-            'comprehension_if') {
-          createName = 'comp_create_with_if';
-        } else if (generator.targetConnection.getSourceBlock().type ===
-            'comprehension_for') {
-          createName = 'comp_create_with_for';
-        } else {
-          throw Error('Unknown block type: ' +
+        const createName =
+            this.getNameRefType(
                 generator.targetConnection.getSourceBlock().type);
-        }
         const itemBlock = workspace.newBlock(createName);
         itemBlock.initSvg();
         connection.connect(itemBlock.previousConnection);
@@ -181,31 +174,19 @@ Blockly.Blocks['comp_create_with_if'] = {
             this.getInput('GENERATOR' + i).connection.targetConnection;
         if (connection && connections.indexOf(connection) === -1) {
           const connectedBlock = connection.getSourceBlock();
-          if (connectedBlock.type === 'comprehension_if') {
-            const testField = connectedBlock.getInput('TEST');
-            if (testField.connection.targetConnection) {
-              testField.connection
-                  .targetConnection
-                  .getSourceBlock()
-                  .unplug(true);
-            }
-          } else if (connectedBlock.type === 'comprehension_for') {
-            const iterField = connectedBlock.getInput('ITERATOR');
-            if (iterField.connection.targetConnection) {
-              iterField.connection
-                  .targetConnection
-                  .getSourceBlock()
-                  .unplug(true);
-            }
-            const targetField = connectedBlock.getInput('TARGET');
-            if (targetField.connection.targetConnection) {
-              targetField.connection
-                  .targetConnection
-                  .getSourceBlock()
-                  .unplug(true);
-            }
-          } else {
-            throw Error('Unknown block type: ' + connectedBlock.type);
+          switch (connectedBlock.type) {
+            case 'comprehension_if':
+              const testField = connectedBlock.getInput('TEST');
+              disconnectNextWith(testField);
+              break;
+            case 'comprehension_for':
+              const iterField = connectedBlock.getInput('ITERATOR');
+              disconnectNextWith(iterField);
+              const targetField = connectedBlock.getInput('TARGET');
+              disconnectNextWith(targetField);
+              break;
+            default:
+              throw Error('Unknown block type: ' + connectedBlock.type);
           }
           connection.disconnect();
           connection.getSourceBlock().dispose();
@@ -217,15 +198,8 @@ Blockly.Blocks['comp_create_with_if'] = {
       for (let i = 1; i < this.itemCount_; i++) {
         Blockly.Mutator.reconnect(connections[i], this, 'GENERATOR' + i);
         if (!connections[i]) {
-          let createName;
-          if (blockTypes[i] === 'comp_create_with_if') {
-            createName = 'comprehension_if';
-          } else if (blockTypes[i] === 'comp_create_with_for') {
-            createName = 'comprehension_for';
-          } else {
-            throw Error('Unknown block type: ' + blockTypes[i]);
-          }
-          itemBlock = this.workspace.newBlock(createName);
+          const createName = this.getNameRefType(blockTypes[i]);
+          const itemBlock = this.workspace.newBlock(createName);
           itemBlock.setDeletable(false);
           itemBlock.setMovable(false);
           itemBlock.initSvg();
@@ -233,7 +207,6 @@ Blockly.Blocks['comp_create_with_if'] = {
               .connection
               .connect(itemBlock.outputConnection);
           itemBlock.render();
-          // this.get(itemBlock, 'ADD'+i)
         }
       }
     },
@@ -278,6 +251,28 @@ Blockly.Blocks['comp_create_with_if'] = {
       while (this.getInput('GENERATOR' + i)) {
         this.removeInput('GENERATOR' + i);
         i++;
+      }
+    },
+    /**
+     * inner functions
+     * @param {Blockly.Input} field
+     */
+    disconnectNextWith: function(field) {
+      if (field.connection.targetConnection) {
+        field.connection
+            .targetConnection
+            .getSourceBlock()
+            .unplug(true);
+      }
+    },
+    getNameRefType: function(type) {
+      switch (type) {
+        case 'comp_create_with_if':
+          return 'comprehension_if';
+        case 'comp_create_with_for':
+          return 'comprehension_for';
+        default:
+          throw Error('Unknown block type: ' + type);
       }
     },
   };

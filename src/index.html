@@ -28,6 +28,8 @@
   <script src="CustomBlocks/binOp.js"></script>
   <script src="CustomBlocks/subscript.js"></script>
   <script src="CodeGenerators/subscript.js"></script>
+  <script src="CustomBlocks/comprehension.js"></script>
+  <script src="CodeGenerators/comprehension.js"></script>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
@@ -476,7 +478,77 @@
     <category name="List Methods" colour="30"></category>
     <category name="String Methods" colour="120"></category>
     <category name="Subscripting" colour="15"></category>
-    <category name="Generators" colour="15"></category>
+    <category name="Generators" colour="15">
+      <block type="list_comp" line_number="1" inline="false">
+        <mutation items="1" />
+        <value name="GENERATOR0">
+          <block type="comprehension_for" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+      </block>
+      <block type="generator_expr" line_number="1" inline="false">
+        <mutation items="1" />
+        <value name="GENERATOR0">
+          <block type="comprehension_for" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+      </block>
+      <block type="set_comp" line_number="1" inline="false">
+        <mutation items="1" />
+        <value name="GENERATOR0">
+          <block type="comprehension_for" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+      </block>
+      <block type="dict_comp" line_number="1" inline="false">
+        <mutation items="2" />
+        <value name="ELT">
+          <block type="dict_item" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+        <value name="GENERATOR0">
+          <block type="comprehension_for" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+        <value name="GENERATOR1">
+          <block type="comprehension_if" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+      </block>
+      <block type="list_comp" line_number="1" inline="false">
+        <mutation items="2" />
+        <value name="GENERATOR0">
+          <block type="comprehension_for" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+        <value name="GENERATOR1">
+          <block type="comprehension_if" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+      </block>
+      <block type="generator_expr" line_number="1" inline="false">
+        <mutation items="2" />
+        <value name="GENERATOR0">
+          <block type="comprehension_for" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+        <value name="GENERATOR1">
+          <block type="comprehension_if" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+      </block>
+      <block type="set_comp" line_number="1" inline="false">
+        <mutation items="2" />
+        <value name="GENERATOR0">
+          <block type="comprehension_for" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+        <value name="GENERATOR1">
+          <block type="comprehension_if" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+      </block>
+      <block type="dict_comp" line_number="1" inline="false">
+        <mutation items="2" />
+        <value name="ELT">
+          <block type="dict_item" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+        <value name="GENERATOR0">
+          <block type="comprehension_for" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+        <value name="GENERATOR1">
+          <block type="comprehension_if" line_number="1" inline="true" deletable="false" movable="false" />
+        </value>
+      </block>
+    </category>
     <category name="Comments" colour="60"></category>
   </xml>
   <script type="text/javascript">
