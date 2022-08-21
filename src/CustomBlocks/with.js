@@ -38,7 +38,8 @@ Blockly.Blocks['with'] = {
   domToMutation: function(xmlElement) {
     this.itemCount_ = parseInt(xmlElement.getAttribute('items'), 10);
     this.renames_ = [];
-    for (let i = 0, childNode; childNode = xmlElement.childNodes[i]; i++) {
+    for (let i = 0; xmlElement.childNodes[i]; i++) {
+      const childNode = xmlElement.childNodes[i];
       if (childNode.nodeName.toLowerCase() === 'as') {
         this.renames_.push('true' === childNode.getAttribute('name'));
       }

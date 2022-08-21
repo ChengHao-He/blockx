@@ -9,9 +9,7 @@ Blockly.Blocks['import'] = {
     this.setColour(180);
     this.updateShape_();
   },
-
-  updateShape_: function() {
-    // Possible FROM part
+  possibleFromPart: function() {
     if (this.from_ && !this.getInput('FROM')) {
       this.appendDummyInput('FROM')
           .setAlign(Blockly.ALIGN_RIGHT)
@@ -20,7 +18,22 @@ Blockly.Blocks['import'] = {
     } else if (!this.from_ && this.getInput('FROM')) {
       this.removeInput('FROM');
     }
-    // Import clauses
+  },
+  removeDeletedInputs: function(i) {
+    while (this.getInput('CLAUSE' + i)) {
+      this.removeInput('CLAUSE' + i);
+      i++;
+    }
+  },
+  repositionEverything: function(i) {
+    if (this.from_ && this.nameCount_ > 0) {
+      this.moveInputBefore('FROM', 'CLAUSE0');
+    }
+    for (i = 0; i + 1 < this.nameCount_; i++) {
+      this.moveInputBefore('CLAUSE' + i, 'CLAUSE' + (i + 1));
+    }
+  },
+  importClauses: function() {
     let i = 0;
     for ( ; i < this.nameCount_; i++) {
       let input = this.getInput('CLAUSE' + i);
@@ -40,18 +53,18 @@ Blockly.Blocks['import'] = {
             .appendField(new Blockly.FieldVariable('alias'), 'ASNAME' + i);
       }
     }
-    // Remove deleted inputs.
-    while (this.getInput('CLAUSE' + i)) {
-      this.removeInput('CLAUSE' + i);
-      i++;
-    }
+    // Remove deleted inputs
+    this.removeDeletedInputs(i);
+
     // Reposition everything
-    if (this.from_ && this.nameCount_ > 0) {
-      this.moveInputBefore('FROM', 'CLAUSE0');
-    }
-    for (i = 0; i + 1 < this.nameCount_; i++) {
-      this.moveInputBefore('CLAUSE' + i, 'CLAUSE' + (i + 1));
-    }
+    this.repositionEverything(i);
+  },
+  updateShape_: function() {
+    // Possible FROM part
+    this.possibleFromPart();
+
+    // Import clauses
+    this.importClauses();
   },
 
   /**
@@ -80,7 +93,8 @@ Blockly.Blocks['import'] = {
     this.nameCount_ = parseInt(xmlElement.getAttribute('names'), 10);
     this.from_ = 'true' === xmlElement.getAttribute('from');
     this.regulars_ = [];
-    for (let i = 0, childNode; childNode = xmlElement.childNodes[i]; i++) {
+    for (let i = 0; xmlElement.childNodes[i]; i++) {
+      const childNode = xmlElement.childNodes[i];
       if (childNode.nodeName.toLowerCase() === 'regular') {
         this.regulars_.push('true' === childNode.getAttribute('name'));
       }
