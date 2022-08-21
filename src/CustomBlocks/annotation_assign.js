@@ -1,3 +1,13 @@
+const updateShape = function(that, _block) {
+  if (that.initialized_ && !that.getInput('VALUE')) {
+    that.appendValueInput('VALUE')
+        .appendField('=')
+        .setAlign(Blockly.ALIGN_RIGHT);
+  }
+  if (!that.initialized_ && that.getInput('VALUE')) {
+    that.removeInput('VALUE');
+  }
+};
 Blockly.Blocks['annotation_assign_full'] = {
   init: function() {
     this.appendValueInput('TARGET')
@@ -36,15 +46,7 @@ Blockly.Blocks['annotation_assign_full'] = {
   },
 
   updateShape_: function(_block) {
-    // Add new inputs.
-    if (this.initialized_ && !this.getInput('VALUE')) {
-      this.appendValueInput('VALUE')
-          .appendField('=')
-          .setAlign(Blockly.ALIGN_RIGHT);
-    }
-    if (!this.initialized_ && this.getInput('VALUE')) {
-      this.removeInput('VALUE');
-    }
+   updateShape(this, _block);
   },
 };
 
@@ -104,14 +106,6 @@ Blockly.Blocks['annotation_assign'] = {
   },
 
   updateShape_: function(_block) {
-    // Add new inputs.
-    if (this.initialized_ && !this.getInput('VALUE')) {
-      this.appendValueInput('VALUE')
-          .appendField('=')
-          .setAlign(Blockly.ALIGN_RIGHT);
-    }
-    if (!this.initialized_ && this.getInput('VALUE')) {
-      this.removeInput('VALUE');
-    }
-  },
+    updateShape(this, _block);
+  }
 };
