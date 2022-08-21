@@ -126,9 +126,8 @@ Blockly.Blocks['Subscript'] = {
    */
   domToMutation: function(xmlElement) {
     this.sliceKinds_ = [];
-    childNode = xmlElement.childNodes[0];
-    for (let i = 0, childNode; childNode; i++) {
-      childNode = xmlElement.childNodes[i];
+    for (let i = 0; xmlElement.childNodes[i]; i++) {
+      const childNode = xmlElement.childNodes[i];
       if (childNode.nodeName.toLowerCase() === 'arg') {
         this.sliceKinds_.push(childNode.getAttribute('name'));
       }

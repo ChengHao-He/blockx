@@ -44,6 +44,19 @@ Blockly.Blocks['Call'] = {
       this.updateShape_();
     }
   },
+  runQuarkIds: function() {
+    if (this.quarkIds_) {
+      for (let i = 0; i < this.arguments_.length; i++) {
+        const quarkId = this.quarkIds_[i];
+        if (quarkId in this.quarkConnections_) {
+          const connection = this.quarkConnections_[quarkId];
+          if (!Blockly.Mutator.reconnect(connection, this, 'ARG' + i)) {
+            delete this.quarkConnections_[quarkId];
+          }
+        }
+      }
+    }
+  },
   setProcedureParameters_: function(paramNames, paramIds) {
     const defBlock = Blockly.Procedures.getDefinition(this.getProcedureCall(),
         this.workspace);
@@ -87,52 +100,34 @@ Blockly.Blocks['Call'] = {
     this.argumentVarModels_ = [];
     this.updateShape_();
     this.quarkIds_ = paramIds;
-    if (this.quarkIds_) {
-      for (let i = 0; i < this.arguments_.length; i++) {
-        const quarkId = this.quarkIds_[i];
-        if (quarkId in this.quarkConnections_) {
-          const connection = this.quarkConnections_[quarkId];
-          if (!Blockly.Mutator.reconnect(connection, this, 'ARG' + i)) {
-            delete this.quarkConnections_[quarkId];
-          }
-        }
-      }
-    }
+    this.runQuarkIds();
     this.rendered = savedRendered;
     if (this.rendered) {
       this.render();
     }
     return true;
   },
-  /**
-   * Modify this block to have the correct number of arguments.
-   * @private
-   * @this Blockly.Block
-   */
-  updateShape_: function() {
-    if (this.isMethod_ && !this.getInput('FUNC')) {
-      const func = this.appendValueInput('FUNC');
-      if (this.premessage_ !== '') {
-        func.appendField(this.premessage_);
-      }
-    } else if (!this.isMethod_ && this.getInput('FUNC')) {
-      this.removeInput('FUNC');
-    }
-
-    const drawnArgumentCount = this.getDrawnArgumentCount_();
-    let message = this.getInput('MESSAGE_AREA');
+  runMoveInputBefore: function(drawnArgumentCount, i) {
     if (drawnArgumentCount === 0) {
-      if (message) {
-        message.removeField('MESSAGE');
-      } else {
-        message = this.appendDummyInput('MESSAGE_AREA')
-            .setAlign(Blockly.ALIGN_RIGHT);
+      if (this.isMethod_) {
+        this.moveInputBefore('FUNC', 'MESSAGE_AREA');
       }
-      message.appendField(new Blockly.FieldLabel(this.message_ + '\ ('),
-          'MESSAGE');
-    } else if (message) {
-      this.removeInput('MESSAGE_AREA');
+      this.moveInputBefore('MESSAGE_AREA', 'CLOSE_PAREN');
+    } else {
+      if (this.isMethod_) {
+        this.moveInputBefore('FUNC', 'CLOSE_PAREN');
+      }
     }
+    for (let j = 0; j < i; j++) {
+      this.moveInputBefore('ARG' + j, 'CLOSE_PAREN');
+    }
+    this.setReturn_(this.returns_, false);
+    while (this.getInput('ARG' + i)) {
+      this.removeInput('ARG' + i);
+      i++;
+    }
+  },
+  runDrawnArgumentCount: function(drawnArgumentCount) {
     let i;
     for (i = 0; i < drawnArgumentCount; i++) {
       const argument = this.arguments_[i];
@@ -166,25 +161,37 @@ Blockly.Blocks['Call'] = {
           .setAlign(Blockly.ALIGN_RIGHT)
           .appendField(new Blockly.FieldLabel(')'));
     }
+    this.runMoveInputBefore(drawnArgumentCount, i);
+  },
+  /**
+   * Modify this block to have the correct number of arguments.
+   * @private
+   * @this Blockly.Block
+   */
+  updateShape_: function() {
+    if (this.isMethod_ && !this.getInput('FUNC')) {
+      const func = this.appendValueInput('FUNC');
+      if (this.premessage_ !== '') {
+        func.appendField(this.premessage_);
+      }
+    } else if (!this.isMethod_ && this.getInput('FUNC')) {
+      this.removeInput('FUNC');
+    }
+    const drawnArgumentCount = this.getDrawnArgumentCount_();
+    let message = this.getInput('MESSAGE_AREA');
     if (drawnArgumentCount === 0) {
-      if (this.isMethod_) {
-        this.moveInputBefore('FUNC', 'MESSAGE_AREA');
+      if (message) {
+        message.removeField('MESSAGE');
+      } else {
+        message = this.appendDummyInput('MESSAGE_AREA')
+            .setAlign(Blockly.ALIGN_RIGHT);
       }
-      this.moveInputBefore('MESSAGE_AREA', 'CLOSE_PAREN');
-    } else {
-      if (this.isMethod_) {
-        this.moveInputBefore('FUNC', 'CLOSE_PAREN');
-      }
+      message.appendField(new Blockly.FieldLabel(this.message_ + '\ ('),
+          'MESSAGE');
+    } else if (message) {
+      this.removeInput('MESSAGE_AREA');
     }
-    for (let j = 0; j < i; j++) {
-      this.moveInputBefore('ARG' + j, 'CLOSE_PAREN');
-    }
-    this.setReturn_(this.returns_, false);
-    while (this.getInput('ARG' + i)) {
-      this.removeInput('ARG' + i);
-      i++;
-    }
-
+    this.runDrawnArgumentCount(drawnArgumentCount);
     this.setColour(this.givenColour_);
   },
   /**
@@ -204,9 +211,9 @@ Blockly.Blocks['Call'] = {
     container.setAttribute('premessage', this.premessage_);
     container.setAttribute('module', this.module_);
     container.setAttribute('colour', this.givenColour_);
-    for (let i = 0; i < this.arguments_.length; i++) {
+    for (const setArguments of this.arguments_) {
       const parameter = document.createElement('arg');
-      parameter.setAttribute('name', this.arguments_[i]);
+      parameter.setAttribute('name', setArguments);
       container.appendChild(parameter);
     }
     return container;
@@ -230,7 +237,8 @@ Blockly.Blocks['Call'] = {
 
     const args = [];
     const paramIds = [];
-    for (let i = 0, childNode; childNode = xmlElement.childNodes[i]; i++) {
+    for (let i = 0; xmlElement.childNodes[i]; i++) {
+      const childNode = xmlElement.childNodes[i];
       if (childNode.nodeName.toLowerCase() === 'arg') {
         args.push(childNode.getAttribute('name'));
         paramIds.push(childNode.getAttribute('paramId'));

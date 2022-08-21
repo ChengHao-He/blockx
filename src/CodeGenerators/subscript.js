@@ -1,9 +1,8 @@
 
 const slicesAppendChild = function(block, STR) {
-  const str = ':' + Blockly.Python
+  return ':' + Blockly.Python
       .valueToCode(block, STR, Blockly.Python.ORDER_MEMBER) ||
-   Blockly.Python.blank;
-  return str;
+Blockly.Python.blank;
 };
 Blockly.Python['Subscript'] = function(block) {
   const value = Blockly.Python.valueToCode(block, 'VALUE',

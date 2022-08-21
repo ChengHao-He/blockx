@@ -26,6 +26,8 @@
   <script src="CustomBlocks/keyword.js"></script>
   <script src="CustomBlocks/controls.js"></script>
   <script src="CustomBlocks/binOp.js"></script>
+  <script src="CustomBlocks/subscript.js"></script>
+  <script src="CodeGenerators/subscript.js"></script>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
@@ -38,11 +40,15 @@
     </div>
   </div>
   <xml id="toolbox" style="display:none">
-    <category name="Variables" colour="225" custom="VARIABLE"></category>
-    <category name="Literal Values" colour="30">
-      <block type="starred"></block>
+    <category name="Variables" colour="225" custom="VARIABLE">
+
     </category>
-    <category name="Calculations" colour="190"></category>
+    <category name="Literal Values" colour="30">
+      <block type="Call"></block>
+    </category>
+    <category name="Calculations" colour="190">
+      <block type="Subscript"></block>
+    </category>
     <category name="Logic" colour="345"></category>
     <sep></sep>
     <category name="Classes" colour="240">

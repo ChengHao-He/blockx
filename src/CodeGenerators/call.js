@@ -27,6 +27,7 @@ Blockly.Python['Call'] = function(block) {
   if (block.returns_) {
     return [code, Blockly.Python.ORDER_FUNCTION_CALL];
   } else {
-  return [code + '\n'];
+    return [code + '\n'];
   }
 };
+
