@@ -199,7 +199,7 @@ Blockly.Blocks['comp_create_with_if'] = {
         Blockly.Mutator.reconnect(connections[i], this, 'GENERATOR' + i);
         if (!connections[i]) {
           const createName = this.getNameRefType(blockTypes[i]);
-          const itemBlock = this.workspace.newBlock(createName);
+          itemBlock = this.workspace.newBlock(createName);
           itemBlock.setDeletable(false);
           itemBlock.setMovable(false);
           itemBlock.initSvg();
