@@ -46,7 +46,7 @@ Blockly.Blocks['annotation_assign_full'] = {
   },
 
   updateShape_: function(_block) {
-   updateShape(this, _block);
+    updateShape(this, _block);
   },
 };
 
@@ -107,5 +107,5 @@ Blockly.Blocks['annotation_assign'] = {
 
   updateShape_: function(_block) {
     updateShape(this, _block);
-  }
+  },
 };
