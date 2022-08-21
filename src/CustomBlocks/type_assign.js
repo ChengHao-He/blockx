@@ -26,7 +26,17 @@ Blockly.Blocks['assign'] = {
       }
       this.moveInputBefore('VAR_ANCHOR', 'VALUE');
     } else {
-      this.setInputsInline(true);
+      i = this.updateShape_1();
+    }
+    // Remove deleted inputs.
+    while (this.getInput('TARGET' + i)) {
+      this.removeInput('TARGET' + i);
+      i++;
+    }
+  },
+  updateShape_1: function() {
+    let i=0;
+    this.setInputsInline(true);
       // Add new inputs.
       for (; i < this.targetCount_; i++) {
         if (!this.getInput('TARGET' + i)) {
@@ -41,14 +51,8 @@ Blockly.Blocks['assign'] = {
       if (this.getInput('VAR_ANCHOR')) {
         this.removeInput('VAR_ANCHOR');
       }
-    }
-    // Remove deleted inputs.
-    while (this.getInput('TARGET' + i)) {
-      this.removeInput('TARGET' + i);
-      i++;
-    }
+      return i;
   },
-
   /**
      * Create XML to represent list inputs.
      * @return {!Element} XML storage element.
