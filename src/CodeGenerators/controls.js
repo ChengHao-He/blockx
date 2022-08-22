@@ -32,6 +32,34 @@ Blockly.Python['while'] = function(block) {
   return `while ${argument0}:\n${branchBody}else:\n${branchElse}`;
 };
 
+Blockly.Python['if'] = function(block) {
+  // Test
+  const test = 'if ' + (Blockly.Python.valueToCode(block, 'TEST',
+      Blockly.Python.ORDER_NONE) || Blockly.Python.blank) + ':\n';
+  // Body:
+  const body =
+      Blockly.Python.statementToCode(block, 'BODY') ||
+      Blockly.Python.PASS;
+  // Elifs
+  const elifs = new Array(block.elifs_);
+  for (let i = 0; i < block.elifs_; i++) {
+    let clause = 'elif ' + (Blockly.Python.valueToCode(block, 'ELIFTEST' + i,
+        Blockly.Python.ORDER_NONE) || Blockly.Python.blank);
+    clause += ':\n' +
+        (Blockly.Python.statementToCode(block, 'ELIFBODY' + i) ||
+        Blockly.Python.PASS);
+    elifs[i] = clause;
+  }
+  // Orelse:
+  let orelse = '';
+  if (this.orelse_) {
+    orelse = 'else:\n' +
+        (Blockly.Python.statementToCode(block, 'ORELSEBODY') ||
+        Blockly.Python.PASS);
+  }
+  return test + body + elifs.join('') + orelse;
+};
+
 Blockly.Python['break'] = function(_block) {
   return 'break\n';
 };

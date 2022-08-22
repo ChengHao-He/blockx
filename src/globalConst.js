@@ -1,6 +1,5 @@
 /* eslint-disable new-cap */
 /* eslint-disable max-len */
-
 /**
  * 描述
  * @date 2022-08-23
@@ -712,21 +711,21 @@ function globalConst(Blockly) {
   Blockly.Msg.DICTS_POP_TOOLTIP = 'Remove a pair from given dictionary according to a key and get the value of the pair.';
 
   /**
-* Mixin to add context menu items to create getter/setter blocks for this
-* setter/getter.
-* Used by blocks 'name' and 'assign'.
-* @mixin
-* @augments Blockly.Block
-* @package
-* @readonly
-*/
+  * Mixin to add context menu items to create getter/setter blocks for this
+  * setter/getter.
+  * Used by blocks 'name' and 'assign'.
+  * @mixin
+  * @augments Blockly.Block
+  * @package
+  * @readonly
+  */
   Blockly.Constants.Variables
       .CUSTOM_CONTEXT_MENU_VARIABLE_GETTER_SETTER_MIXIN = {
       /**
-   * Add menu option to create getter/setter block for this setter/getter.
-   * @param {!Array} options List of menu options to add to.
-   * @this Blockly.Block
-   */
+       * Add menu option to create getter/setter block for this setter/getter.
+       * @param {!Array} options List of menu options to add to.
+       * @this Blockly.Block
+       */
         customContextMenu: function(options) {
           let name;
           if (!this.isInFlyout) {
