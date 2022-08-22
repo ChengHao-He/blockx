@@ -3,15 +3,6 @@ const workSpace = Blockly.inject('blockly-div', {
 });
 
 Blockly.Xml.domToWorkspace(document.getElementById('toolbox'), workSpace);
-/**
- *
- * @param {*} _event
- */
-function updateFunction(_event) {
-  const code = Blockly.Python.workspaceToCode(workSpace);
-  document.getElementById('python-code').value = code;
-}
-workSpace.addChangeListener(updateFunction);
 
 // 代码编辑editor
 const editor = CodeMirror.fromTextArea(document.getElementById('python-code'), {
@@ -38,3 +29,14 @@ editor.setOption('extraKeys', {
     if (cm.getOption('fullScreen')) cm.setOption('fullScreen', false);
   },
 });
+/**
+ *
+ * @param {*} _event
+ */
+function updateFunction(_event) {
+  const code = Blockly.Python.workspaceToCode(workSpace);
+  document.getElementById('python-code').value = code;
+  editor.setValue(code);
+}
+workSpace.addChangeListener(updateFunction);
+

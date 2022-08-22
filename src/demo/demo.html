@@ -14,9 +14,11 @@
   <script src="../../node_modules/blockly/msg/en.js"></script>
 
   <!-- import CustomBlocks  -->
-  <script type="text/javascript" src="CustomBlocks/type_number.js"></script>
-  <script type="text/javascript" src="CustomBlocks/str_char.js"></script>
-  <script type="text/javascript" src="CustomBlocks/lambda.js"></script>
+  <script type="text/javascript" src="../CustomBlocks/number.js"></script>
+  <script type="text/javascript" src="../CustomBlocks/call.js"></script>
+  <script type="text/javascript" src="../CodeGenerators/call.js"></script>
+  <script type="text/javascript" src="../CustomBlocks/impport.js"></script>
+  <script type="text/javascript" src="../CodeGenerators/"></script>
   <link rel="stylesheet" type="text/css" href="./style.css">
 
   <!-- Code Mirror -->
@@ -125,7 +127,18 @@
     <category name="Files" colour="170"></category>
     <sep></sep>
     <category name="Conversion" colour="120"></category>
-    <category name="Builtin Functions" colour="15"></category>
+    <category name="Builtin Functions" colour="15">
+      <block type="Call" line_number="1" inline="true">
+        <mutation arguments="1" returns="true" parameters="true" method="false" name="iter" message="iter" premessage="" colour="190" module="">
+        <arg name="UNKNOWN_ARG:0"/>
+        </mutation>
+      </block>
+      <block type="Call" line_number="1" inline="true">
+        <mutation arguments="1" returns="true" parameters="true" method="false" name="issubclass" message="issubclass" premessage="" colour="190" module="">
+        <arg name="UNKNOWN_ARG:0"/>
+        </mutation>
+      </block>
+    </category>
     <category name="List Methods" colour="30"></category>
     <category name="String Methods" colour="120"></category>
     <category name="Subscripting" colour="15"></category>
