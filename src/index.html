@@ -30,6 +30,8 @@
   <script src="CodeGenerators/subscript.js"></script>
   <script src="CustomBlocks/comprehension.js"></script>
   <script src="CodeGenerators/comprehension.js"></script>
+  <script src="CustomBlocks/iterator.js"></script>
+  <script src="CodeGenerators/iterator.js"></script>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
@@ -45,8 +47,15 @@
     <category name="Variables" colour="225" custom="VARIABLE">
     </category>
     <category name="Literal Values" colour="30">
-      <block type="Call"></block>
-      <block type="import"></block>
+      <block type="sets_create_with">
+        <mutation items="3"></mutation>
+      </block>
+      <block type="tuples_create_with">
+        <mutation items="3"></mutation>
+      </block>
+      <block type="dicts_create_with">
+        <mutation items="3"></mutation>
+      </block>
     </category>
     <category name="Calculations" colour="190">
     </category>
@@ -549,7 +558,8 @@
         </value>
       </block>
     </category>
-    <category name="Comments" colour="60"></category>
+    <category name="Comments" colour="60">
+    </category>
   </xml>
   <script type="text/javascript">
 // test for code

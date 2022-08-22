@@ -97,9 +97,6 @@ Blockly.BINOPS_BLOCKLY_DISPLAY_FULL = Blockly.BINOPS.map(
 Blockly.BINOPS_AUGASSIGN_DISPLAY_FULL = Blockly.BINOPS.map(
     (binop) => [binop[4], binop[1]],
 );
-Blockly.BINOPS_AUGASSIGN_DISPLAY = Blockly.BINOPS_AUGASSIGN_DISPLAY_FULL.filter(
-    (binop) => BINOPS_SIMPLE.indexOf(binop[1]) >= 0,
-);
 
 Blockly.BINOPS_BLOCKLY_GENERATE = {};
 Blockly.BINOPS_AUGASSIGN_PREPOSITION = {};

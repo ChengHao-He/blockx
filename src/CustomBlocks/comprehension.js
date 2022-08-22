@@ -12,7 +12,7 @@ const comprehensionForConfig = {
     },
   ],
   'inputsInline': true,
-  'output': 'comprehension_for',
+  'output': 'ComprehensionFor',
   'colour': 15,
 };
 Blockly.Blocks['comprehension_for'] = {
@@ -30,7 +30,7 @@ const comprehensionIfConfig = {
     },
   ],
   'inputsInline': true,
-  'output': 'comprehension_if',
+  'output': 'ComprehensionIf',
   'colour': 15,
 };
 Blockly.Blocks['comprehension_if'] = {
@@ -102,7 +102,7 @@ Blockly.Blocks['comp_create_with_if'] = {
       const input = this.appendValueInput('ELT')
           .appendField(Blockly.COMPREHENSION_SETTINGS[kind].start);
       if (kind === 'dict_comp') {
-        input.setCheck('dict_pair');
+        input.setCheck('DictPair');
       }
       this.appendDummyInput('END_BRACKET')
           .appendField(Blockly.COMPREHENSION_SETTINGS[kind].end);
@@ -240,9 +240,9 @@ Blockly.Blocks['comp_create_with_if'] = {
         if (!this.getInput('GENERATOR' + i)) {
           const input = this.appendValueInput('GENERATOR' + i);
           if (i === 0) {
-            input.setCheck('comprehension_for');
+            input.setCheck('ComprehensionFor');
           } else {
-            input.setCheck(['comprehension_for', 'comprehension_if']);
+            input.setCheck(['ComprehensionFor', 'ComprehensionIf']);
           }
           this.moveInputBefore('GENERATOR' + i, 'END_BRACKET');
         }

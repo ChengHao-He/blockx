@@ -1,18 +1,16 @@
+const importConfig = {
+  'innputsInline': false,
+  'previousStatement': null,
+  'nextStatement': null,
+  'colour': 60,
+};
 Blockly.Blocks['import'] = {
   init: function() {
     this.nameCount_ = 1;
     this.from_ = false;
     this.regulars_ = [true];
-    this.setInputsInline(false);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(180);
+    this.jsonInit(importConfig);
     this.updateShape_();
-  },
-  runmoveInputBefore: function() {
-    for (let i = 0; i + 1 < this.nameCount_; i++) {
-      this.moveInputBefore('CLAUSE' + i, 'CLAUSE' + (i + 1));
-    }
   },
   runImportClauses: function() {
     // Import clauses
@@ -56,7 +54,9 @@ Blockly.Blocks['import'] = {
     if (this.from_ && this.nameCount_ > 0) {
       this.moveInputBefore('FROM', 'CLAUSE0');
     }
-    this.runmoveInputBefore();
+    for (let i = 0; i + 1 < this.nameCount_; i++) {
+      this.moveInputBefore('CLAUSE' + i, 'CLAUSE' + (i + 1));
+    }
   },
 
   /**
