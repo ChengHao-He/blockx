@@ -1,8 +1,7 @@
 const dependence = {};
-dependence.blockly = null;
-dependence.textEditor = null;
+dependence.Blockly = null;
+dependence.TextEditor = null;
 export default {
-  dependence,
   initBlockly(blockly) {
     if (blockly === null) {
       return false;
@@ -14,7 +13,16 @@ export default {
     if (textEditor === null) {
       return false;
     }
-    dependence.textEditor = textEditor;
+    dependence.TextEditor = textEditor;
     return true;
   },
+  getDependence() {
+    return dependence;
+  },
+  getBlockly() {
+    return dependence.Blockly;
+  },
+  getTextEditor() {
+    return dependence.TextEditor;
+  }
 };

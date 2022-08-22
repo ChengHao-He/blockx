@@ -1,12 +1,13 @@
 // 全局变量
-import {dependence, initBlockly, initTextEditor} from './dependence';
+import {initBlockly, initTextEditor,
+getDependence, getBlockly, getTextEditor} from './dependence';
 /**
  * 描述: Blockx初始化函数
  * @date 2022-08-22
  * @param {any} blockxId
  */
 function Blockx(blockxId) {
-  dependence.blockxId = blockxId;
+  getDependence().blockxId = blockxId;
 };
 
 Blockx.initBlockly = function(blockly) {

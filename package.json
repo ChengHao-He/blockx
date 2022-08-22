@@ -23,18 +23,19 @@
     "prepare": "husky install",
     "lint": "eslint src",
     "dev": "webpack --mode=development",
+    "build": "webpack --mode=production",
     "lint-staged": "lint-staged",
     "commitlint": "commitlint --config commitlint.config.js -e -V"
   },
   "name": "blockx",
-  "description": "## blockX开发前期配置（代码风格统一）",
+  "description": "",
   "version": "1.0.0",
-  "private": false,
   "repository": {
     "type": "git",
     "url": "git@se.jisuanke.com:project1/dawnWarrior/blockx.git"
   },
   "author": "",
   "license": "MIT",
-  "private":true
+  "private":true,
+  "module": "./src/blockx.js"
 }
