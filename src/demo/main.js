@@ -1,5 +1,15 @@
 const workSpace = Blockly.inject('blockly-div', {
   toolbox: document.getElementById('toolbox'),
+  media: '../../node_modules/blockly/media/',
+  zoom: {
+    controls: true,
+    wheel: true,
+    startScale: 1.0,
+    maxScale: 3,
+    minScale: 0.3,
+    scaleSpeed: 1.2,
+  },
+  trashcan: true,
 });
 
 Blockly.Xml.domToWorkspace(document.getElementById('toolbox'), workSpace);
