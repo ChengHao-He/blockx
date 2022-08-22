@@ -27,7 +27,7 @@
     "commitlint": "commitlint --config commitlint.config.js -e -V"
   },
   "name": "blockx",
-  "description": "",
+  "description": "## blockX开发前期配置（代码风格统一）",
   "version": "1.0.0",
   "private": false,
   "repository": {
@@ -35,5 +35,6 @@
     "url": "git@se.jisuanke.com:project1/dawnWarrior/blockx.git"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "private":true
 }
