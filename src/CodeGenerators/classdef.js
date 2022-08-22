@@ -1,4 +1,4 @@
-Blockly.Python['ClassDef'] = function(block) {
+Blockly.Python['class_def'] = function(block) {
   // Name
   const name = Blockly.Python.variableDB_
       .getName(block.getFieldValue('NAME'), Blockly.Variables.NAME_TYPE);
@@ -36,4 +36,8 @@ Blockly.Python['ClassDef'] = function(block) {
   let args = (bases.concat(keywords));
   args = (args.length === 0) ? '' : '(' + args.join(', ') + ')';
   return decorators.join('') + 'class ' + name + args + ':\n' + body;
+};
+
+Blockly.Python.ellipsis = function(_block) {
+  return ['...', Blockly.Python.ORDER_ATOMIC];
 };

@@ -1,4 +1,4 @@
-const ClassDefConfig = {
+const classDefConfig = {
   'message0': '%1 %2',
   'args0': [
     {
@@ -15,7 +15,7 @@ const ClassDefConfig = {
   'previousStatement': null,
 };
 
-Blockly.Blocks['ClassDef'] = {
+Blockly.Blocks['class_def'] = {
   init: function() {
     this.decorators_ = 0;
     this.bases_ = 0;
@@ -23,7 +23,7 @@ Blockly.Blocks['ClassDef'] = {
     this.appendDummyInput('HEADER')
         .appendField('Class')
         .appendField(new Blockly.FieldVariable('item'), 'NAME');
-    this.jsonInit(ClassDefConfig);
+    this.jsonInit(classDefConfig);
     this.updateShape_();
   },
   updateShape_: function() {
@@ -78,5 +78,16 @@ Blockly.Blocks['ClassDef'] = {
     this.bases_ = parseInt(xmlElement.getAttribute('bases'), 10);
     this.keywords_ = parseInt(xmlElement.getAttribute('keywords'), 10);
     this.updateShape_();
+  },
+};
+
+const ellipsisConfig = {
+  message0: '...',
+  output: null,
+  colour: '#777777',
+};
+Blockly.Blocks['ellipsis'] = {
+  init: function() {
+    this.jsonInit(ellipsisConfig);
   },
 };

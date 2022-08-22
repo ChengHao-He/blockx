@@ -35,6 +35,10 @@
   <script src="CodeGenerators/iterator.js"></script>
   <script src="CustomBlocks/slice.js"></script>
   <script src="CodeGenerators/slice.js"></script>
+  <script src="CustomBlocks/classdef.js"></script>
+  <script src="CodeGenerators/classdef.js"></script>
+  <script src="CustomBlocks/attribute.js"></script>
+  <script src="CodeGenerators/attribute.js"></script>
   <script src="CustomBlocks/type_assign.js"></script>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
@@ -67,17 +71,36 @@
     <category name="Logic" colour="345"></category>
     <sep></sep>
     <category name="Classes" colour="240">
+      <block type="class_def" line_number="1" inline="false">
+        <mutation decorators="0" bases="0" keywords="0"></mutation>
+        <field name="NAME">___</field>
+      </block>
+      <block type="class_def" line_number="1" inline="false">
+        <mutation decorators="0" bases="1" keywords="0"></mutation>
+        <field name="NAME">___</field>
+      </block>
+      <block type="attribute" line_number="1">
+        <field name="VALUE">___</field>
+        <field name="ATTR">___</field>
+      </block>
+      <block type="assign" line_number="1" inline="true">
+        <mutation initialized="false"></mutation>
+      </block>
+      <block type="Call" line_number="1" inline="true">
+        <mutation arguments="0" returns="true" parameters="true" method="false" name="super" message="super" premessage="" colour="240" module=""></mutation>
+      </block>
+      <block type="ellipsis"></block>
+    </category>
+    <category name="Functions" colour="210">
       <block type="FunctionDef"></block>
       <block type="lambda">
         <mutation decorators="0" parameters="1" returns="false"/>
         <value name="PARAMETER0">
         <block type="FunctionParameter" line_number="1" movable="false" deletable="false">
-        <field name="NAME">___</field>
+          <field name="NAME">___</field>
         </block>
         </value>
       </block>
-    </category>
-    <category name="Functions" colour="210">
     </category>
     <category name="Imports" colour="60">
       <block type="import" line_number="1" inline="true">
