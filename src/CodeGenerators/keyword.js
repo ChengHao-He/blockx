@@ -34,3 +34,17 @@ Blockly.Python['nonlocal'] = function(block) {
   }
   return 'nonlocal ' + elements.join(', ') + '\n';
 };
+Blockly.Python['yield'] = function(_block) {
+  return ['yield', Blockly.Python.ORDER_LAMBDA];
+};
+
+Blockly.Python['yield_full'] = function(block) {
+  const value = Blockly.Python.valueToCode(block, 'VALUE',
+      Blockly.Python.ORDER_LAMBDA) || Blockly.Python.blank;
+  return ['yield ' + value, Blockly.Python.ORDER_LAMBDA];
+};
+Blockly.Python['yield_from'] = function(block) {
+  const value = Blockly.Python.valueToCode(block,
+      'VALUE', Blockly.Python.ORDER_LAMBDA) || Blockly.Python.blank;
+  return ['yield from ' + value, Blockly.Python.ORDER_LAMBDA];
+};

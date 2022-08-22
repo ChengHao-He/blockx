@@ -38,6 +38,33 @@ const starredConfig = {
   'colour': 230,
 };
 
+const yieldConfig = {
+  'message0': 'yield',
+  'inputsInline': false,
+  'output': null,
+  'colour': 210,
+};
+
+const yieldFullConfig = {
+  'message0': 'yield %1',
+  'args0': [
+    {'type': 'input_value', 'name': 'VALUE'},
+  ],
+  'inputsInline': false,
+  'output': null,
+  'colour': 210,
+};
+
+const yieldFromConfig = {
+  'message0': 'yield from %1',
+  'args0': [
+    {'type': 'input_value', 'name': 'VALUE'},
+  ],
+  'inputsInline': false,
+  'output': null,
+  'colour': 210,
+};
+
 Blockly.Blocks['delete'] = {
   init: function() {
     this.setInputsInline(true);
@@ -139,3 +166,20 @@ Blockly.Blocks['nonlocal'] = {
     this.updateShape_();
   },
 };
+
+Blockly.Blocks['yield'] = {
+  init: function() {
+    this.jsonInit(yieldConfig);
+  }};
+
+Blockly.Blocks['yield_full'] = {
+  init: function() {
+    this.jsonInit(yieldFullConfig);
+  }};
+
+Blockly.Blocks['yield_from'] = {
+  init: function() {
+    this.jsonInit(yieldFromConfig);
+  },
+};
+
