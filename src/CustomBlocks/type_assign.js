@@ -37,21 +37,21 @@ Blockly.Blocks['assign'] = {
   getColumnsNumber: function() {
     let i=0;
     this.setInputsInline(true);
-      // Add new inputs.
-      for (; i < this.targetCount_; i++) {
-        if (!this.getInput('TARGET' + i)) {
-          const input = this.appendValueInput('TARGET' + i);
-          if (i !== 0) {
-            input.appendField('and').setAlign(Blockly.ALIGN_RIGHT);
-          }
+    // Add new inputs.
+    for (; i < this.targetCount_; i++) {
+      if (!this.getInput('TARGET' + i)) {
+        const input = this.appendValueInput('TARGET' + i);
+        if (i !== 0) {
+          input.appendField('and').setAlign(Blockly.ALIGN_RIGHT);
         }
-        this.moveInputBefore('TARGET' + i, 'VALUE');
       }
-      // Kill simple VAR
-      if (this.getInput('VAR_ANCHOR')) {
-        this.removeInput('VAR_ANCHOR');
-      }
-      return i;
+      this.moveInputBefore('TARGET' + i, 'VALUE');
+    }
+    // Kill simple VAR
+    if (this.getInput('VAR_ANCHOR')) {
+      this.removeInput('VAR_ANCHOR');
+    }
+    return i;
   },
   /**
      * Create XML to represent list inputs.
@@ -74,5 +74,18 @@ Blockly.Blocks['assign'] = {
     this.targetCount_ = parseInt(xmlElement.getAttribute('targets'), 10);
     this.simpleTarget_ = 'true' === xmlElement.getAttribute('simple');
     this.updateShape_();
+  },
+};
+
+Blockly.Blocks['annAssignFull'] = {
+  init: function init() {
+    this.appendValueInput('TARGET').setCheck(null).appendField('set');
+    this.appendValueInput('ANNOTATION').setCheck(null).appendField(':');
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+    this.initialized_ = true;
+    // this.updateShape_();
   },
 };

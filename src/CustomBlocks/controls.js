@@ -1,227 +1,377 @@
 const forConfig = {
-  'message0': 'for each item %1 in list %2 :',
+  'type': 'ast_For',
+  'message0': 'for %1 in %2 : %3 %4',
   'args0': [
-    {
-      'type': 'input_value',
-      'name': 'DELTA',
-      'check': 'Number',
-    },
-    {
-      'type': 'input_value',
-      'name': 'DELTA',
-      'check': 'Number'},
+    {'type': 'input_value', 'name': 'TARGET'},
+    {'type': 'input_value', 'name': 'ITERATOR'},
+    {'type': 'input_dummy'},
+    {'type': 'input_statement', 'name': 'BODY'},
   ],
+  'inputsInline': true,
   'previousStatement': null,
   'nextStatement': null,
-  'colour': 230,
+  'colour': 270,
 };
-const whileConfig = {
-  'message0': 'while %1',
-  'args0': [
-    {
-      'type': 'input_value',
-      'name': 'DELTA',
-      'check': 'Number',
-    },
-  ],
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 230,
-};
-const breakConfig = {
-  'message0': 'break',
-  'args0': [],
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 230,
-};
-const continueConfig = {
-  'message0': 'continue',
-  'args0': [],
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 230,
-};
-const tryConfig = {
-  'message0': 'try %1',
-  'args0': [
-    {
-      'type': 'input_value',
-      'name': 'DELTA',
-      'check': 'Number',
-    },
-  ],
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 230,
-};
-const exceptConfig = {
-  'message0': 'except %1',
-  'args0': [
-    {
-      'type': 'input_value',
-      'name': 'DELTA',
-      'check': 'Number',
-    },
-  ],
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 230,
-};
-const elseConfig = {
-  'message0': 'else',
-  'args0': [],
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 230,
-};
-const raiseConfig = {
-  'message0': 'raise',
-  'args0': [],
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 230,
-};
-const assertConfig = {
-  'message0': 'assert %1 , %2 ',
-  'args0': [
-    {
-      'type': 'input_value',
-      'name': 'DELTA',
-      'check': 'Number',
-    },
-    {
-      'type': 'input_value',
-      'name': 'DELTA',
-      'check': 'Number',
-    },
-  ],
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 230,
-};
-const withConfig = {
-  'message0': 'with %1 as %2 ',
-  'args0': [
-    {
-      'type': 'input_value',
-      'name': 'DELTA',
-      'check': 'Number',
-    },
-    {
-      'type': 'input_value',
-      'name': 'DELTA',
-      'check': 'Number',
-    },
-  ],
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 230,
-};
-
 Blockly.Blocks['for'] = {
   init: function() {
-    this.setInputsInline(true);
     this.jsonInit(forConfig);
     this.appendStatementInput('DO');
-    // Assign 'this' to a variable for use in the tooltip closure below.
-    const thisBlock = this;
     this.setTooltip(function() {
-      return 'Add a number to variable "%1".'.replace('%1',
-          thisBlock.getFieldValue('VAR'));
+      return 'FOR loop.';
     });
   },
 };
 
+const forElseConfig = {
+  'type': 'ast_ForElse',
+  'message0': 'for %1 in %2 : %3 %4 else: %5 %6',
+  'args0': [
+    {'type': 'input_value', 'name': 'TARGET'},
+    {'type': 'input_value', 'name': 'ITERATOR'},
+    {'type': 'input_dummy'},
+    {'type': 'input_statement', 'name': 'BODY'},
+    {'type': 'input_dummy'},
+    {'type': 'input_statement', 'name': 'ELSE'},
+  ],
+  'inputsInline': true,
+  'previousStatement': null,
+  'nextStatement': null,
+  'colour': 270,
+};
+Blockly.Blocks['for_else'] = {
+  init: function() {
+    this.jsonInit(forElseConfig);
+    this.setTooltip(function() {
+      return 'FOR_ELSE loop.';
+    });
+  },
+};
+
+const whileConfig = {
+  message0: '%1 %2',
+  args0: [
+    {
+      type: 'field_dropdown',
+      name: 'MODE',
+      options: [
+        ['%{BKY_CONTROLS_WHILEUNTIL_OPERATOR_WHILE}', 'WHILE'],
+        ['%{BKY_CONTROLS_WHILEUNTIL_OPERATOR_UNTIL}', 'UNTIL'],
+      ],
+    },
+    {
+      type: 'input_value',
+      name: 'BOOL',
+      check: 'Boolean',
+    },
+  ],
+  message1: 'do %1',
+  args1: [{
+    type: 'input_statement',
+    name: 'DO',
+  }],
+  message2: 'else %1',
+  args2: [{
+    type: 'input_statement',
+    name: 'ELSE',
+  }],
+  previousStatement: null,
+  nextStatement: null,
+  colour: '#FFAB1B',
+};
 Blockly.Blocks['while'] = {
   init: function() {
     this.jsonInit(whileConfig);
-    this.appendStatementInput('DO');
-    // Assign 'this' to a variable for use in the tooltip closure below.
-    const thisBlock = this;
-    this.setTooltip(function() {
-      return 'Add a number to variable "%1".'.replace('%1',
-          thisBlock.getFieldValue('VAR'));
-    });
   },
 };
 
+const breakConfig = {
+  'message0': 'break',
+  'inputsInline': false,
+  'previousStatement': null,
+  'nextStatement': null,
+  'colour': 230,
+};
 Blockly.Blocks['break'] = {
   init: function() {
     this.jsonInit(breakConfig);
-    // Assign 'this' to a variable for use in the tooltip closure below.
-    const thisBlock = this;
-    this.setTooltip(function() {
-      return 'Add a number to variable "%1".'.replace('%1',
-          thisBlock.getFieldValue('VAR'));
-    });
   },
 };
 
+const continueConfig = {
+  'message0': 'continue',
+  'inputsInline': false,
+  'previousStatement': null,
+  'nextStatement': null,
+  'colour': 230,
+};
 Blockly.Blocks['continue'] = {
   init: function() {
     this.jsonInit(continueConfig);
-    // Assign 'this' to a variable for use in the tooltip closure below.
-    const thisBlock = this;
-    this.setTooltip(function() {
-      return 'Add a number to variable "%1".'.replace('%1',
-          thisBlock.getFieldValue('VAR'));
-    });
   },
 };
 
-Blockly.Blocks['try'] = {
-  init: function() {
-    this.jsonInit(tryConfig);
-    this.appendStatementInput('DO');
-    // Assign 'this' to a variable for use in the tooltip closure below.
-    const thisBlock = this;
-    this.setTooltip(function() {
-      return 'Add a number to variable "%1".'.replace('%1',
-          thisBlock.getFieldValue('VAR'));
-    });
-    this.jsonInit(exceptConfig);
-    this.appendStatementInput('DO');
-    this.jsonInit(elseConfig);
-    this.appendStatementInput('DO');
-  },
+const assertConfig = {
+  'message0': 'assert %1',
+  'args0': [
+    {'type': 'input_value', 'name': 'TEST'},
+  ],
+  'inputsInline': true,
+  'previousStatement': null,
+  'nextStatement': null,
+  'colour': 345,
 };
-
-Blockly.Blocks['raise'] = {
-  init: function() {
-    this.jsonInit(raiseConfig);
-    // Assign 'this' to a variable for use in the tooltip closure below.
-    const thisBlock = this;
-    this.setTooltip(function() {
-      return 'Add a number to variable "%1".'.replace('%1',
-          thisBlock.getFieldValue('VAR'));
-    });
-  },
-};
-
 Blockly.Blocks['assert'] = {
   init: function() {
-    this.setInputsInline(true);
     this.jsonInit(assertConfig);
-    // Assign 'this' to a variable for use in the tooltip closure below.
-    const thisBlock = this;
-    this.setTooltip(function() {
-      return 'Add a number to variable "%1".'.replace('%1',
-          thisBlock.getFieldValue('VAR'));
-    });
+  },
+};
+
+const assertFullConfig = {
+  'message0': 'assert %1 %2',
+  'args0': [
+    {'type': 'input_value', 'name': 'TEST'},
+    {'type': 'input_value', 'name': 'MSG'},
+  ],
+  'inputsInline': true,
+  'previousStatement': null,
+  'nextStatement': null,
+  'colour': 345,
+};
+Blockly.Blocks['assert_full'] = {
+  init: function() {
+    this.jsonInit(assertFullConfig);
+  },
+};
+
+const withItemConfig = {
+  'output': 'WithItem',
+  'message0': '%1',
+  'args0': [{'type': 'input_value', 'name': 'CONTEXT'}],
+  'enableContextMenu': false,
+  'colour': 270,
+  'inputsInline': false,
+};
+Blockly.Blocks['with_item'] = {
+  init: function() {
+    this.jsonInit(withItemConfig);
+  },
+};
+
+const withItemAsConfig = {
+  'output': 'WithItem',
+  'message0': 'context %1 as %2',
+  'args0': [{'type': 'input_value', 'name': 'CONTEXT'},
+    {'type': 'input_value', 'name': 'AS'}],
+  'enableContextMenu': false,
+  'colour': 270,
+  'inputsInline': true,
+};
+Blockly.Blocks['with_item_as'] = {
+  init: function() {
+    this.jsonInit(withItemAsConfig);
   },
 };
 
 Blockly.Blocks['with'] = {
   init: function() {
+    this.appendValueInput('ITEM0')
+        .appendField('with');
+    this.appendStatementInput('BODY')
+        .setCheck(null);
+    this.itemCount_ = 1;
+    this.renames_ = [false];
+    this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(270);
+    this.updateShape_();
+  },
+  /**
+   * Create XML to represent list inputs.
+   * @return {!Element} XML storage element.
+   * @this Blockly.Block
+   */
+  mutationToDom: function() {
+    const container = document.createElement('mutation');
+    container.setAttribute('items', this.itemCount_);
+    for (let i = 0; i < this.itemCount_; i++) {
+      const parameter = document.createElement('as');
+      parameter.setAttribute('name', this.renames_[i]);
+      container.appendChild(parameter);
+    }
+    return container;
+  },
+  /**
+   * Parse XML to restore the list inputs.
+   * @param {!Element} xmlElement XML storage element.
+   * @this Blockly.Block
+   */
+  domToMutation: function(xmlElement) {
+    this.itemCount_ = parseInt(xmlElement.getAttribute('items'), 10);
+    this.renames_ = [];
+    for (let i = 0, childNode; childNode = xmlElement.childNodes[i]; i++) {
+      if (childNode.nodeName.toLowerCase() === 'as') {
+        this.renames_.push('true' === childNode.getAttribute('name'));
+      }
+    }
+    this.updateShape_();
+  },
+  updateShape_: function() {
+    // With clauses
+    let i = 1;
+    for (; i < this.itemCount_; i++) {
+      let input = this.getInput('ITEM' + i);
+      if (!input) {
+        input = this.appendValueInput('ITEM' + i);
+      }
+    }
+    // Remove deleted inputs.
+    while (this.getInput('ITEM' + i)) {
+      this.removeInput('ITEM' + i);
+      i++;
+    }
+    // Reposition everything
+    for (i = 0; i < this.itemCount_; i++) {
+      this.moveInputBefore('ITEM' + i, 'BODY');
+    }
+  },
+};
+
+Blockly.Blocks['try'] = {
+  init: function() {
+    this.handlersCount_ = 0;
+    this.handlers_ = [];
+    this.hasElse_ = false;
+    this.hasFinally_ = true;
+    this.appendDummyInput()
+        .appendField('try:');
+    this.appendStatementInput('BODY')
+        .setCheck(null)
+        .setAlign(Blockly.ALIGN_RIGHT);
     this.setInputsInline(true);
-    this.jsonInit(withConfig);
-    this.appendStatementInput('DO');
-    // Assign 'this' to a variable for use in the tooltip closure below.
-    const thisBlock = this;
-    this.setTooltip(function() {
-      return 'Add a number to variable "%1".'.replace('%1',
-          thisBlock.getFieldValue('VAR'));
-    });
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(300);
+    this.updateShape_();
+  },
+  updateShape_: function() {
+    for (let i = 0; i < this.handlersCount_; i++) {
+      if (this.handlers_[i] === TRY_SETTINGS.HANDLERS_CATCH_ALL) {
+        this.appendDummyInput()
+            .appendField('except');
+      } else {
+        this.appendValueInput('TYPE' + i)
+            .setCheck(null)
+            .appendField('except');
+        if (this.handlers_[i] === TRY_SETTINGS.HANDLERS_COMPLETE) {
+          this.appendDummyInput()
+              .appendField('as')
+              .appendField(new Blockly.FieldVariable('item'), 'NAME'+i);
+        }
+      }
+      this.appendStatementInput('HANDLER'+i)
+          .setCheck(null);
+    }
+    if (this.hasElse_) {
+      this.appendDummyInput()
+          .appendField('else:');
+      this.appendStatementInput('ORELSE')
+          .setCheck(null);
+    }
+    if (this.hasFinally_) {
+      console.log('fuck');
+      this.appendDummyInput()
+          .appendField('finally:');
+      this.appendStatementInput('FINALBODY')
+          .setCheck(null);
+    }
+  },
+  /**
+   * Create XML to represent the (non-editable) name and arguments.
+   * @return {!Element} XML storage element.
+   * @this Blockly.Block
+   */
+  mutationToDom: function() {
+    const container = document.createElement('mutation');
+    container.setAttribute('orelse', this.hasElse_);
+    container.setAttribute('finalbody', this.hasFinally_);
+    container.setAttribute('handlers', this.handlersCount_);
+    for (let i = 0; i < this.handlersCount_; i++) {
+      const parameter = document.createElement('arg');
+      parameter.setAttribute('name', this.handlers_[i]);
+      container.appendChild(parameter);
+    }
+    return container;
+  },
+  /**
+   * Parse XML to restore the (non-editable) name and parameters.
+   * @param {!Element} xmlElement XML storage element.
+   * @this Blockly.Block
+   */
+  domToMutation: function(xmlElement) {
+    this.hasElse_ = 'true' === xmlElement.getAttribute('orelse');
+    this.hasFinally_ = 'true' === xmlElement.getAttribute('finalbody');
+    this.handlersCount_ = parseInt(xmlElement.getAttribute('handlers'), 10);
+    this.handlers_ = [];
+    for (let i = 0, childNode; childNode = xmlElement.childNodes[i]; i++) {
+      if (childNode.nodeName.toLowerCase() === 'arg') {
+        this.handlers_.push(parseInt(childNode.getAttribute('name'), 10));
+      }
+    }
+    this.updateShape_();
+  },
+};
+
+Blockly.Blocks['raise'] = {
+  init: function() {
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(300);
+    this.exc_ = true;
+    this.cause_ = false;
+
+    this.appendDummyInput()
+        .appendField('raise');
+    this.updateShape_();
+  },
+  updateShape_: function() {
+    if (this.exc_ && !this.getInput('EXC')) {
+      this.appendValueInput('EXC')
+          .setCheck(null);
+    } else if (!this.exc_ && this.getInput('EXC')) {
+      this.removeInput('EXC');
+    }
+    if (this.cause_ && !this.getInput('CAUSE')) {
+      this.appendValueInput('CAUSE')
+          .setCheck(null)
+          .appendField('from');
+    } else if (!this.cause_ && this.getInput('CAUSE')) {
+      this.removeInput('CAUSE');
+    }
+    if (this.cause_ && this.exc_) {
+      this.moveInputBefore('EXC', 'CAUSE');
+    }
+  },
+  /**
+   * Create XML to represent list inputs.
+   * @return {!Element} XML storage element.
+   * @this Blockly.Block
+   */
+  mutationToDom: function() {
+    const container = document.createElement('mutation');
+    container.setAttribute('exc', this.exc_);
+    container.setAttribute('cause', this.cause_);
+    return container;
+  },
+  /**
+   * Parse XML to restore the list inputs.
+   * @param {!Element} xmlElement XML storage element.
+   * @this Blockly.Block
+   */
+  domToMutation: function(xmlElement) {
+    this.exc_ = 'true' === xmlElement.getAttribute('exc');
+    this.cause_ = 'true' === xmlElement.getAttribute('cause');
+    this.updateShape_();
   },
 };

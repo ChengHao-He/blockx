@@ -3,8 +3,7 @@ const deleteConfig = {
   'args0': [
     {
       'type': 'input_value',
-      'name': 'DELTA',
-      'check': 'Number',
+      'name': 'VALUE',
     },
   ],
   'previousStatement': null,
@@ -16,8 +15,7 @@ const globalConfig = {
   'args0': [
     {
       'type': 'input_value',
-      'name': 'DELTA',
-      'check': 'Number',
+      'name': 'VALUE',
     },
   ],
   'previousStatement': null,
@@ -29,8 +27,7 @@ const starredConfig = {
   'args0': [
     {
       'type': 'input_value',
-      'name': 'DELTA',
-      'check': 'Number',
+      'name': 'VALUE',
     },
   ],
   'previousStatement': null,
@@ -69,11 +66,8 @@ Blockly.Blocks['delete'] = {
   init: function() {
     this.setInputsInline(true);
     this.jsonInit(deleteConfig);
-    // Assign 'this' to a variable for use in the tooltip closure below.
-    const thisBlock = this;
     this.setTooltip(function() {
-      return 'Add a number to variable "%1".'.replace('%1',
-          thisBlock.getFieldValue('VAR'));
+      return 'Add a number to variable "%1".';
     });
   },
 };
@@ -82,11 +76,8 @@ Blockly.Blocks['global'] = {
   init: function() {
     this.setInputsInline(true);
     this.jsonInit(globalConfig);
-    // Assign 'this' to a variable for use in the tooltip closure below.
-    const thisBlock = this;
     this.setTooltip(function() {
-      return 'Add a number to variable "%1".'.replace('%1',
-          thisBlock.getFieldValue('VAR'));
+      return 'Add a number to variable "%1".';
     });
   },
 };
@@ -95,11 +86,8 @@ Blockly.Blocks['starred'] = {
   init: function() {
     this.setInputsInline(true);
     this.jsonInit(starredConfig);
-    // Assign 'this' to a variable for use in the tooltip closure below.
-    const thisBlock = this;
     this.setTooltip(function() {
-      return 'Add a number to variable "%1".'.replace('%1',
-          thisBlock.getFieldValue('VAR'));
+      return 'Add a number to variable "%1".';
     });
   },
 };

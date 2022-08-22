@@ -32,6 +32,7 @@
   <script src="CodeGenerators/comprehension.js"></script>
   <script src="CustomBlocks/iterator.js"></script>
   <script src="CodeGenerators/iterator.js"></script>
+  <script src="CustomBlocks/type_assign.js"></script>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
@@ -47,6 +48,7 @@
     <category name="Variables" colour="225" custom="VARIABLE">
     </category>
     <category name="Literal Values" colour="30">
+      <block type="annAssignFull"></block>
       <block type="sets_create_with">
         <mutation items="3"></mutation>
       </block>
@@ -106,25 +108,23 @@
     </category>
     <sep></sep>
     <category name="Control Flow" colour="270">
-      <block type="controls_if" line_number="1">
+      <block type="controls_if">
         <mutation orelse="false" elifs="0" />
       </block>
-      <block type="for" line_number="1"></block>
-      <block type="while" line_number="1">
-        <mutation orelse="false" />
-      </block>
-      <block type="break" line_number="1"></block>
-      <block type="continue" line_number="1"></block>
-      <block type="try" line_number="1">
+      <block type="for_else"></block>
+      <block type="while"></block>
+      <block type="break"></block>
+      <block type="continue"></block>
+      <block type="assert"></block>
+      <block type="assert_full"></block>
+      <block type="with"></block>
+      <block type="try">
         <mutation orelse="false" finalbody="false" handlers="1">
-          <arg name="3" />
+          <arg name="3"></arg>
         </mutation>
         <field name="NAME0">___</field>
       </block>
-      <block type="raise" line_number="1">
-        <mutation exc="true" cause="false" />
-      </block>
-      <block type="assert" line_number="1"></block>
+      <block type="raise"></block>
     </category>
     <sep></sep>
     <category name="Output" colour="140"></category>

@@ -90,6 +90,11 @@ Blockly.BINOPS = [
     'bitwise AND', 'using',
   ],
 ];
+TRY_SETTINGS = {
+  HANDLERS_CATCH_ALL: 0,
+  HANDLERS_NO_AS: 1,
+  HANDLERS_COMPLETE: 3,
+};
 
 Blockly.BINOPS_BLOCKLY_DISPLAY_FULL = Blockly.BINOPS.map(
     (binop) => [binop[0], binop[1]],
