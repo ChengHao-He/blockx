@@ -25,6 +25,7 @@
   <script src="./CodeGenerators/import.js"></script>
   <script src="CustomBlocks/keyword.js"></script>
   <script src="CustomBlocks/controls.js"></script>
+  <script src="CodeGenerators/controls.js"></script>
   <script src="CustomBlocks/binOp.js"></script>
   <script src="CustomBlocks/subscript.js"></script>
   <script src="CodeGenerators/subscript.js"></script>
@@ -32,6 +33,8 @@
   <script src="CodeGenerators/comprehension.js"></script>
   <script src="CustomBlocks/iterator.js"></script>
   <script src="CodeGenerators/iterator.js"></script>
+  <script src="CustomBlocks/slice.js"></script>
+  <script src="CodeGenerators/slice.js"></script>
   <script src="CustomBlocks/type_assign.js"></script>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
@@ -48,7 +51,7 @@
     <category name="Variables" colour="225" custom="VARIABLE">
     </category>
     <category name="Literal Values" colour="30">
-      <block type="annAssignFull"></block>
+      <block type="tuples_getSubtuple"></block>
       <block type="sets_create_with">
         <mutation items="3"></mutation>
       </block>
@@ -125,6 +128,14 @@
         <field name="NAME0">___</field>
       </block>
       <block type="raise"></block>
+      <block type="with" line_number="1" inline="false">
+        <mutation items="1">
+          <as name="[object Object]"></as>
+        </mutation>
+        <value name="ITEM0">
+          <block type="with_item_as" line_number="1" inline="true" deletable="false" movable="false"></block>
+        </value>
+      </block>
     </category>
     <sep></sep>
     <category name="Output" colour="140"></category>

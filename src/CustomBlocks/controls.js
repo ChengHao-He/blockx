@@ -1,5 +1,5 @@
 const forConfig = {
-  'type': 'ast_For',
+  'type': 'for',
   'message0': 'for %1 in %2 : %3 %4',
   'args0': [
     {'type': 'input_value', 'name': 'TARGET'},
@@ -23,7 +23,6 @@ Blockly.Blocks['for'] = {
 };
 
 const forElseConfig = {
-  'type': 'ast_ForElse',
   'message0': 'for %1 in %2 : %3 %4 else: %5 %6',
   'args0': [
     {'type': 'input_value', 'name': 'TARGET'},
@@ -279,7 +278,6 @@ Blockly.Blocks['try'] = {
           .setCheck(null);
     }
     if (this.hasFinally_) {
-      console.log('fuck');
       this.appendDummyInput()
           .appendField('finally:');
       this.appendStatementInput('FINALBODY')
