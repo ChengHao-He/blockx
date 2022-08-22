@@ -8,7 +8,8 @@ const nameConfig = {
     },
   ],
   'output': null,
-  'colour': 240,
+  'colour': 270,
+  'extensions': ['contextMenu_variableSetterGetter'],
 };
 
 Blockly.Blocks['name'] = {

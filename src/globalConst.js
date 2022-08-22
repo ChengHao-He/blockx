@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 /* eslint-disable max-len */
 Blockly.Python.blank = '__';
 
@@ -110,6 +111,76 @@ Blockly.BINOPS.forEach(function(binop) {
   Blockly.BINOPS_BLOCKLY_GENERATE[binop[1]] = [' ' + binop[0], binop[2]];
   Blockly.BINOPS_AUGASSIGN_PREPOSITION[binop[1]] = binop[5];
 });
+
+/**
+* Mixin to add context menu items to create getter/setter blocks for this
+* setter/getter.
+* Used by blocks 'name' and 'assign'.
+* @mixin
+* @augments Blockly.Block
+* @package
+* @readonly
+*/
+Blockly.Constants.Variables
+    .CUSTOM_CONTEXT_MENU_VARIABLE_GETTER_SETTER_MIXIN = {
+      /**
+   * Add menu option to create getter/setter block for this setter/getter.
+   * @param {!Array} options List of menu options to add to.
+   * @this Blockly.Block
+   */
+      customContextMenu: function(options) {
+        let name;
+        if (!this.isInFlyout) {
+          // Getter blocks have the option to create a setter block,
+          // and vice versa.
+          let oppositeType;
+          let contextMenuMsg;
+          if (this.type === 'name') {
+            oppositeType = 'assign';
+            contextMenuMsg = Blockly.Msg['VARIABLES_GET_CREATE_SET'];
+          } else {
+            oppositeType = 'name';
+            contextMenuMsg = Blockly.Msg['VARIABLES_SET_CREATE_GET'];
+          }
+          const option = {enabled: this.workspace.remainingCapacity() > 0};
+          name = this.getField('VAR').getText();
+          option.text = contextMenuMsg.replace('%1', name);
+          const xmlField = document.createElement('field');
+          xmlField.setAttribute('name', 'VAR');
+          xmlField.appendChild(document.createTextNode(name));
+          const xmlBlock = document.createElement('block');
+          xmlBlock.setAttribute('type', oppositeType);
+          xmlBlock.appendChild(xmlField);
+          option.callback = Blockly.ContextMenu.callbackFactory(this, xmlBlock);
+          options.push(option);
+          // Getter blocks have the option to rename or delete that variable.
+        } else {
+          if (this.type === 'name' ||
+              this.type === 'variables_get_reporter') {
+            const renameOption = {
+              text: Blockly.Msg.RENAME_VARIABLE,
+              enabled: true,
+              callback: Blockly.Constants.Variables
+                  .RENAME_OPTION_CALLBACK_FACTORY(this),
+            };
+            name = this.getField('VAR').getText();
+            const deleteOption = {
+              text: Blockly.Msg.DELETE_VARIABLE.replace('%1', name),
+              enabled: true,
+              callback: Blockly.Constants.Variables
+                  .DELETE_OPTION_CALLBACK_FACTORY(this),
+            };
+            options.unshift(renameOption);
+            options.unshift(deleteOption);
+          }
+        }
+      },
+    };
+
+Blockly.Extensions
+    .registerMixin('contextMenu_variableSetterGetter',
+        Blockly.Constants.Variables
+            .CUSTOM_CONTEXT_MENU_VARIABLE_GETTER_SETTER_MIXIN);
 
 Blockly.Msg.TYPES_GET_TITLE = 'get the type of %1';
 Blockly.Msg.TYPES_CONVERT_TITLE = 'convert %2 to %1 type';
