@@ -26,7 +26,7 @@ Blockly.Blocks['assign'] = {
       }
       this.moveInputBefore('VAR_ANCHOR', 'VALUE');
     } else {
-      i = this.updateShape_1();
+      i = this.getColumnsNumber();
     }
     // Remove deleted inputs.
     while (this.getInput('TARGET' + i)) {
@@ -34,7 +34,7 @@ Blockly.Blocks['assign'] = {
       i++;
     }
   },
-  updateShape_1: function() {
+  getColumnsNumber: function() {
     let i=0;
     this.setInputsInline(true);
       // Add new inputs.
