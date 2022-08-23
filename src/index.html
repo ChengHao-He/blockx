@@ -13,33 +13,61 @@
   <script src="../node_modules/blockly/python_compressed.js"></script>
   <script src="../node_modules/blockly/msg/en.js"></script>
 
-  <!-- import CustomBlocks  -->
-  <script src="globalConst.js"></script>
-  <script src="./CustomBlocks/call.js"></script>
-  <script src="./CodeGenerators/call.js"></script>
-  <script src="./CustomBlocks/function.js"></script>
-  <script src="./CodeGenerators/function.js"></script>
-  <script src="./CustomBlocks/lambda.js"></script>
-  <script src="./CodeGenerators/lambda.js"></script>
-  <script src="./CustomBlocks/import.js"></script>
-  <script src="./CodeGenerators/import.js"></script>
-  <script src="CustomBlocks/keyword.js"></script>
-  <script src="CustomBlocks/controls.js"></script>
-  <script src="CodeGenerators/controls.js"></script>
-  <script src="CustomBlocks/binOp.js"></script>
-  <script src="CustomBlocks/subscript.js"></script>
-  <script src="CodeGenerators/subscript.js"></script>
-  <script src="CustomBlocks/comprehension.js"></script>
-  <script src="CodeGenerators/comprehension.js"></script>
-  <script src="CustomBlocks/iterator.js"></script>
-  <script src="CodeGenerators/iterator.js"></script>
-  <!-- <script src="CustomBlocks/slice.js"></script>
-  <script src="CodeGenerators/slice.js"></script> -->
-  <script src="CustomBlocks/classdef.js"></script>
-  <script src="CodeGenerators/classdef.js"></script>
-  <script src="CustomBlocks/attribute.js"></script>
-  <script src="CodeGenerators/attribute.js"></script>
-  <script src="CustomBlocks/type_assign.js"></script>
+<!-- Skulpt-->
+<script src="../skulpt/dist/skulpt.js"></script>
+<script src="../skulpt/dist/skulpt-stdlib.js"></script>
+<script src="./textToblock.js"></script>
+<script src="./pythonBlock.js"></script>
+<!-- import CustomBlocks  -->
+<script src="globalConst.js"></script>
+<script src="./CustomBlocks/annotation_assign.js"></script>
+<script src="./CustomBlocks/binOp.js"></script>
+<script src="./CustomBlocks/iterator.js"></script>
+<script src="./CustomBlocks/boolOp.js"></script>
+<script src="./CustomBlocks/call.js"></script>
+<script src="./CustomBlocks/character.js"></script>
+<script src="./CustomBlocks/classdef.js"></script>
+<script src="./CustomBlocks/comment.js"></script>
+<script src="./CustomBlocks/compare.js"></script>
+<script src="./CustomBlocks/comprehension.js"></script>
+<script src="./CustomBlocks/controls.js"></script>
+<script src="./CustomBlocks/expression.js"></script>
+<script src="./CustomBlocks/function.js"></script>
+<script src="./CustomBlocks/import.js"></script>
+<script src="./CustomBlocks/keyword.js"></script>
+<script src="./CustomBlocks/lambda.js"></script>
+<script src="./CustomBlocks/number.js"></script>
+<script src="./CustomBlocks/return.js"></script>
+<script src="./CustomBlocks/slice.js"></script>
+<script src="./CustomBlocks/subscript.js"></script>
+<script src="./CustomBlocks/type_assign.js"></script>
+<script src="./CustomBlocks/name.js"></script>
+<script src="./CustomBlocks/raw_block.js"></script>
+<script src="./CustomBlocks/type_string.js"></script>
+<script src="./CustomBlocks/unaryOpNot.js"></script>
+<script src="./CustomBlocks/annAssign.js"></script>
+<script src="./CustomBlocks/augAssign.js"></script>
+<script src="./CustomBlocks/attribute.js"></script>
+
+<script src="./CodeGenerators/binOp.js"></script>
+<script src="./CodeGenerators/name.js"></script>
+<script src="./CodeGenerators/boolOp.js"></script>
+<script src="./CodeGenerators/call.js"></script>
+<script src="./CodeGenerators/character.js"></script>
+<script src="./CodeGenerators/classdef.js"></script>
+<script src="./CodeGenerators/comment.js"></script>
+<script src="./CodeGenerators/compare.js"></script>
+<script src="./CodeGenerators/controls.js"></script>
+<script src="./CodeGenerators/comprehension.js"></script>
+<script src="./CodeGenerators/expression.js"></script>
+<script src="./CodeGenerators/function.js"></script>
+<script src="./CodeGenerators/import.js"></script>
+<script src="./CodeGenerators/lambda.js"></script>
+<script src="./CodeGenerators/return.js"></script>
+<script src="./CodeGenerators/slice.js"></script>
+<script src="./CodeGenerators/subscript.js"></script>
+<script src="./CodeGenerators/unaryOpNot.js"></script>
+
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
@@ -599,17 +627,35 @@
   </xml>
   <script type="text/javascript">
 // test for code
+Blockly.changeStatus = 0;
 const workSpace = Blockly.inject('blockly-div', {
   toolbox: document.getElementById('toolbox'),
 });
-
 Blockly.Xml.domToWorkspace(document.getElementById('toolbox'), workSpace);
 function updateFunction(event) {
   const code = Blockly.Python.workspaceToCode(workSpace);
   document.getElementById('python-code').value = code;
 }
-workSpace.addChangeListener(updateFunction);
 
+const text_to_blocks = new pythonToBlock();
+let TxtArea = document.getElementById('python-code');
+const textChangeListener = function () {
+    const blockXml = text_to_blocks.convertSource(TxtArea.value);
+    workSpace.clear();
+    Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(blockXml.xml), workSpace);
+};
+blocklyWorkSpace = document.getElementById("blockly-div");
+blocklyTextArea = document.getElementById("python-code");
+blocklyWorkSpace.onclick = function(){
+  console.log('WorkSpace');
+  TxtArea.removeEventListener('input',textChangeListener);
+  workSpace.addChangeListener(updateFunction);
+}
+blocklyTextArea.onclick = function(){
+   console.log('clickTXT');
+    workSpace.removeChangeListener(updateFunction);
+    TxtArea.addEventListener('input',textChangeListener);
+}
   </script>
 </body>
 
