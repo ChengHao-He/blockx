@@ -1,5 +1,5 @@
 /**
- * 描述
+ * 创建attribute块
  * @date 2022-08-23
  * @param {any} Blockly
  */

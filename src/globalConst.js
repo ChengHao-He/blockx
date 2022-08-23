@@ -125,7 +125,7 @@ function globalConst(Blockly) {
     HANDLERS_COMPLETE: 3,
   };
 
-  Blockly.BINOPS_BLOCKLY_DISPLAY_FULL = Blockly.BINOPS.map(
+  Blockly.BINOPS_BLOCKLY_DISPLAY = Blockly.BINOPS.map(
       (binop) => [binop[0], binop[1]],
   );
   Blockly.BINOPS_AUGASSIGN_DISPLAY_FULL = Blockly.BINOPS.map(

@@ -643,12 +643,13 @@ const textChangeListener = function () {
 };
 blocklyWorkSpace = document.getElementById("blockly-div");
 blocklyTextArea = document.getElementById("python-code");
-blocklyWorkSpace.onclick = function(){
+workSpace.addChangeListener(updateFunction);
+blocklyTextArea.onblur = function(){
   console.log('WorkSpace');
   TxtArea.removeEventListener('input',textChangeListener);
   workSpace.addChangeListener(updateFunction);
 }
-blocklyTextArea.onclick = function(){
+blocklyTextArea.onfocus = function(){
    console.log('clickTXT');
     workSpace.removeChangeListener(updateFunction);
     TxtArea.addEventListener('input',textChangeListener);

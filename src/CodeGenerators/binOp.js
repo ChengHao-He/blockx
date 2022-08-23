@@ -1,5 +1,5 @@
 /**
- * 描述
+ * binOP块的代码生成器
  * @date 2022-08-23
  * @param {any} Blockly
  */

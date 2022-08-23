@@ -102,7 +102,7 @@ pythonToBlock.
       }
       values['VALUE'] = this.convert(value, node);
 
-      return pythonToBlock.create_block('assign', node.lineno, fields,
+      return pythonToBlock.create_block('variables_set', node.lineno, fields,
           values,
           {
             'inline': 'true',
@@ -362,7 +362,7 @@ pythonToBlock.prototype['pythonToBlockClassDef'] = function(node, parent) {
   }
 
   return pythonToBlock
-      .create_block('ClassDef', node.lineno, fields,
+      .create_block('class_def', node.lineno, fields,
           values,
           {
             'inline': 'false',
@@ -1042,7 +1042,7 @@ pythonToBlock.prototype['pythonToBlockName'] = function(node, parent) {
   if (id.v == Blockly.Python.blank) {
     return null;
   } else {
-    return pythonToBlock.create_block('name', node.lineno, {
+    return pythonToBlock.create_block('variables_get', node.lineno, {
       'VAR': id.v,
     });
   }
