@@ -5,8 +5,7 @@ Blockly.Python['delete'] = function(block) {
     elements[i] = Blockly.Python.valueToCode(block, 'TARGET' + i,
         Blockly.Python.ORDER_NONE) || Blockly.Python.blank;
   }
-  const code = 'del ' + elements.join(', ') + '\n';
-  return code;
+  return 'del ' + elements.join(', ') + '\n';
 };
 Blockly.Python['global'] = function(block) {
   // Create a list with any number of elements of any type.

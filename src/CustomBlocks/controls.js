@@ -159,8 +159,10 @@ Blockly.Blocks['with_item'] = {
 const withItemAsConfig = {
   'output': 'WithItem',
   'message0': 'context %1 as %2',
-  'args0': [{'type': 'input_value', 'name': 'CONTEXT'},
-    {'type': 'input_value', 'name': 'AS'}],
+  'args0': [
+    {'type': 'input_value', 'name': 'CONTEXT'},
+    {'type': 'input_value', 'name': 'AS'},
+  ],
   'enableContextMenu': false,
   'colour': 270,
   'inputsInline': true,
@@ -208,11 +210,12 @@ Blockly.Blocks['with'] = {
   domToMutation: function(xmlElement) {
     this.itemCount_ = parseInt(xmlElement.getAttribute('items'), 10);
     this.renames_ = [];
-    for (let i = 0, childNode; childNode = xmlElement.childNodes[i]; i++) {
+    const that = this;
+    xmlElement.childNodes.forEach(function(childNode) {
       if (childNode.nodeName.toLowerCase() === 'as') {
-        this.renames_.push('true' === childNode.getAttribute('name'));
+        that.renames_.push('true' === childNode.getAttribute('name'));
       }
-    }
+    });
     this.updateShape_();
   },
   updateShape_: function() {
@@ -255,14 +258,14 @@ Blockly.Blocks['try'] = {
   },
   updateShape_: function() {
     for (let i = 0; i < this.handlersCount_; i++) {
-      if (this.handlers_[i] === TRY_SETTINGS.HANDLERS_CATCH_ALL) {
+      if (this.handlers_[i] === Blockly.TRY_SETTINGS.HANDLERS_CATCH_ALL) {
         this.appendDummyInput()
             .appendField('except');
       } else {
         this.appendValueInput('TYPE' + i)
             .setCheck(null)
             .appendField('except');
-        if (this.handlers_[i] === TRY_SETTINGS.HANDLERS_COMPLETE) {
+        if (this.handlers_[i] === Blockly.TRY_SETTINGS.HANDLERS_COMPLETE) {
           this.appendDummyInput()
               .appendField('as')
               .appendField(new Blockly.FieldVariable('item'), 'NAME'+i);
@@ -311,11 +314,12 @@ Blockly.Blocks['try'] = {
     this.hasFinally_ = 'true' === xmlElement.getAttribute('finalbody');
     this.handlersCount_ = parseInt(xmlElement.getAttribute('handlers'), 10);
     this.handlers_ = [];
-    for (let i = 0, childNode; childNode = xmlElement.childNodes[i]; i++) {
+    const that = this;
+    xmlElement.childNodes.forEach(function(childNode) {
       if (childNode.nodeName.toLowerCase() === 'arg') {
-        this.handlers_.push(parseInt(childNode.getAttribute('name'), 10));
+        that.handlers_.push(parseInt(childNode.getAttribute('name'), 10));
       }
-    }
+    });
     this.updateShape_();
   },
 };

@@ -48,6 +48,67 @@ Blockly.Blocks['delete'] = {
   },
 };
 
+const starredConfig = {
+  'message0': '* %1',
+  'args0': [
+    {
+      'type': 'input_value',
+      'name': 'VALUE',
+    },
+  ],
+  'previousStatement': null,
+  'nextStatement': null,
+  'colour': 230,
+};
+Blockly.Blocks['starred'] = {
+  init: function() {
+    this.setInputsInline(true);
+    this.jsonInit(starredConfig);
+  },
+};
+
+const yieldConfig = {
+  'message0': 'yield',
+  'inputsInline': false,
+  'output': null,
+  'colour': 210,
+};
+Blockly.Blocks['yield'] = {
+  init: function() {
+    this.jsonInit(yieldConfig);
+  },
+};
+
+const yieldFullConfig = {
+  'message0': 'yield %1',
+  'args0': [
+    {'type': 'input_value', 'name': 'VALUE'},
+  ],
+  'inputsInline': false,
+  'output': null,
+  'colour': 210,
+};
+Blockly.Blocks['yield_full'] = {
+  init: function() {
+    this.jsonInit(yieldFullConfig);
+  },
+};
+
+const yieldFromConfig = {
+  'message0': 'yield from %1',
+  'args0': [
+    {'type': 'input_value', 'name': 'VALUE'},
+  ],
+  'inputsInline': false,
+  'output': null,
+  'colour': 210,
+};
+Blockly.Blocks['yield_from'] = {
+  init: function() {
+    this.jsonInit(yieldFromConfig);
+  },
+};
+
 Blockly.Blocks['global'] = {
   init: function() {
     this.setInputsInline(true);
@@ -107,67 +168,6 @@ Blockly.Blocks['global'] = {
   domToMutation: function(xmlElement) {
     this.nameCount_ = parseInt(xmlElement.getAttribute('names'), 10);
     this.updateShape_();
-  },
-};
-
-const starredConfig = {
-  'message0': '* %1',
-  'args0': [
-    {
-      'type': 'input_value',
-      'name': 'VALUE',
-    },
-  ],
-  'previousStatement': null,
-  'nextStatement': null,
-  'colour': 230,
-};
-Blockly.Blocks['starred'] = {
-  init: function() {
-    this.setInputsInline(true);
-    this.jsonInit(starredConfig);
-  },
-};
-
-const yieldConfig = {
-  'message0': 'yield',
-  'inputsInline': false,
-  'output': null,
-  'colour': 210,
-};
-Blockly.Blocks['yield'] = {
-  init: function() {
-    this.jsonInit(yieldConfig);
-  },
-};
-
-const yieldFullConfig = {
-  'message0': 'yield %1',
-  'args0': [
-    {'type': 'input_value', 'name': 'VALUE'},
-  ],
-  'inputsInline': false,
-  'output': null,
-  'colour': 210,
-};
-Blockly.Blocks['yield_full'] = {
-  init: function() {
-    this.jsonInit(yieldFullConfig);
-  },
-};
-
-const yieldFromConfig = {
-  'message0': 'yield from %1',
-  'args0': [
-    {'type': 'input_value', 'name': 'VALUE'},
-  ],
-  'inputsInline': false,
-  'output': null,
-  'colour': 210,
-};
-Blockly.Blocks['yield_from'] = {
-  init: function() {
-    this.jsonInit(yieldFromConfig);
   },
 };
 

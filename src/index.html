@@ -33,8 +33,8 @@
   <script src="CodeGenerators/comprehension.js"></script>
   <script src="CustomBlocks/iterator.js"></script>
   <script src="CodeGenerators/iterator.js"></script>
-  <script src="CustomBlocks/slice.js"></script>
-  <script src="CodeGenerators/slice.js"></script>
+  <!-- <script src="CustomBlocks/slice.js"></script>
+  <script src="CodeGenerators/slice.js"></script> -->
   <script src="CustomBlocks/classdef.js"></script>
   <script src="CodeGenerators/classdef.js"></script>
   <script src="CustomBlocks/attribute.js"></script>
@@ -55,7 +55,9 @@
     <category name="Variables" colour="225" custom="VARIABLE">
     </category>
     <category name="Literal Values" colour="30">
-      <block type="tuples_getSubtuple"></block>
+      <block type="lists_create_with">
+        <mutation items="3"></mutation>
+      </block>
       <block type="sets_create_with">
         <mutation items="3"></mutation>
       </block>

@@ -32,11 +32,11 @@ Blockly.Python['while'] = function(block) {
   return `while ${argument0}:\n${branchBody}else:\n${branchElse}`;
 };
 
-Blockly.Python['break'] = function(block) {
+Blockly.Python['break'] = function(_block) {
   return 'break\n';
 };
 
-Blockly.Python['continue'] = function(block) {
+Blockly.Python['continue'] = function(_block) {
   return 'continue\n';
 };
 
@@ -94,10 +94,10 @@ Blockly.Python['try'] = function(block) {
   for (let i = 0; i < block.handlersCount_; i++) {
     const level = block.handlers_[i];
     let clause = 'except';
-    if (level !== TRY_SETTINGS.HANDLERS_CATCH_ALL) {
+    if (level !== Blockly.TRY_SETTINGS.HANDLERS_CATCH_ALL) {
       clause += ' ' + Blockly.Python.valueToCode(block, 'TYPE' + i,
           Blockly.Python.ORDER_NONE) || Blockly.Python.blank;
-      if (level === TRY_SETTINGS.HANDLERS_COMPLETE) {
+      if (level === Blockly.TRY_SETTINGS.HANDLERS_COMPLETE) {
         clause += ' as ' +
         Blockly.Python.variableDB_.getName(block.getFieldValue('NAME' + i),
             Blockly.Variables.NAME_TYPE);

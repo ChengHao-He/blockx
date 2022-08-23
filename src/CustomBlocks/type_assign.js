@@ -86,6 +86,5 @@ Blockly.Blocks['annAssignFull'] = {
     this.setNextStatement(true, null);
     this.setColour(230);
     this.initialized_ = true;
-    // this.updateShape_();
   },
 };
