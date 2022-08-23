@@ -28,7 +28,7 @@ function binOpBlocks(Blockly) {
 
   Blockly.Blocks['BinOp'] = {
     init: function() {
-      this.jsonInit(binOpConfig);
+      Blockly.Block.jsonInit(binOpConfig);
     },
   };
   const binOpFullConfig = {
@@ -55,7 +55,7 @@ function binOpBlocks(Blockly) {
 
   Blockly.Blocks['BinOpFull'] = {
     init: function() {
-      this.jsonInit(binOpFullConfig);
+      Blockly.Block.jsonInit(binOpFullConfig);
     },
   };
 };

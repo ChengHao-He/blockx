@@ -5,9 +5,11 @@ import globalConst from './globalConst';
 
 // generate
 import binOpGenerate from './CodeGenerators/binOp';
+import returnGenerate from './CodeGenerators/return';
 
 // blocks
 import binOpBlocks from './CustomBlocks/binOp';
+import returnBlocks from './CustomBlocks/return';
 /**
  * 描述: Blockx初始化函数
  * @date 2022-08-22
@@ -23,6 +25,9 @@ Blockx.initBlockly = function(blockly) {
     // binOp
     binOpBlocks(getBlockly());
     binOpGenerate(getBlockly());
+    // return
+    returnBlocks(getBlockly());
+    returnGenerate(getBlockly());
     return getBlockly();
   } else {
     throw new Error('Blockly is null.');
