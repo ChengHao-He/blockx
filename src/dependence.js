@@ -1,7 +1,7 @@
 const dependence = {};
 dependence.Blockly = null;
 dependence.TextEditor = null;
-export default {
+module.exports = {
   initBlockly(blockly) {
     if (blockly === null) {
       return false;
@@ -24,5 +24,5 @@ export default {
   },
   getTextEditor() {
     return dependence.TextEditor;
-  }
+  },
 };
