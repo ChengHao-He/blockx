@@ -482,7 +482,7 @@ pythonToBlock.prototype['pythonToBlockContinue'] = function(node, parent) {
 pythonToBlock.prototype['pythonToBlockDelete'] = function(node, parent) {
   const targets = node.targets;
   return pythonToBlock.create_block('delete', node.lineno, {},
-      this.convertElements('VALUE', targets, node),
+      this.convertElements('TARGET', targets, node),
       {
         'inline': 'true',
       }, {
@@ -857,12 +857,6 @@ pythonToBlock.prototype.METHOD_SIGNATURES = {
   'mro': {returns: true, colour: pythonToBlock.COLOR.OO},
   '__subclasses__': {returns: true, colour: pythonToBlock.COLOR.OO},
 };
-
-pythonToBlock.prototype.MODULE_FUNCTION_IMPORTS = {
-  'plt': 'import matplotlib.pyplot as plt',
-  'turtle': 'import turtle',
-};
-
 pythonToBlock.prototype.MODULE_FUNCTION_SIGNATURES = {
   'cisc108': {
     'assert_equal': {
@@ -872,170 +866,11 @@ pythonToBlock.prototype.MODULE_FUNCTION_SIGNATURES = {
       colour: pythonToBlock.COLOR.PYTHON,
     },
   },
-  'turtle': {},
-  'plt': {
-    'show': {
-      returns: false,
-      simple: [],
-      message: 'show plot canvas',
-      colour: pythonToBlock.COLOR.PLOTTING,
-    },
-    'hist': {
-      returns: false,
-      simple: ['values'],
-      message: 'plot histogram',
-      colour: pythonToBlock.COLOR.PLOTTING,
-    },
-    'bar': {
-      returns: false,
-      simple: ['xs', 'heights', '*tick_label'],
-      message: 'plot bar chart',
-      colour: pythonToBlock.COLOR.PLOTTING,
-    },
-    'plot': {
-      returns: false,
-      simple: ['values'],
-      message: 'plot line',
-      colour: pythonToBlock.COLOR.PLOTTING,
-    },
-    'boxplot': {
-      returns: false,
-      simple: ['values'],
-      message: 'plot boxplot',
-      colour: pythonToBlock.COLOR.PLOTTING,
-    },
-    'hlines': {
-      returns: false,
-      simple: ['y', 'xmin', 'xmax'],
-      message: 'plot horizontal line',
-      colour: pythonToBlock.COLOR.PLOTTING,
-    },
-    'vlines': {
-      returns: false,
-      simple: ['x', 'ymin', 'ymax'],
-      message: 'plot vertical line',
-      colour: pythonToBlock.COLOR.PLOTTING,
-    },
-    'scatter': {
-      returns: false,
-      simple: ['xs', 'ys'],
-      message: 'plot scatter',
-      colour: pythonToBlock.COLOR.PLOTTING,
-    },
-    'title': {
-      returns: false,
-      simple: ['label'],
-      message: 'make plot\'s title',
-      colour: pythonToBlock.COLOR.PLOTTING,
-    },
-    'xlabel': {
-      returns: false,
-      simple: ['label'],
-      message: 'make plot\'s x-axis label',
-      colour: pythonToBlock.COLOR.PLOTTING,
-    },
-    'ylabel': {
-      returns: false,
-      simple: ['label'],
-      message: 'make plot\'s y-axis label',
-      colour: pythonToBlock.COLOR.PLOTTING,
-    },
-    'xticks': {
-      returns: false,
-      simple: ['xs', 'labels', '*rotation'],
-      message: 'make x ticks',
-      colour: pythonToBlock.COLOR.PLOTTING,
-    },
-    'yticks': {
-      returns: false,
-      simple: ['ys', 'labels', '*rotation'],
-      message: 'make y ticks',
-      colour: pythonToBlock.COLOR.PLOTTING,
-    },
-  },
 };
 
 pythonToBlock.prototype.FUNCTION_SIGNATURES['assert_equal'] =
     pythonToBlock
         .prototype.MODULE_FUNCTION_SIGNATURES['cisc108']['assert_equal'];
-
-/**
- * 描述
- * @date 2022-08-22
- * @param {any} name
- * @param {any} returns
- * @param {any} values
- * @param {any} message
- * @param {any} aliases
- */
-function makeTurtleBlock(name, returns, values, message, aliases) {
-  pythonToBlock
-      .prototype.MODULE_FUNCTION_SIGNATURES['turtle'][name] = {
-        'returns': returns,
-        'simple': values,
-        'message': message,
-        'colour': pythonToBlock.COLOR.PLOTTING,
-      };
-  if (aliases) {
-    aliases.forEach(function(alias) {
-      pythonToBlock.prototype
-          .MODULE_FUNCTION_SIGNATURES['turtle'][alias] =
-                pythonToBlock
-                    .prototype.MODULE_FUNCTION_SIGNATURES['turtle'][name];
-    });
-  }
-}
-
-makeTurtleBlock('forward', false, ['amount'], 'move turtle forward by', ['fd']);
-makeTurtleBlock('backward', false, ['amount'],
-    'move turtle backward by', ['bd']);
-makeTurtleBlock('right', false, ['angle'], 'turn turtle right by', ['rt']);
-makeTurtleBlock('left', false, ['angle'], 'turn turtle left by', ['lt']);
-makeTurtleBlock('goto', false, ['x', 'y'],
-    'move turtle to position', ['setpos', 'setposition']);
-makeTurtleBlock('setx', false, ['x'], 'set turtle\'s x position to ', []);
-makeTurtleBlock('sety', false, ['y'], 'set turtle\'s y position to ', []);
-makeTurtleBlock('setheading', false, ['angle'],
-    'set turtle\'s heading to ', ['seth']);
-makeTurtleBlock('home', false, [], 'move turtle to origin ', []);
-makeTurtleBlock('circle', false, ['radius'],
-    'move the turtle in a circle ', []);
-makeTurtleBlock('dot', false, ['size', 'color'], 'turtle draws a dot ', []);
-makeTurtleBlock('stamp', true, [], 'stamp a copy of the turtle shape ', []);
-makeTurtleBlock('clearstamp', false, ['stampid'], 'delete stamp with id ', []);
-makeTurtleBlock('clearstamps', false, [], 'delete all stamps ', []);
-makeTurtleBlock('undo', false, [], 'undo last turtle action ', []);
-makeTurtleBlock('speed', true, ['x'], 'set or get turtle speed', []);
-makeTurtleBlock('position', true, [], 'get turtle\'s position ', ['pos']);
-makeTurtleBlock('towards', true, ['x', 'y'],
-    'get the angle from the turtle to the point ', []);
-makeTurtleBlock('xcor', true, [], 'get turtle\'s x position ', []);
-makeTurtleBlock('ycor', true, [], 'get turtle\'s y position ', []);
-makeTurtleBlock('heading', true, [], 'get turtle\'s heading ', []);
-makeTurtleBlock('distance', true, ['x', 'y'],
-    'get the distance from turtle\'s position to ', []);
-makeTurtleBlock('degrees', false, [], 'set turtle mode to degrees', []);
-makeTurtleBlock('radians', false, [], 'set turtle mode to radians', []);
-makeTurtleBlock('pendown', false, [], 'pull turtle pen down ', ['pd', 'down']);
-makeTurtleBlock('penup', false, [], 'pull turtle pen up ', ['pu', 'up']);
-makeTurtleBlock('pensize', false, [], 'set or get the pen size ', ['width']);
-makeTurtleBlock('pencolor', false, [], 'set or get the pen color ', []);
-makeTurtleBlock('fillcolor', false, [], 'set or get the fill color ', []);
-makeTurtleBlock('reset', false, [], 'reset drawing', []);
-makeTurtleBlock('clear', false, [], 'clear drawing', []);
-makeTurtleBlock('write', false, ['message'], 'write text ', []);
-makeTurtleBlock('bgpic', false, ['url'], 'set background to ', []);
-makeTurtleBlock('done', false, [], 'start the turtle loop ', ['mainloop']);
-makeTurtleBlock('setup', false, ['width', 'height'],
-    'set drawing area size ', []);
-makeTurtleBlock('title', false, ['message'], 'set title of drawing area ', []);
-makeTurtleBlock('bye', false, [], 'say goodbye to turtles ', []);
-
-
-pythonToBlock
-    .prototype.MODULE_FUNCTION_SIGNATURES['matplotlib.pyplot'] =
-    pythonToBlock.prototype.MODULE_FUNCTION_SIGNATURES['plt'];
-
 pythonToBlock.getFunctionBlock = function(name, values, module) {
   if (values === undefined) {
     values = {};
@@ -1093,17 +928,21 @@ pythonToBlock.prototype['pythonToBlockIf'] = function(node, parent) {
   const test = node.test;
   const body = node.body;
   let orelse = node.orelse;
+
   let hasOrelse = false;
   let elifCount = 0;
-  const values = {'IF0': this.convert(test, node)};
-  const statements = {'DO0': this.convertBody(body, node)};
+
+  const values = {'TEST': this.convert(test, node)};
+  const statements = {'BODY': this.convertBody(body, node)};
+
   while (orelse !== undefined && orelse.length > 0) {
     if (orelse.length === 1) {
       if (orelse[0]._astname === 'If') {
+        // This is an ELIF
         this.heights.shift();
         values['ELIFTEST' + elifCount] = this.convert(orelse[0].test, node);
-        statements['ELIFBODY' + elifCount] = this
-            .convertBody(orelse[0].body, node);
+        statements['ELIFBODY' + elifCount] =
+         this.convertBody(orelse[0].body, node);
         elifCount++;
       } else {
         hasOrelse = true;
@@ -1115,7 +954,8 @@ pythonToBlock.prototype['pythonToBlockIf'] = function(node, parent) {
     }
     orelse = orelse[0].orelse;
   }
-  return pythonToBlock.create_block('controls_if', node.lineno, {},
+
+  return pythonToBlock.create_block('If', node.lineno, {},
       values, {}, {
         '@orelse': hasOrelse,
         '@elifs': elifCount,

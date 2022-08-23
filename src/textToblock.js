@@ -14,8 +14,7 @@ function pythonToBlock() {
     read: function read(filename) {
       if (Sk.builtinFiles === undefined ||
         Sk.builtinFiles['files'][filename] === undefined) {
-        // eslint-disable-next-line no-throw-literal
-        throw 'File not found: \'' + filename + '\'';
+        throw new Error('File not found: \'' + filename + '\'');
       }
 
       return Sk.builtinFiles['files'][filename];
@@ -44,7 +43,26 @@ pythonToBlock.prototype
 *      source code or an error message and the code as a code-block.
 */
 pythonToBlock.prototype.convertSource = function(pythonSource) {
-  const xml = document.createElement('xml');
+  /**
+   * 描述
+   * @date 2022-08-23
+   * @param {any} converted
+   * @param {any} xml
+   * @return {any}
+   */
+  const xmlAppendChild=function(converted, xml) {
+    if (converted !== null) {
+      // eslint-disable-next-line guard-for-in
+      for (const perConverted of converted) {
+        xml.appendChild(perConverted);
+      }
+    }
+    if (badChunks.length) {
+      xml.appendChild(pythonToBlock.raw_block(badChunks.join('\n')));
+    }
+    return xml;
+  };
+  let xml = document.createElement('xml');
   const filename = '__main__.py';
   let parse; let ast = null;
   let error;
@@ -94,14 +112,7 @@ pythonToBlock.prototype.convertSource = function(pythonSource) {
   this.nextExpectedLine = 0;
   this.measureNode(ast);
   const converted = this.convert(ast);
-  if (converted !== null) {
-    for (let block = 0; block < converted.length; block += 1) {
-      xml.appendChild(converted[block]);
-    }
-  }
-  if (badChunks.length) {
-    xml.appendChild(pythonToBlock.raw_block(badChunks.join('\n')));
-  }
+  xml=xmlAppendChild(converted, xml);
   return {
     'xml': pythonToBlock.xmlToString(xml),
     'error': null,
@@ -124,8 +135,9 @@ pythonToBlock.prototype.recursiveMeasure = function(node, nextBlockLine) {
     }
   }
   this.heights.push(nextBlockLine);
+  let i = 0;
   if ('body' in node) {
-    for (let i = 0; i < node.body.length; i++) {
+    for (; i < node.body.length; i++) {
       let next;
       if (i + 1 === node.body.length) {
         next = myNext;
@@ -136,14 +148,14 @@ pythonToBlock.prototype.recursiveMeasure = function(node, nextBlockLine) {
     }
   }
   if ('orelse' in node) {
-    for (let i = 0; i < node.orelse.length; i++) {
+    for (const ondeOrelse of node.orelse) {
       let next;
       if (i === node.orelse.length) {
         next = nextBlockLine;
       } else {
-        next = 1 + (node.orelse[i].lineno - 1);
+        next = 1 + (ondeOrelse.lineno - 1);
       }
-      this.recursiveMeasure(node.orelse[i], next);
+      this.recursiveMeasure(ondeOrelse, next);
     }
   }
 };
@@ -223,12 +235,8 @@ pythonToBlock.prototype.convertBody = function(node, parent) {
   let skippedLine;
   let previousWasStatement = false;
   let visitedFirstLine = false;
-  for (let i = 0; i < node.length; i++) {
-    lineNumberInProgram = node[i].lineno;
-    distance = 0;
-    if (previousLineInProgram != null) {
-      distance = lineNumberInProgram - previousLineInProgram - 1;
-    }
+  for (const nodeLength of node) {
+    lineNumberInProgram = nodeLength.lineno;
     for (const commentLineInProgram in this.comments) {
       if (commentLineInProgram < lineNumberInProgram) {
         const commentChild = this.
@@ -248,7 +256,6 @@ pythonToBlock.prototype.convertBody = function(node, parent) {
         previousLineInProgram = commentLineInProgram;
         this.highestLineSeen = Math
             .max(this.highestLineSeen, parseInt(commentLineInProgram, 10));
-        distance = lineNumberInProgram - previousLineInProgram;
         delete this.comments[commentLineInProgram];
       }
     }
@@ -257,7 +264,7 @@ pythonToBlock.prototype.convertBody = function(node, parent) {
     this.highestLineSeen = Math.max(lineNumberInProgram, this.highestLineSeen);
     const height = this.heights.shift();
     const originalSourceCode = this.getSourceCode(lineNumberInProgram, height);
-    const newChild = this.convertStatement(node[i], originalSourceCode, parent);
+    const newChild = this.convertStatement(nodeLength, originalSourceCode, parent);
 
     if (newChild == null) {
       continue;
@@ -379,9 +386,8 @@ pythonToBlock.prototype.getChunkHeights = function(node) {
     }
   }
   if (node.hasOwnProperty('orelse')) {
-    for (let i = 0; i < node.orelse.length; i += 1) {
-      const subnode = node.orelse[i];
-      lineNumbers = lineNumbers.concat(this.getChunkHeights(subnode));
+    for (const nodeOrelse of node.orelse) {
+      lineNumbers = lineNumbers.concat(this.getChunkHeights(nodeOrelse));
     }
   }
   return lineNumbers;
@@ -404,9 +410,9 @@ pythonToBlock.create_block = function(type, lineNumber, fields, values, settings
       if (mutation.charAt(0) === '@') {
         newMutation.setAttribute(mutation.substr(1), mutationValue);
       } else if (mutationValue != null && mutationValue.constructor === Array) {
-        for (let i = 0; i < mutationValue.length; i++) {
+        for (const perMutationValue of mutationValue) {
           const mutationNode = document.createElement(mutation);
-          mutationNode.setAttribute('name', mutationValue[i]);
+          mutationNode.setAttribute('name', perMutationValue);
           newMutation.appendChild(mutationNode);
         }
       } else {
@@ -450,10 +456,10 @@ pythonToBlock.create_block = function(type, lineNumber, fields, values, settings
       if (statementValue == null) {
         continue;
       } else {
-        for (let i = 0; i < statementValue.length; i += 1) {
+        for (const perStatementValue of statementValue) {
           const newStatement = document.createElement('statement');
           newStatement.setAttribute('name', statement);
-          newStatement.appendChild(statementValue[i]);
+          newStatement.appendChild(perStatementValue);
           newBlock.appendChild(newStatement);
         }
       }
