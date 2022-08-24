@@ -7,7 +7,7 @@
  * @date 2022-08-23
  * @param {any} Blockly
  */
-function interatorBlocks(Blockly) {
+function iteratorBlocks(Blockly) {
 // 字典元素：键值对
   const dictPairConfig = {
     message0: '%1 : %2',
@@ -260,5 +260,5 @@ function interatorBlocks(Blockly) {
       },
   );
 }
-export default interatorBlocks;
+export default iteratorBlocks;
 

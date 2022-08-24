@@ -55,7 +55,7 @@ import sliceBlocks from './CustomBlocks/sliceBlocks';
 import subscriptBlocks from './CustomBlocks/subscriptBlocks';
 import assignBlocks from './CustomBlocks/assignBlocks';
 import stringBlocks from './CustomBlocks/stringBlocks';
-import unaryOpNotBlocks from './CustomBlocks/unaryOPNotBlocks';
+import unaryOpNotBlocks from './CustomBlocks/unaryOpNotBlocks';
 /**
  * 描述: Blockx初始化函数
  * @date 2022-08-22

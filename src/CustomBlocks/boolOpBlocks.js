@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
  * 创建boolOP块
-=======
- * 描述
->>>>>>> 0f76589 (refactor: Refactor BlockX--stage 1. Closes #187)
  * @date 2022-08-23
  * @param {any} Blockly
  */

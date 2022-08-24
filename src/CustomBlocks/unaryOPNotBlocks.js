@@ -3,7 +3,7 @@
  * @date 2022-08-23
  * @param {any} Blockly
  */
-function unaryOPNotBlocks(Blockly) {
+function unaryOpNotBlocks(Blockly) {
   Blockly.UNARYOPS = [
     [
       '+', 'UAdd',
@@ -44,5 +44,5 @@ function unaryOPNotBlocks(Blockly) {
     };
   });
 }
-export default unaryOPNotBlocks;
+export default unaryOpNotBlocks;
 

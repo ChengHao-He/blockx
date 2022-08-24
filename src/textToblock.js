@@ -47,21 +47,21 @@ pythonToBlock.prototype.convertSource = function(pythonSource) {
   /**
    * 描述
    * @date 2022-08-23
-   * @param {any} converted
-   * @param {any} xml
+   * @param {any} convertedInFunction
+   * @param {any} xmlInFunction
    * @return {any}
    */
-  const xmlAppendChild=function(converted, xml) {
-    if (converted !== null) {
+  const xmlAppendChild=function(convertedInFunction, xmlInFunction) {
+    if (convertedInFunction !== null) {
       // eslint-disable-next-line guard-for-in
-      for (const perConverted of converted) {
-        xml.appendChild(perConverted);
+      for (const perConverted of convertedInFunction) {
+        xmlInFunction.appendChild(perConverted);
       }
     }
     if (badChunks.length) {
-      xml.appendChild(pythonToBlock.raw_block(badChunks.join('\n')));
+      xmlInFunction.appendChild(pythonToBlock.raw_block(badChunks.join('\n')));
     }
-    return xml;
+    return xmlInFunction;
   };
   let xml = document.createElement('xml');
   const filename = '__main__.py';
@@ -381,8 +381,8 @@ pythonToBlock.prototype.getChunkHeights = function(node) {
     lineNumbers.push(node.lineno);
   }
   if (node.hasOwnProperty('body')) {
-    for (let i = 0; i < node.body.length; i += 1) {
-      const subnode = node.body[i];
+    for (const perNodeBody of node.body) {
+      const subnode = perNodeBody;
       lineNumbers = lineNumbers.concat(this.getChunkHeights(subnode));
     }
   }
@@ -409,7 +409,7 @@ pythonToBlock.create_block = function(type, lineNumber, fields, values, settings
     for (const mutation in mutations) {
       const mutationValue = mutations[mutation];
       if (mutation.charAt(0) === '@') {
-        newMutation.setAttribute(mutation.substr(1), mutationValue);
+        newMutation.setAttribute(mutation.substring(1), mutationValue);
       } else if (mutationValue != null && mutationValue.constructor === Array) {
         for (const perMutationValue of mutationValue) {
           const mutationNode = document.createElement(mutation);
