@@ -35,6 +35,25 @@ pythonToBlock.prototype
     };
 
 /**
+ * 描述
+ * @date 2022-08-24
+ * @param {any} convertedInFunction
+ * @param {any} xmlInFunction
+ * @return {any}
+ */
+const xmlAppendChild=function(convertedInFunction, xmlInFunction) {
+  if (convertedInFunction !== null) {
+    // eslint-disable-next-line guard-for-in
+    for (const perConverted of convertedInFunction) {
+      xmlInFunction.appendChild(perConverted);
+    }
+  }
+  if (badChunks.length) {
+    xmlInFunction.appendChild(pythonToBlock.raw_block(badChunks.join('\n')));
+  }
+  return xmlInFunction;
+};
+/**
 * The main function for converting a string representation of Python
 * code to the Blockly XML representation.
 *
@@ -43,6 +62,7 @@ pythonToBlock.prototype
 * @return {Object} An object which will either have the converted
 *      source code or an error message and the code as a code-block.
 */
+
 pythonToBlock.prototype.convertSource = function(pythonSource) {
   /**
    * 描述
@@ -51,18 +71,7 @@ pythonToBlock.prototype.convertSource = function(pythonSource) {
    * @param {any} xmlInFunction
    * @return {any}
    */
-  const xmlAppendChild=function(convertedInFunction, xmlInFunction) {
-    if (convertedInFunction !== null) {
-      // eslint-disable-next-line guard-for-in
-      for (const perConverted of convertedInFunction) {
-        xmlInFunction.appendChild(perConverted);
-      }
-    }
-    if (badChunks.length) {
-      xmlInFunction.appendChild(pythonToBlock.raw_block(badChunks.join('\n')));
-    }
-    return xmlInFunction;
-  };
+
   let xml = document.createElement('xml');
   const filename = '__main__.py';
   let parse; let ast = null;
@@ -123,6 +132,36 @@ pythonToBlock.prototype.convertSource = function(pythonSource) {
   };
 };
 
+/**
+ * 描述
+ * @date 2022-08-24
+ * @param {any} index
+ * @param {any} nodeInFunction
+ * @param {any} Next
+ * @return {any}
+ */
+const assignForNextBody = function(index, nodeInFunction, Next) {
+  if (index + 1 === nodeInFunction.body.length) {
+    return Next;
+  } else {
+    return nodeInFunction.body[index + 1].lineno - 1;
+  }
+};
+/**
+ * 描述
+ * @date 2022-08-24
+ * @param {any} index
+ * @param {any} nodeInFunction
+ * @param {any} Orelse
+ * @return {any}
+ */
+const assignForNextOrElse = function(index, nodeInFunction, Orelse) {
+  if (index === nodeInFunction.orelse.length) {
+    return nextBlockLine;
+  } else {
+    return 1 + (Orelse.lineno - 1);
+  }
+};
 pythonToBlock.prototype.recursiveMeasure = function(node, nextBlockLine) {
   if (node === undefined) {
     return;
@@ -139,24 +178,12 @@ pythonToBlock.prototype.recursiveMeasure = function(node, nextBlockLine) {
   let i = 0;
   if ('body' in node) {
     for (; i < node.body.length; i++) {
-      let next;
-      if (i + 1 === node.body.length) {
-        next = myNext;
-      } else {
-        next = node.body[i + 1].lineno - 1;
-      }
-      this.recursiveMeasure(node.body[i], next);
+      this.recursiveMeasure(node.body[i], assignForNextBody(i, node, myNext));
     }
   }
   if ('orelse' in node) {
     for (const ondeOrelse of node.orelse) {
-      let next;
-      if (i === node.orelse.length) {
-        next = nextBlockLine;
-      } else {
-        next = 1 + (ondeOrelse.lineno - 1);
-      }
-      this.recursiveMeasure(ondeOrelse, next);
+      this.recursiveMeasure(ondeOrelse, assignForNextOrElse(i, node, ondeOrelse));
     }
   }
 };
@@ -315,12 +342,8 @@ pythonToBlock.prototype.convertBody = function(node, parent) {
       delete this.comments[lastLineNumber];
     }
   }
-
-
   finalizePeers();
-
   this.levelIndex -= 1;
-
   return children;
 };
 
@@ -394,61 +417,115 @@ pythonToBlock.prototype.getChunkHeights = function(node) {
   return lineNumbers;
 };
 
-pythonToBlock.create_block = function(type, lineNumber, fields, values, settings, mutations, statements) {
-  const newBlock = document.createElement('block');
-  newBlock.setAttribute('type', type);
-  newBlock.setAttribute('line_number', lineNumber);
+/**
+ * 描述
+ * @date 2022-08-24
+ * @param {any} valuesInFunction
+ * @param {any} newBlockInFunction
+ * @return {any}
+ */
+const newBlockAppendValues = function(valuesInFunction, newBlockInFunction) {
   // eslint-disable-next-line guard-for-in
-  for (const setting in settings) {
-    const settingValue = settings[setting];
-    newBlock.setAttribute(setting, settingValue);
-  }
-  if (mutations !== undefined && Object.keys(mutations).length > 0) {
-    const newMutation = document.createElement('mutation');
-    // eslint-disable-next-line guard-for-in
-    for (const mutation in mutations) {
-      const mutationValue = mutations[mutation];
-      if (mutation.charAt(0) === '@') {
-        newMutation.setAttribute(mutation.substring(1), mutationValue);
-      } else if (mutationValue != null && mutationValue.constructor === Array) {
-        for (const perMutationValue of mutationValue) {
-          const mutationNode = document.createElement(mutation);
-          mutationNode.setAttribute('name', perMutationValue);
-          newMutation.appendChild(mutationNode);
-        }
-      } else {
-        const mutationNode = document.createElement('arg');
-        if (mutation.charAt(0) === '!') {
-          mutationNode.setAttribute('name', '');
-        } else {
-          mutationNode.setAttribute('name', mutation);
-        }
-        if (mutationValue !== null) {
-          mutationNode.appendChild(mutationValue);
-        }
-        newMutation.appendChild(mutationNode);
-      }
+  for (const value in valuesInFunction) {
+    const valueValue = valuesInFunction[value];
+    const newValue = document.createElement('value');
+    if (valueValue !== null) {
+      newValue.setAttribute('name', value);
+      newValue.appendChild(valueValue);
+      newBlockInFunction.appendChild(newValue);
     }
-    newBlock.appendChild(newMutation);
   }
+  return newBlockInFunction;
+};
+/**
+ * 描述
+ * @date 2022-08-24
+ * @param {any} fieldsInFunction
+ * @param {any} newBlockInFunction
+ * @return {any}
+ */
+const newBlockAppendFields = function(fieldsInFunction, newBlockInFunction) {
   // eslint-disable-next-line guard-for-in
-  for (const field in fields) {
-    const fieldValue = fields[field];
+  for (const field in fieldsInFunction) {
+    const fieldValue = fieldsInFunction[field];
     const newField = document.createElement('field');
     newField.setAttribute('name', field);
     newField.appendChild(document.createTextNode(fieldValue));
     newBlock.appendChild(newField);
   }
+  return newBlockInFunction;
+};
+/**
+ * 描述
+ * @date 2022-08-24
+ * @param {any} settingsInFunction
+ * @param {any} newBlockInFunction
+ * @return {any}
+ */
+const newBlockAppendSettings = function(settingsInFunction, newBlockInFunction) {
   // eslint-disable-next-line guard-for-in
-  for (const value in values) {
-    const valueValue = values[value];
-    const newValue = document.createElement('value');
-    if (valueValue !== null) {
-      newValue.setAttribute('name', value);
-      newValue.appendChild(valueValue);
-      newBlock.appendChild(newValue);
+  for (const setting in settingsInFunction) {
+    const settingValue = settingsInFunction[setting];
+    newBlockInFunction.setAttribute(setting, settingValue);
+  }
+  return newBlockInFunction;
+};
+/**
+ * 描述
+ * @date 2022-08-24
+ * @param {any} mutationValueInFunction
+ * @return {any}
+ */
+const mutationNodeAppendChild = function(mutationValueInFunction) {
+  if (mutationValueInFunction !== null) {
+    mutationNode.appendChild(mutationValueInFunction);
+  }
+  return mutationValueInFunction;
+};
+/**
+ * 描述
+ * @date 2022-08-24
+ * @param {any} mutations
+ * @param {any} newMutation
+ * @return {any}
+ */
+const newBlockAppendMutations = function(mutations, newMutation) {
+  // eslint-disable-next-line guard-for-in
+  for (const mutation in mutations) {
+    const mutationValue = mutations[mutation];
+    if (mutation.charAt(0) === '@') {
+      newMutation.setAttribute(mutation.substring(1), mutationValue);
+    } else if (mutationValue != null && mutationValue.constructor === Array) {
+      for (const perMutationValue of mutationValue) {
+        const mutationNode = document.createElement(mutation);
+        mutationNode.setAttribute('name', perMutationValue);
+        newMutation.appendChild(mutationNode);
+      }
+    } else {
+      let mutationNode = document.createElement('arg');
+      if (mutation.charAt(0) === '!') {
+        mutationNode.setAttribute('name', '');
+      } else {
+        mutationNode.setAttribute('name', mutation);
+      }
+      mutationNode = mutationNodeAppendChild(mutationNode);
+      newMutation.appendChild(mutationNode);
     }
   }
+  return newMutation;
+};
+pythonToBlock.create_block = function(type, lineNumber, fields, values, settings, mutations, statements) {
+  let newBlock = document.createElement('block');
+  newBlock.setAttribute('type', type);
+  newBlock.setAttribute('line_number', lineNumber);
+  newBlock = newBlockAppendSettings(settings, newBlock);
+  if (mutations !== undefined && Object.keys(mutations).length > 0) {
+    let newMutation = document.createElement('mutation');
+    newMutation=newBlockAppendMutations(mutations, newMutation);
+    newBlock.appendChild(newMutation);
+  }
+  newBlock = newBlockAppendFields(fields, newBlock);
+  newBlock = newBlockAppendValues(values, newBlock);
   // Statements
   if (statements !== undefined && Object.keys(statements).length > 0) {
     // eslint-disable-next-line guard-for-in
