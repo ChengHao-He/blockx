@@ -173,12 +173,13 @@ Blockx.initPythonToBlock = function() {
   if (initPythonToBlock(pythonToBlock)) {
     textToBlock(getPythonToBlock(), getSk());
     pythonBlock(getPythonToBlock(), getBlockly(), getSk());
-    console.log('Dependence', getDependence());
-    return getPythonToBlock();
   } else {
     throw new Error('pythonToBlock is null or undefined');
   }
 };
 
+Blockx.getPythonToBlock = function() {
+  return getPythonToBlock();
+};
 export default Blockx;
 

@@ -1,4 +1,4 @@
-import {getBlockly, getSkulpt} from './dependence';
+import {getBlockly, getSk} from './dependence';
 /* eslint-disable max-len */
 /**
  * 描述
@@ -10,14 +10,14 @@ function pythonToBlock() {
   // eslint-disable-next-line no-invalid-this
   this.strictAnnotations = ['int', 'float', 'str', 'bool'];
   getBlockly().defineBlocksWithJsonArray(pythonToBlock.BLOCKS);
-  getSkulpt().configure({
-    __future__: getSkulpt().python3,
+  getSk().configure({
+    __future__: getSk().python3,
     read: function read(filename) {
-      if (getSkulpt().builtinFiles === undefined ||
-        getSkulpt().builtinFiles['files'][filename] === undefined) {
+      if (getSk().builtinFiles === undefined ||
+        getSk().builtinFiles['files'][filename] === undefined) {
         throw new Error('File not found: \'' + filename + '\'');
       }
-      return getSkulpt().builtinFiles['files'][filename];
+      return getSk().builtinFiles['files'][filename];
     },
   });
 }

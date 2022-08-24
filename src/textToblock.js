@@ -18,22 +18,24 @@ function textToBlock(pythonToBlock, Sk) {
         return pythonToBlock.xmlToString(xml);
       };
 
+
   /**
- * 描述
- * @date 2022-08-24
- * @param {any} convertedInFunction
- * @param {any} xmlInFunction
- * @return {any}
- */
-  const xmlAppendChild=function(convertedInFunction, xmlInFunction) {
+   * 描述
+   * @date 2022-08-24
+   * @param {any} badChunksInFunction
+   * @param {any} convertedInFunction
+   * @param {any} xmlInFunction
+   * @return {any}
+   */
+  const xmlAppendChild=function(badChunksInFunction, convertedInFunction, xmlInFunction) {
     if (convertedInFunction !== null) {
     // eslint-disable-next-line guard-for-in
       for (const perConverted of convertedInFunction) {
         xmlInFunction.appendChild(perConverted);
       }
     }
-    if (badChunks.length) {
-      xmlInFunction.appendChild(pythonToBlock.raw_block(badChunks.join('\n')));
+    if (badChunksInFunction.length) {
+      xmlInFunction.appendChild(pythonToBlock.raw_block(badChunksInFunction.join('\n')));
     }
     return xmlInFunction;
   };
@@ -106,7 +108,8 @@ function textToBlock(pythonToBlock, Sk) {
     this.nextExpectedLine = 0;
     this.measureNode(ast);
     const converted = this.convert(ast);
-    xml=xmlAppendChild(converted, xml);
+
+    xml=xmlAppendChild(badChunks, converted, xml);
     return {
       'xml': pythonToBlock.xmlToString(xml),
       'error': null,
@@ -435,7 +438,7 @@ function textToBlock(pythonToBlock, Sk) {
       const newField = document.createElement('field');
       newField.setAttribute('name', field);
       newField.appendChild(document.createTextNode(fieldValue));
-      newBlock.appendChild(newField);
+      newBlockInFunction.appendChild(newField);
     }
     return newBlockInFunction;
   };
