@@ -64,7 +64,8 @@ function assignGenerate(Blockly) {
           Blockly.Python.ORDER_NONE) || Blockly.Python.blank;
     }
 
-    const operator = BINOPS_BLOCKLY_GENERATE[block.getFieldValue('OP_NAME')][0];
+    const operator =
+    Blockly.BINOPS_BLOCKLY_GENERATE[block.getFieldValue('OP_NAME')][0];
 
     const value = Blockly.Python.valueToCode(block, 'VALUE',
         Blockly.Python.ORDER_NONE) || Blockly.Python.blank;

@@ -191,36 +191,22 @@ function assignBlocks(Blockly) {
 
   Blockly.Blocks['aug_assign'] = {
     init: function() {
-      const block = this;
       this.simpleTarget_ = true;
       this.allOptions_ = false;
-      this.initialPreposition_ = 'by';
       this.appendDummyInput('OP')
           .appendField(new Blockly.FieldDropdown(function() {
-            return block.allOptions_ ?
-                      Blockly.BINOPS_AUGASSIGN_DISPLAY_FULL :
-                      Blockly.BINOPS_AUGASSIGN_DISPLAY;
-          }, function(value) {
-          // eslint-disable-next-line no-invalid-this
-            const block = this.sourceBlock_;
-            block.updatePreposition_(value);
+            return Blockly.BINOPS_AUGASSIGN_DISPLAY;
           }), 'OP_NAME')
           .appendField(' ');
       this.appendDummyInput('PREPOSITION_ANCHOR')
           .setAlign(Blockly.ALIGN_RIGHT)
-          .appendField('by', 'PREPOSITION');
+          .appendField(Blockly.Msg.BINOPS_AUGASSIGN_PREPOSITION, 'PREPOSITION');
       this.appendValueInput('VALUE');
       this.setInputsInline(true);
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(225);
       this.updateShape_();
-      this.updatePreposition_(this.initialPreposition_);
-    },
-
-    updatePreposition_: function(value) {
-      const preposition = Blockly.BINOPS_AUGASSIGN_PREPOSITION[value];
-      this.setFieldValue(preposition, 'PREPOSITION');
     },
     /**
        * Create XML to represent list inputs.
@@ -230,8 +216,6 @@ function assignBlocks(Blockly) {
     mutationToDom: function() {
       const container = document.createElement('mutation');
       container.setAttribute('simple', this.simpleTarget_);
-      container.setAttribute('options', this.allOptions_);
-      container.setAttribute('preposition', this.initialPreposition_);
       return container;
     },
     /**
@@ -241,12 +225,9 @@ function assignBlocks(Blockly) {
        */
     domToMutation: function(xmlElement) {
       this.simpleTarget_ = 'true' === xmlElement.getAttribute('simple');
-      this.allOptions_ = 'true' === xmlElement.getAttribute('options');
-      this.initialPreposition_ = xmlElement.getAttribute('preposition');
       this.updateShape_();
-      this.updatePreposition_(this.initialPreposition_);
     },
-    updateShape_: function(block) {
+    updateShape_: function(_block) {
     // Add new inputs.
       this.getField('OP_NAME').getOptions(false);
       if (this.simpleTarget_) {
