@@ -1,3 +1,4 @@
+
 // 块基本信息
 const intNumberConfig = {
   'message0': 'int: %1',

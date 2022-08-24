@@ -1,3 +1,5 @@
+
+
 /* eslint-disable max-len */
 /**
  * 描述
@@ -16,7 +18,6 @@ function pythonToBlock() {
         Sk.builtinFiles['files'][filename] === undefined) {
         throw new Error('File not found: \'' + filename + '\'');
       }
-
       return Sk.builtinFiles['files'][filename];
     },
   });
@@ -498,8 +499,6 @@ pythonToBlock.prototype.convertElements = function(key, values, parent) {
   }
   return output;
 };
-
-Blockly.Python['blank'] = '___';
 
 pythonToBlock.prototype.LOCKED_BLOCK = {
   'inline': 'true',
