@@ -4,9 +4,7 @@ import {initBlockly, initTextEditor,
 import globalConst from './globalConst';
 
 // generate
-// import annotationAssignGenerate from './CodeGenerators/annotation_assign';
 import attributeGenerate from './CodeGenerators/attributeGenerate';
-// import augAssignGenerate from './CodeGenerators/augAssign';
 import binOpGenerate from './CodeGenerators/binOpGenerate';
 import boolOpGenerate from './CodeGenerators/boolOpGenerate';
 import callGenerate from './CodeGenerators/callGenerate';
@@ -28,14 +26,12 @@ import rawBlockGenerate from './CodeGenerators/rawBlockGenerate';
 import returnGenerate from './CodeGenerators/returnGenerate';
 import sliceGenerate from './CodeGenerators/sliceGenerate';
 import subscriptGenerate from './CodeGenerators/subscriptGenerate';
-// import typeAssginGenerate from './CodeGenerators/type_assgin';
-// import typeStringGenerate from './CodeGenerators/type_string';
+import assignGenerate from './CodeGenerators/assignGenerate';
+import stringGenerate from './CodeGenerators/stringGenerate';
 import unaryOpNotGenerate from './CodeGenerators/unaryOpNotGenerate';
 
 // blocks
-// import annotationAssignBlocks from './CustomBlocks/annotation_assign';
 import attributeBlocks from './CustomBlocks/attributeBlocks';
-// import augAssignBlocks from './CustomBlocks/augAssign';
 import binOpBlocks from './CustomBlocks/binOpBlocks';
 import boolOpBlocks from './CustomBlocks/boolOpBlocks';
 import callBlocks from './CustomBlocks/callBlocks';
@@ -57,8 +53,8 @@ import rawBlockBlocks from './CustomBlocks/rawBlockBlocks';
 import returnBlocks from './CustomBlocks/returnBlocks';
 import sliceBlocks from './CustomBlocks/sliceBlocks';
 import subscriptBlocks from './CustomBlocks/subscriptBlocks';
-// import typeAssginBlocks from './CustomBlocks/type_assign';
-// import typeStringBlocks from './CustomBlocks/type_string';
+import assignBlocks from './CustomBlocks/assignBlocks';
+import stringBlocks from './CustomBlocks/stringBlocks';
 import unaryOpNotBlocks from './CustomBlocks/unaryOPNotBlocks';
 /**
  * 描述: Blockx初始化函数
@@ -72,15 +68,12 @@ function Blockx(blockxId) {
 Blockx.initBlockly = function(blockly) {
   if (initBlockly(blockly)) {
     globalConst(getBlockly());
-    // annotationAssign
-    // annotationAssignBlocks(getBlockly());
-    // annotationAssignGenerate(getBlockly());
+    // Assign、augAssign、annotationAssign
+    assignBlocks(getBlockly());
+    assignGenerate(getBlockly());
     // attribute
     attributeBlocks(getBlockly());
     attributeGenerate(getBlockly());
-    // augAssign
-    // augAssignBlocks(getBlockly());
-    // augAssignGenerate(getBlockly());
     // binOp
     binOpBlocks(getBlockly());
     binOpGenerate(getBlockly());
@@ -144,12 +137,9 @@ Blockx.initBlockly = function(blockly) {
     // subscript
     subscriptBlocks(getBlockly());
     subscriptGenerate(getBlockly());
-    // typeAssgin
-    // typeAssginBlockBlocks(getBlockly());
-    // typeAssginBlockGenerate(getBlockly());
-    // typeString
-    // typeStringBlockBlocks(getBlockly());
-    // typeStringBlockGenerate(getBlockly());
+    // string
+    stringBlocks(getBlockly());
+    stringGenerate(getBlockly());
     // unaryOpNot
     unaryOpNotBlocks(getBlockly());
     unaryOpNotGenerate(getBlockly());
