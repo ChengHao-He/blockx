@@ -18,7 +18,6 @@ function assignGenerate(Blockly) {
             Blockly.Python.ORDER_NONE) || Blockly.Python.blank);
       }
     }
-    console.log(targets);
     return targets.join(' = ') + ' = ' + value + '\n';
   };
 

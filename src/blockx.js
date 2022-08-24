@@ -1,6 +1,9 @@
 // 全局变量
-import {initBlockly, initTextEditor,
-  getDependence, getBlockly, getTextEditor} from './dependence';
+import {initBlockly, initTextEditor, initPythonToBlock, initSk,
+  getDependence, getBlockly, getSk, getPythonToBlock} from './dependence.js';
+import pythonToBlock from './pythonToBlock';
+import textToBlock from './textToblock.js';
+import pythonBlock from './pythonBlock.js';
 import globalConst from './globalConst';
 
 // generate
@@ -145,7 +148,7 @@ Blockx.initBlockly = function(blockly) {
     unaryOpNotGenerate(getBlockly());
     return getBlockly();
   } else {
-    throw new Error('Blockly is null.');
+    throw new Error('Blockly is null or undefined.');
   }
 };
 
@@ -155,7 +158,25 @@ Blockx.initTextEditor = function(textEditor) {
     getTextEditor();
     return true;
   } else {
-    throw new Error('textEditor is null.');
+    throw new Error('textEditor is null or undefined.');
+  }
+};
+
+Blockx.initSk = function(Sk) {
+  if (initSk(Sk)) {
+  } else {
+    throw new Error('Skulpt is null or undefined.');
+  }
+};
+
+Blockx.initPythonToBlock = function() {
+  if (initPythonToBlock(pythonToBlock)) {
+    textToBlock(getPythonToBlock(), getSk());
+    pythonBlock(getPythonToBlock(), getBlockly(), getSk());
+    console.log('Dependence', getDependence());
+    return getPythonToBlock();
+  } else {
+    throw new Error('pythonToBlock is null or undefined');
   }
 };
 
