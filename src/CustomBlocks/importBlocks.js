@@ -8,7 +8,7 @@ function importBlocks(Blockly) {
     'innputsInline': false,
     'previousStatement': null,
     'nextStatement': null,
-    'colour': 60,
+    'colour': '#4250D4',
   };
   Blockly.Blocks['import'] = {
     init: function() {
@@ -27,7 +27,7 @@ function importBlocks(Blockly) {
           input = this.appendDummyInput('CLAUSE' + i)
               .setAlign(Blockly.ALIGN_RIGHT);
           if (i === 0) {
-            input.appendField('import');
+            input.appendField(Blockly.Msg.IMPORT_BLOCK_TITLE);
           }
           input.appendField(new Blockly.FieldTextInput('default'), 'NAME' + i);
         }
@@ -35,7 +35,7 @@ function importBlocks(Blockly) {
           input.removeField('AS' + i);
           input.removeField('ASNAME' + i);
         } else if (!this.regulars_[i] && !this.getField('AS' + i)) {
-          input.appendField('as', 'AS' + i)
+          input.appendField(Blockly.Msg.IMPORT_AS_BLOCK_TITLE, 'AS' + i)
               .appendField(new Blockly.FieldVariable('alias'), 'ASNAME' + i);
         }
       }
@@ -50,7 +50,7 @@ function importBlocks(Blockly) {
       if (this.from_ && !this.getInput('FROM')) {
         this.appendDummyInput('FROM')
             .setAlign(Blockly.ALIGN_RIGHT)
-            .appendField('from')
+            .appendField(Blockly.Msg.IMPORT_FROM_BLOCK_TITLE)
             .appendField(new Blockly.FieldTextInput('module'), 'MODULE');
       } else if (!this.from_ && this.getInput('FROM')) {
         this.removeInput('FROM');

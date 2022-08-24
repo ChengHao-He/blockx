@@ -5,7 +5,7 @@
  */
 function compareGenerate(Blockly) {
   Blockly.Python['Compare'] = function(block) {
-    const tuple = COMPARES_BLOCKLY_GENERATE[block.getFieldValue('OP')];
+    const tuple = Blockly.COMPARES_BLOCKLY_GENERATE[block.getFieldValue('OP')];
     const operator = ' ' + tuple + ' ';
     const order = Blockly.Python.ORDER_RELATIONAL;
     const argument0 =

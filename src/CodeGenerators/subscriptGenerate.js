@@ -5,7 +5,7 @@
  */
 function subscriptGenerate(Blockly) {
   const slicesAppendChild = function(block, STR) {
-    return ':' + Blockly.Python
+    return Blockly.Python
         .valueToCode(block, STR, Blockly.Python.ORDER_MEMBER) ||
 Blockly.Python.blank;
   };
@@ -24,10 +24,10 @@ Blockly.Python.blank;
         }
         slices[i] += ':';
         if (kind.charAt(2) === '1') {
-          slices[i] += slicesAppendChild(block, 'SLICELOWER' + i);
+          slices[i] += slicesAppendChild(block, 'SLICEUPPER' + i);
         }
         if (kind.charAt(3) === '1') {
-          slices[i] += slicesAppendChild(block, 'SLICELOWER' + i);
+          slices[i] += ':' + slicesAppendChild(block, 'SLICESTEP' + i);
         }
       }
     }

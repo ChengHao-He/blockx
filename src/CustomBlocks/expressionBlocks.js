@@ -23,7 +23,7 @@ function expressionBlocks(Blockly) {
   };
 
   const ifExpConnfig = {
-    'message0': '%1 if %2 else %3',
+    'message0': '%{BKY_IF_EXPRESSION_CREATE_TITLE}',
     'args0': [
       {
         'type': 'input_value',

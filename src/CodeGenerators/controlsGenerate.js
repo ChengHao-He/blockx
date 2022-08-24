@@ -14,6 +14,7 @@ function controlsGenerate(Blockly) {
     Blockly.Python.statementToCode(block, 'BODY') ||
     Blockly.Python.PASS;
     const branchElse = Blockly.Python.statementToCode(block, 'ELSE');
+    console.log(branchElse);
     let code = 'for ' + argument0 + ' in ' + argument1 + ':\n' + branchBody;
     if (branchElse) {
       code += 'else:\n' + branchElse;

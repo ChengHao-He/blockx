@@ -6,7 +6,7 @@
 function controlsBlocks(Blockly) {
   const forConfig = {
     'type': 'for',
-    'message0': 'for %1 in %2 : %3 %4',
+    'message0': '%{BKY_CONTROLS_FOREACH_TITLE} %3 %4',
     'args0': [
       {'type': 'input_value', 'name': 'TARGET'},
       {'type': 'input_value', 'name': 'ITERATOR'},
@@ -21,7 +21,6 @@ function controlsBlocks(Blockly) {
   Blockly.Blocks['for'] = {
     init: function() {
       this.jsonInit(forConfig);
-      this.appendStatementInput('DO');
       this.setTooltip(function() {
         return 'FOR loop.';
       });
@@ -29,7 +28,7 @@ function controlsBlocks(Blockly) {
   };
 
   const forElseConfig = {
-    'message0': 'for %1 in %2 : %3 %4 else: %5 %6',
+    'message0': '%{BKY_CONTROLS_FOREACH_TITLE} %3 %4 else: %5 %6',
     'args0': [
       {'type': 'input_value', 'name': 'TARGET'},
       {'type': 'input_value', 'name': 'ITERATOR'},
@@ -69,12 +68,12 @@ function controlsBlocks(Blockly) {
         check: 'Boolean',
       },
     ],
-    message1: 'do %1',
+    message1: '%{BKY_CONTROLS_REPEAT_INPUT_DO} %1',
     args1: [{
       type: 'input_statement',
       name: 'DO',
     }],
-    message2: 'else %1',
+    message2: '%{BKY_CONTROLS_IF_MSG_ELSE} %1',
     args2: [{
       type: 'input_statement',
       name: 'ELSE',
@@ -94,7 +93,7 @@ function controlsBlocks(Blockly) {
       this.orelse_ = 0;
       this.elifs_ = 0;
       this.appendValueInput('TEST')
-          .appendField('if');
+          .appendField(Blockly.Msg.CONTROLS_IF_MSG_IF);
       this.appendStatementInput('BODY')
           .setCheck(null)
           .setAlign(Blockly.ALIGN_RIGHT);
@@ -110,7 +109,7 @@ function controlsBlocks(Blockly) {
       for (; i < this.elifs_; i++) {
         if (!this.getInput('ELIF' + i)) {
           this.appendValueInput('ELIFTEST' + i)
-              .appendField('elif');
+              .appendField(Blockly.Msg.CONTROLS_IF_MSG_ELSEIF);
           this.appendStatementInput('ELIFBODY' + i)
               .setCheck(null);
         }
@@ -124,7 +123,7 @@ function controlsBlocks(Blockly) {
 
       if (this.orelse_ && !this.getInput('ELSE')) {
         this.appendDummyInput('ORELSETEST')
-            .appendField('else:');
+            .appendField(Blockly.Msg.CONTROLS_IF_MSG_ELSE);
         this.appendStatementInput('ORELSEBODY')
             .setCheck(null);
       } else if (!this.orelse_ && this.getInput('ELSE')) {
@@ -166,7 +165,7 @@ function controlsBlocks(Blockly) {
   };
 
   const breakConfig = {
-    'message0': 'break',
+    'message0': '%{BKY_CONTROLS_FLOW_STATEMENTS_OPERATOR_BREAK}',
     'inputsInline': false,
     'previousStatement': null,
     'nextStatement': null,
@@ -179,7 +178,7 @@ function controlsBlocks(Blockly) {
   };
 
   const continueConfig = {
-    'message0': 'continue',
+    'message0': '%{BKY_CONTROLS_FLOW_STATEMENTS_OPERATOR_CONTINUE}',
     'inputsInline': false,
     'previousStatement': null,
     'nextStatement': null,
@@ -192,7 +191,7 @@ function controlsBlocks(Blockly) {
   };
 
   const assertConfig = {
-    'message0': 'assert %1',
+    'message0': '%{BKY_LOGIC_TERNARY_CONDITION} %1',
     'args0': [
       {'type': 'input_value', 'name': 'TEST'},
     ],
@@ -208,7 +207,7 @@ function controlsBlocks(Blockly) {
   };
 
   const assertFullConfig = {
-    'message0': 'assert %1 %2',
+    'message0': '%{BKY_LOGIC_TERNARY_CONDITION} %1 %2',
     'args0': [
       {'type': 'input_value', 'name': 'TEST'},
       {'type': 'input_value', 'name': 'MSG'},
@@ -326,9 +325,9 @@ function controlsBlocks(Blockly) {
       this.handlersCount_ = 0;
       this.handlers_ = [];
       this.hasElse_ = false;
-      this.hasFinally_ = true;
+      this.hasFinally_ = false;
       this.appendDummyInput()
-          .appendField('try:');
+          .appendField('try');
       this.appendStatementInput('BODY')
           .setCheck(null)
           .setAlign(Blockly.ALIGN_RIGHT);

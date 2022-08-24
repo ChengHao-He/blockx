@@ -570,4 +570,17 @@ export default () => {
   Blockly.Msg.DICTS_POP_TITLE = '移除 %1 中键为 %2 的键值对并返回其中的值';
   Blockly.Msg.DICTS_POP_TOOLTIP = '返回字典中给定键对应的键值对的值并移除该键值对。';
   Blockly.Msg.BINOPS_AUGASSIGN_PREPOSITION = '以';
+  Blockly.Msg.ITERATOR_CONTAINER_TITLE = '可迭代对象';
+  Blockly.Msg.ITERATOR_ITEM_TITLE = '子元素';
+  Blockly.Msg.COMPREHENSION_CONTAINER_TITLE = '推导式';
+  Blockly.Msg.COMPREHENSION_FOR_TITLE = '迭代器';
+  Blockly.Msg.COMPREHENSION_IF_TITLE = '判断条件';
+  Blockly.Msg.COMPREHENSION_DICTS_CREATE_TITLE = '创建字典推导式';
+  Blockly.Msg.COMPREHENSION_LISTS_CREATE_TITLE = '创建列表推导式';
+  Blockly.Msg.COMPREHENSION_SETS_CREATE_TITLE = '创建集合推导式';
+  Blockly.Msg.GENERATOR_EXPRESSION_CREATE_TITLE = '创建生成器表达式';
+  Blockly.Msg.IF_EXPRESSION_CREATE_TITLE = '如果 %2 成立，则返回 %1, 否则返回%3';
+  Blockly.Msg.BREAKPOINT_CREATE_TITLE = '断点';
+  Blockly.Msg.TRY_CREATE_TITLE = '姑妄行此';
+  Blockly.Msg.EXCEPT_AS_CREATE_TITLE = '如事不谐岂 %1 之祸欤名之曰 %2';
 };

@@ -52,71 +52,48 @@ function globalConst(Blockly) {
   Blockly.BINOPS = [
     [
       '+', 'Add',
-      Blockly.Python.ORDER_ADDITIVE,
-      'Return the sum of the two numbers.',
-      'increase', 'by',
+      Blockly.Python.ORDER_ADDITIVE, '加',
     ],
     [
       '-', 'Sub',
-      Blockly.Python.ORDER_ADDITIVE,
-      'Return the difference of the two numbers.',
-      'decrease', 'by',
+      Blockly.Python.ORDER_ADDITIVE, '减',
     ],
     [
       '*', 'Mult',
-      Blockly.Python.ORDER_MULTIPLICATIVE,
-      'Return the product of the two numbers.',
-      'multiply', 'by',
+      Blockly.Python.ORDER_MULTIPLICATIVE, '乘',
     ],
     [
       '/', 'Div',
-      Blockly.Python.ORDER_MULTIPLICATIVE,
-      'Return the quotient of the two numbers.',
-      'divide', 'by',
+      Blockly.Python.ORDER_MULTIPLICATIVE, '除',
     ],
     [
       '%', 'Mod',
-      Blockly.Python.ORDER_MULTIPLICATIVE,
-      'Return the remainder of the first number divided by the second number.',
-      'modulo', 'by'],
+      Blockly.Python.ORDER_MULTIPLICATIVE, '模',
+    ],
     [
       '**', 'Pow',
-      Blockly.Python.ORDER_EXPONENTIATION,
-      'Return the first number raised to the power of the second number.',
-      'raise', 'to',
+      Blockly.Python.ORDER_EXPONENTIATION, '升',
     ],
     ['//', 'FloorDiv',
-      Blockly.Python.ORDER_MULTIPLICATIVE,
-      'Return the truncated quotient of the two numbers.',
-      'floor divide', 'by',
+      Blockly.Python.ORDER_MULTIPLICATIVE, '斩',
     ],
     ['<<', 'LShift',
-      Blockly.Python.ORDER_BITWISE_SHIFT,
-      'Return the left number left shifted by the right number.',
-      'left shift', 'by',
+      Blockly.Python.ORDER_BITWISE_SHIFT, '左移',
     ],
     ['>>', 'RShift',
-      Blockly.Python.ORDER_BITWISE_SHIFT,
-      'Return the left number right shifted by the right number.',
-      'right shift', 'by',
+      Blockly.Python.ORDER_BITWISE_SHIFT, '右移',
     ],
     [
       '|', 'BitOr',
-      Blockly.Python.ORDER_BITWISE_OR,
-      'Returns the bitwise OR of the two values.',
-      'bitwise OR', 'using',
+      Blockly.Python.ORDER_BITWISE_OR, '或',
     ],
     [
       '^', 'BitXor',
-      Blockly.Python.ORDER_BITWISE_XOR,
-      'Returns the bitwise XOR of the two values.',
-      'bitwise XOR', 'using',
+      Blockly.Python.ORDER_BITWISE_XOR, '异或',
     ],
     [
       '&', 'BitAnd',
-      Blockly.Python.ORDER_BITWISE_AND,
-      'Returns the bitwise AND of the two values.',
-      'bitwise AND', 'using',
+      Blockly.Python.ORDER_BITWISE_AND, '与',
     ],
   ];
   Blockly.TRY_SETTINGS = {
@@ -129,13 +106,62 @@ function globalConst(Blockly) {
       (binop) => [binop[0], binop[1]],
   );
   Blockly.BINOPS_AUGASSIGN_DISPLAY = Blockly.BINOPS.map(
-      (binop) => [binop[4], binop[1]],
+      (binop) => [binop[3], binop[1]],
   );
-
   Blockly.BINOPS_BLOCKLY_GENERATE = {};
   Blockly.BINOPS.forEach(function(binop) {
     Blockly.BINOPS_BLOCKLY_GENERATE[binop[1]] = [' ' + binop[0], binop[2]];
   });
+
+  Blockly.COMPARES = [
+    ['==', 'Eq', 'Return whether the two values are equal.'],
+    ['!=', 'NotEq', 'Return whether the two values are not equal.'],
+    ['<', 'Lt', 'Return whether the left value is less than the right value.'],
+    ['<=', 'LtE', 'Return whether the left value is less than or equal to the' +
+  'right value.'],
+    ['>', 'Gt',
+      'Return whether the left value is greater than the right value.'],
+    ['>=', 'GtE', 'Return whether the left value is greater than or equal to ' +
+  'the right value.'],
+    ['is', 'Is', 'Return whether the left value is identical to the right ' +
+  'value.'],
+    ['is not', 'IsNot', 'Return whether the left value is not identical to ' +
+  'the right value.'],
+    ['in', 'In', 'Return whether the left value is in the right value.'],
+    ['not in', 'NotIn', 'Return whether the left value is not in the '+
+  'right value.'],
+  ];
+  Blockly.COMPARES_BLOCKLY_DISPLAY = Blockly.COMPARES.map(
+      (boolop) => [boolop[0], boolop[1]],
+  );
+  Blockly.COMPARES_BLOCKLY_GENERATE = {};
+  Blockly.COMPARES.forEach(function(boolop) {
+    Blockly.COMPARES_BLOCKLY_GENERATE[boolop[1]] = boolop[0];
+  });
+
+  Blockly.UNARYOPS = [
+    [
+      '+', 'UAdd',
+      'Do nothing to the number',
+      '%{BKY_UNARYOPS_UADD}',
+    ],
+    [
+      '-', 'USub',
+      'Make the number negative',
+      '%{BKY_UNARYOPS_USUB}',
+    ],
+    [
+      'not', 'Not',
+      'Return the logical opposite of the value.',
+      '%{BKY_UNARYOPS_NOT}',
+    ],
+    [
+      '~', 'Invert',
+      'Take the bit inversion of the number',
+      '%{BKY_UNARYOPS_INVERT}',
+    ],
+  ];
+
   Blockly.Msg.TYPES_GET_TITLE = '获取 %1 的变量类型';
   Blockly.Msg.TYPES_CONVERT_TITLE = '把 %2 转类型为 %1';
   Blockly.Msg.TYPES_INT = '整数类型';
@@ -149,7 +175,7 @@ function globalConst(Blockly) {
   Blockly.Msg.TYPES_TUPLE = '元组类型';
   Blockly.Msg.TYPES_DICT = '字典类型';
   Blockly.Msg.TYPES_RANGE = '范围类型';
-  Blockly.Msg.ADD_COMMENT = '添加注释';
+  Blockly.Msg.ADD_COMMENT = '添加注释 %1';
   Blockly.Msg.CANNOT_DELETE_VARIABLE_PROCEDURE = '不能删除变量“%1”，因为它是函数“%2”定义的一部分';
   Blockly.Msg.CHANGE_VALUE_TITLE = '更改值：';
   Blockly.Msg.CLEAN_UP = '整理块';
@@ -344,10 +370,10 @@ function globalConst(Blockly) {
   Blockly.Msg.LISTS_REPEAT_TIMES_TITLE = '首尾相接 %1 列表 %2 次为新列表';
   Blockly.Msg.LISTS_REPEAT_TIMES_TOOLTIP = '将给定列表首尾相接重复指定次数作为新列表';
   Blockly.Msg.RANGE_CREATE = '从 %1 到 %2 每往后 %3 个取一次数组成一个范围';
-  Blockly.Msg.LOGIC_BOOLEAN_FALSE = '阴';
+  Blockly.Msg.LOGIC_BOOLEAN_FALSE = '假';
   Blockly.Msg.LOGIC_BOOLEAN_HELPURL = 'https://github.com/google/blockly/wiki/Logic#values'; // untranslated
   Blockly.Msg.LOGIC_BOOLEAN_TOOLTIP = '爻';
-  Blockly.Msg.LOGIC_BOOLEAN_TRUE = '阳';
+  Blockly.Msg.LOGIC_BOOLEAN_TRUE = '真';
   Blockly.Msg.LOGIC_COMPARE_HELPURL = 'https://zh.wikipedia.org/wiki/不等';
   Blockly.Msg.LOGIC_COMPARE_TOOLTIP_EQ = '如果两个输入结果相等，则返回真。';
   Blockly.Msg.LOGIC_COMPARE_TOOLTIP_GT = '如果第一个输入结果比第二个大，则返回真。';
@@ -705,5 +731,25 @@ function globalConst(Blockly) {
   Blockly.Msg.DICTS_POP_TITLE = '移除 %1 中键为 %2 的键值对并返回其中的值';
   Blockly.Msg.DICTS_POP_TOOLTIP = '返回字典中给定键对应的键值对的值并移除该键值对。';
   Blockly.Msg.BINOPS_AUGASSIGN_PREPOSITION = '以';
+  Blockly.Msg.ITERATOR_CONTAINER_TITLE = '可迭代对象';
+  Blockly.Msg.ITERATOR_ITEM_TITLE = '子元素';
+  Blockly.Msg.COMPREHENSION_CONTAINER_TITLE = '推导式';
+  Blockly.Msg.COMPREHENSION_FOR_TITLE = '迭代器';
+  Blockly.Msg.COMPREHENSION_IF_TITLE = '判断条件';
+  Blockly.Msg.COMPREHENSION_DICTS_CREATE_TITLE = '创建字典推导式';
+  Blockly.Msg.COMPREHENSION_LISTS_CREATE_TITLE = '创建列表推导式';
+  Blockly.Msg.COMPREHENSION_SETS_CREATE_TITLE = '创建集合推导式';
+  Blockly.Msg.GENERATOR_EXPRESSION_CREATE_TITLE = '创建生成器表达式';
+  Blockly.Msg.IF_EXPRESSION_CREATE_TITLE = '如果 %2 成立，则返回 %1, 否则返回%3';
+  Blockly.Msg.BREAKPOINT_CREATE_TITLE = '断点';
+  Blockly.Msg.TRY_CREATE_TITLE = '姑妄行此';
+  Blockly.Msg.EXCEPT_AS_CREATE_TITLE = '如事不谐岂 %1 之祸欤名之曰 %2';
+  Blockly.Msg.UNARYOPS_UADD = '取正';
+  Blockly.Msg.UNARYOPS_USUB = '取负';
+  Blockly.Msg.UNARYOPS_NOT = '非';
+  Blockly.Msg.UNARYOPS_INVERT = '按位取反';
+  Blockly.Msg.IMPORT_BLOCK_TITLE = '导入模块';
+  Blockly.Msg.IMPORT_FROM_BLOCK_TITLE = '从';
+  Blockly.Msg.IMPORT_AS_BLOCK_TITLE = '名之曰';
 };
 export default globalConst;

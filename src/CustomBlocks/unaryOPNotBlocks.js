@@ -4,29 +4,10 @@
  * @param {any} Blockly
  */
 function unaryOpNotBlocks(Blockly) {
-  Blockly.UNARYOPS = [
-    [
-      '+', 'UAdd',
-      'Do nothing to the number',
-    ],
-    [
-      '-', 'USub',
-      'Make the number negative',
-    ],
-    [
-      'not', 'Not',
-      'Return the logical opposite of the value.',
-    ],
-    [
-      '~', 'Invert',
-      'Take the bit inversion of the number',
-    ],
-  ];
-
   Blockly.UNARYOPS.forEach(function(unaryop) {
     const fullName = 'UnaryOp' + unaryop[1];
     const initBlockConfig = {
-      'message0': unaryop[0] + ' %1',
+      'message0': unaryop[3] + ' %1',
       'args0': [
         {
           'type': 'input_value',

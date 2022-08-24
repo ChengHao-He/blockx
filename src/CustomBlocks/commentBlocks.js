@@ -5,11 +5,11 @@
  */
 function commentBlocks(Blockly) {
   const commentConfig = {
-    'message0': '# Comment: %1',
+    'message0': '%{BKY_ADD_COMMENT}',
     'args0': [
       {'type': 'field_input',
         'name': 'BODY',
-        'text': 'will be ignored',
+        'text': '内容',
       },
     ],
     'inputsInline': true,
@@ -22,7 +22,7 @@ function commentBlocks(Blockly) {
     init: function() {
       this.jsonInit(commentConfig);
       this.setTooltip(function() {
-        return 'make a comment';
+        return Blockly.Msg.ADD_COMMENT;
       });
     },
   };

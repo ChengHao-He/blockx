@@ -42,7 +42,7 @@ function iteratorBlocks(Blockly) {
     init() {
       this.setColour('#464547');
       this.appendDummyInput()
-          .appendField('container');
+          .appendField(Blockly.Msg.ITERATOR_CONTAINER_TITLE);
       this.appendStatementInput('STACK');
       this.contextMenu = false;
     },
@@ -55,7 +55,7 @@ function iteratorBlocks(Blockly) {
     init() {
       this.setColour('#464547');
       this.appendDummyInput()
-          .appendField('item');
+          .appendField(Blockly.Msg.ITERATOR_ITEM_TITLE);
       this.setPreviousStatement(true);
       this.setNextStatement(true);
       this.contextMenu = false;

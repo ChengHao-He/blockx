@@ -6,7 +6,7 @@
 function comprehensionBlocks(Blockly) {
 // 推导式comprehension
   const comprehensionForConfig = {
-    'message0': 'for %1 in %2',
+    'message0': '%{BKY_CONTROLS_FOREACH_TITLE}',
     'args0': [
       {
         'type': 'input_value',
@@ -28,7 +28,7 @@ function comprehensionBlocks(Blockly) {
   };
 
   const comprehensionIfConfig = {
-    'message0': 'if %1',
+    'message0': '%{BKY_CONTROLS_IF_MSG_IF} %1',
     'args0': [
       {
         'type': 'input_value',
@@ -53,9 +53,9 @@ function comprehensionBlocks(Blockly) {
     init: function() {
       this.setColour(15);
       this.appendDummyInput()
-          .appendField('Add new comprehensions below');
+          .appendField(Blockly.Msg.COMPREHENSION_CONTAINER_TITLE);
       this.appendDummyInput()
-          .appendField('   For clause');
+          .appendField(Blockly.Msg.COMPREHENSION_FOR_TITLE);
       this.appendStatementInput('STACK');
       this.contextMenu = false;
     },
@@ -69,7 +69,7 @@ function comprehensionBlocks(Blockly) {
     init: function() {
       this.setColour(15);
       this.appendDummyInput()
-          .appendField('For clause');
+          .appendField(Blockly.Msg.COMPREHENSION_FOR_TITLE);
       this.setPreviousStatement(true);
       this.setNextStatement(true);
       this.contextMenu = false;
@@ -84,7 +84,7 @@ function comprehensionBlocks(Blockly) {
     init: function() {
       this.setColour(15);
       this.appendDummyInput()
-          .appendField('If clause');
+          .appendField(Blockly.Msg.COMPREHENSION_IF_TITLE);
       this.setPreviousStatement(true);
       this.setNextStatement(true);
       this.contextMenu = false;
@@ -105,10 +105,25 @@ function comprehensionBlocks(Blockly) {
         this.setStyle('loop_blocks');
         this.setColour(Blockly.COMPREHENSION_SETTINGS[kind].color);
         this.itemCount_ = 3;
-        const input = this.appendValueInput('ELT')
-            .appendField(Blockly.COMPREHENSION_SETTINGS[kind].start);
-        if (kind === 'dict_comp') {
-          input.setCheck('DictPair');
+        const input = this.appendValueInput('ELT');
+        switch (kind) {
+          case 'list_comp':
+            input.appendField(Blockly.Msg.COMPREHENSION_LISTS_CREATE_TITLE)
+                .appendField('[');
+            break;
+          case 'set_comp':
+            input.appendField(Blockly.Msg.COMPREHENSION_SETS_CREATE_TITLE)
+                .appendField('{');
+            break;
+          case 'dict_comp':
+            input.appendField(Blockly.Msg.COMPREHENSION_DICTS_CREATE_TITLE)
+                .appendField('{')
+                .setCheck('DictPair');
+            break;
+          case 'generator_expr':
+            input.appendField(Blockly.Msg.GENERATOR_EXPRESSION_CREATE_TITLE)
+                .appendField('');
+            break;
         }
         this.appendDummyInput('END_BRACKET')
             .appendField(Blockly.COMPREHENSION_SETTINGS[kind].end);
