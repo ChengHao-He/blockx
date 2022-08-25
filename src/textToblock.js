@@ -134,15 +134,17 @@ function textToBlock(pythonToBlock, Sk) {
       return nodeInFunction.body[index + 1].lineno - 1;
     }
   };
+
   /**
- * 描述
- * @date 2022-08-24
- * @param {any} index
- * @param {any} nodeInFunction
- * @param {any} Orelse
- * @return {any}
- */
-  const assignForNextOrElse = function(index, nodeInFunction, Orelse) {
+   * 描述
+   * @date 2022-08-25
+   * @param {any} nextBlockLine
+   * @param {any} index
+   * @param {any} nodeInFunction
+   * @param {any} Orelse
+   * @return {any}
+   */
+  const assignForNextOrElse = function(nextBlockLine, index, nodeInFunction, Orelse) {
     if (index === nodeInFunction.orelse.length) {
       return nextBlockLine;
     } else {
@@ -170,7 +172,7 @@ function textToBlock(pythonToBlock, Sk) {
     }
     if ('orelse' in node) {
       for (const ondeOrelse of node.orelse) {
-        this.recursiveMeasure(ondeOrelse, assignForNextOrElse(i, node, ondeOrelse));
+        this.recursiveMeasure(ondeOrelse, assignForNextOrElse(nextBlockLine, i, node, ondeOrelse));
       }
     }
   };
@@ -403,128 +405,82 @@ function textToBlock(pythonToBlock, Sk) {
     }
     return lineNumbers;
   };
-
-  /**
- * 描述
- * @date 2022-08-24
- * @param {any} valuesInFunction
- * @param {any} newBlockInFunction
- * @return {any}
- */
-  const newBlockAppendValues = function(valuesInFunction, newBlockInFunction) {
-  // eslint-disable-next-line guard-for-in
-    for (const value in valuesInFunction) {
-      const valueValue = valuesInFunction[value];
-      const newValue = document.createElement('value');
-      if (valueValue !== null) {
-        newValue.setAttribute('name', value);
-        newValue.appendChild(valueValue);
-        newBlockInFunction.appendChild(newValue);
-      }
+  pythonToBlock.create_block = function(type, lineNumber, fields, values, settings, mutations, statements) {
+    const newBlock = document.createElement('block');
+    newBlock.setAttribute('type', type);
+    newBlock.setAttribute('line_number', lineNumber);
+    // eslint-disable-next-line guard-for-in
+    for (const setting in settings) {
+      const settingValue = settings[setting];
+      newBlock.setAttribute(setting, settingValue);
     }
-    return newBlockInFunction;
-  };
-  /**
- * 描述
- * @date 2022-08-24
- * @param {any} fieldsInFunction
- * @param {any} newBlockInFunction
- * @return {any}
- */
-  const newBlockAppendFields = function(fieldsInFunction, newBlockInFunction) {
-  // eslint-disable-next-line guard-for-in
-    for (const field in fieldsInFunction) {
-      const fieldValue = fieldsInFunction[field];
+    if (mutations !== undefined && Object.keys(mutations).length > 0) {
+      const newMutation = document.createElement('mutation');
+      // eslint-disable-next-line guard-for-in
+      for (const mutation in mutations) {
+        const mutationValue = mutations[mutation];
+
+        if (mutation.charAt(0) === '@') {
+          newMutation.setAttribute(mutation.substr(1), mutationValue);
+        } else if (mutationValue != null && mutationValue.constructor === Array) {
+          for (let i = 0; i < mutationValue.length; i++) {
+            const mutationNode = document.createElement(mutation);
+            mutationNode.setAttribute('name', mutationValue[i]);
+            newMutation.appendChild(mutationNode);
+          }
+        } else {
+          const _mutationNode = document.createElement('arg');
+
+          if (mutation.charAt(0) === '!') {
+            _mutationNode.setAttribute('name', '');
+          } else {
+            _mutationNode.setAttribute('name', mutation);
+          }
+
+          if (mutationValue !== null) {
+            _mutationNode.appendChild(mutationValue);
+          }
+
+          newMutation.appendChild(_mutationNode);
+        }
+      }
+
+      newBlock.appendChild(newMutation);
+    }
+    // eslint-disable-next-line guard-for-in
+    for (const field in fields) {
+      const fieldValue = fields[field];
       const newField = document.createElement('field');
       newField.setAttribute('name', field);
       newField.appendChild(document.createTextNode(fieldValue));
-      newBlockInFunction.appendChild(newField);
+      newBlock.appendChild(newField);
     }
-    return newBlockInFunction;
-  };
-  /**
- * 描述
- * @date 2022-08-24
- * @param {any} settingsInFunction
- * @param {any} newBlockInFunction
- * @return {any}
- */
-  const newBlockAppendSettings = function(settingsInFunction, newBlockInFunction) {
-  // eslint-disable-next-line guard-for-in
-    for (const setting in settingsInFunction) {
-      const settingValue = settingsInFunction[setting];
-      newBlockInFunction.setAttribute(setting, settingValue);
-    }
-    return newBlockInFunction;
-  };
-  /**
- * 描述
- * @date 2022-08-24
- * @param {any} mutationValueInFunction
- * @return {any}
- */
-  const mutationNodeAppendChild = function(mutationValueInFunction) {
-    if (mutationValueInFunction !== null) {
-      mutationNode.appendChild(mutationValueInFunction);
-    }
-    return mutationValueInFunction;
-  };
-  /**
- * 描述
- * @date 2022-08-24
- * @param {any} mutations
- * @param {any} newMutation
- * @return {any}
- */
-  const newBlockAppendMutations = function(mutations, newMutation) {
-  // eslint-disable-next-line guard-for-in
-    for (const mutation in mutations) {
-      const mutationValue = mutations[mutation];
-      if (mutation.charAt(0) === '@') {
-        newMutation.setAttribute(mutation.substring(1), mutationValue);
-      } else if (mutationValue != null && mutationValue.constructor === Array) {
-        for (const perMutationValue of mutationValue) {
-          const mutationNode = document.createElement(mutation);
-          mutationNode.setAttribute('name', perMutationValue);
-          newMutation.appendChild(mutationNode);
-        }
-      } else {
-        let mutationNode = document.createElement('arg');
-        if (mutation.charAt(0) === '!') {
-          mutationNode.setAttribute('name', '');
-        } else {
-          mutationNode.setAttribute('name', mutation);
-        }
-        mutationNode = mutationNodeAppendChild(mutationNode);
-        newMutation.appendChild(mutationNode);
+    // eslint-disable-next-line guard-for-in
+    for (const value in values) {
+      const valueValue = values[value];
+      const newValue = document.createElement('value');
+
+      if (valueValue !== null) {
+        newValue.setAttribute('name', value);
+        newValue.appendChild(valueValue);
+        newBlock.appendChild(newValue);
       }
     }
-    return newMutation;
-  };
-  pythonToBlock.create_block = function(type, lineNumber, fields, values, settings, mutations, statements) {
-    let newBlock = document.createElement('block');
-    newBlock.setAttribute('type', type);
-    newBlock.setAttribute('line_number', lineNumber);
-    newBlock = newBlockAppendSettings(settings, newBlock);
-    if (mutations !== undefined && Object.keys(mutations).length > 0) {
-      let newMutation = document.createElement('mutation');
-      newMutation=newBlockAppendMutations(mutations, newMutation);
-      newBlock.appendChild(newMutation);
-    }
-    newBlock = newBlockAppendFields(fields, newBlock);
-    newBlock = newBlockAppendValues(values, newBlock);
-    // Statements
     if (statements !== undefined && Object.keys(statements).length > 0) {
-    // eslint-disable-next-line guard-for-in
+      // eslint-disable-next-line guard-for-in
       for (const statement in statements) {
         const statementValue = statements[statement];
+
         if (statementValue == null) {
           continue;
         } else {
-          for (const perStatementValue of statementValue) {
+          for (let _i3 = 0; _i3 < statementValue.length; _i3 += 1) {
+            // In most cases, you really shouldn't ever have more than
+            //  one statement in this list. I'm not sure Blockly likes
+            //  that.
             const newStatement = document.createElement('statement');
             newStatement.setAttribute('name', statement);
-            newStatement.appendChild(perStatementValue);
+            newStatement.appendChild(statementValue[_i3]);
             newBlock.appendChild(newStatement);
           }
         }

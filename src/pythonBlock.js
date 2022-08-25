@@ -7,7 +7,6 @@
  * @param {any} Sk
  */
 function pythonBlock(pythonToBlock, Blockly, Sk) {
-// Expr ok
   pythonToBlock
       .prototype['pythonToBlockExpr'] = function(node, parent) {
         const value = node.value;
@@ -24,7 +23,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
               });
         }
       };
-  // AnnAssign ok
   pythonToBlock.prototype.getBuiltinAnnotation = function(annotation) {
     let result = false;
     if (annotation._astname === 'Name') {
@@ -77,7 +75,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
               }, mutations);
     }
   };
-  // Assert ok
   pythonToBlock.prototype['pythonToBlockAssert'] = function(node, parent) {
     const test = node.test;
     const msg = node.msg;
@@ -93,7 +90,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           });
     }
   };
-  // Assign ok
   pythonToBlock.
       prototype['pythonToBlockAssign'] = function(node, parent) {
         const targets = node.targets;
@@ -120,7 +116,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
               '@simple': simpleTarget,
             });
       };
-  // Attribute AttributeFull ok
   pythonToBlock.prototype['pythonToBlockAttribute'] = function(node, parent) {
     const value = node.value;
     const attr = node.attr;
@@ -138,7 +133,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           });
     }
   };
-  // AugAssign ok
   pythonToBlock.prototype['pythonToBlockAugAssign'] = function(node, parent) {
     const target = node.target;
     const op = node.op.name;
@@ -153,9 +147,9 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
       values['TARGET'] = this.convert(value, node);
     }
     const preposition = op;
-    const allOptions = BINOPS_SIMPLE.indexOf(op) === -1;
+    const allOptions = Blockly.BINOPS.indexOf(op) === -1;
     return pythonToBlock
-        .create_block('AugAssign', node.lineno, fields,
+        .create_block('aug_assign', node.lineno, fields,
             values,
             {
               'inline': 'true',
@@ -165,14 +159,12 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
               '@preposition': preposition,
             });
   };
-  // BinOp BinOpFull ok
   pythonToBlock.prototype['pythonToBlockBinOp'] = function(node, parent) {
     const left = node.left;
+    console.log('binop node', node);
     const op = node.op.name;
     const right = node.right;
-    const blockName = (Blockly.BINOPS
-        .indexOf(op) >= 0) ? 'BinOp' : 'BinOpFull';
-    return pythonToBlock.create_block(blockName, node.lineno, {
+    return pythonToBlock.create_block('BinOp', node.lineno, {
       'OP': op,
     }, {
       'A': this.convert(left, node),
@@ -182,8 +174,7 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
     });
   };
   pythonToBlock.
-      prototype['BinOpFull'] = pythonToBlock.prototype['BinOp'];
-  // BoolOp  ok
+      prototype['pythonToBlockBinOpFull'] = pythonToBlock.prototype['pythonToBlockBinOp'];
   pythonToBlock.prototype['pythonToBlockBoolOp'] = function(node, parent) {
     const op = node.op;
     const values = node.values;
@@ -201,11 +192,9 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
     }
     return resultBlock;
   };
-  // Break ok
   pythonToBlock.prototype['pythonToBlockBreak'] = function(node, parent) {
     return pythonToBlock.create_block('break', node.lineno);
   };
-  // Call ok
   pythonToBlock.prototype.getAsModule = function(node) {
     if (node._astname === 'Name') {
       return Sk.ffi.remapToJs(node.id);
@@ -335,7 +324,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
       return [newBlock];
     }
   };
-  // ClassDef ok
   pythonToBlock.prototype['pythonToBlockClassDef'] = function(node, parent) {
     const name = node.name;
     const bases = node.bases;
@@ -384,14 +372,12 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
               'BODY': this.convertBody(body, node),
             });
   };
-  // Comment ok
   pythonToBlock.prototype['pythonToBlockComment'] = function(txt, lineno) {
     const commentText = txt.slice(1);
     return pythonToBlock.create_block('Comment', lineno, {
       'BODY': commentText,
     });
   };
-  // Comp ok
   ['ListComp', 'SetComp', 'GeneratorExp', 'DictComp'].forEach(function(kind) {
     pythonToBlock.prototype['pythonToBlock' + kind] = function(node, parent) {
       switch (kind) {
@@ -464,7 +450,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           });
     };
   });
-  // Compare ok
   pythonToBlock.prototype['pythonToBlockCompare'] = function(node, parent) {
     const ops = node.ops;
     const left = node.left;
@@ -483,11 +468,9 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
     }
     return resultBlock;
   };
-  // Continue ok
   pythonToBlock.prototype['pythonToBlockContinue'] = function(node, parent) {
     return pythonToBlock.create_block('continue', node.lineno);
   };
-  // Delete ok
   pythonToBlock.prototype['pythonToBlockDelete'] = function(node, parent) {
     const targets = node.targets;
     return pythonToBlock.create_block('delete', node.lineno, {},
@@ -498,7 +481,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           '@targets': targets.length,
         });
   };
-  // Dict ok
   pythonToBlock.prototype['pythonToBlockDict'] = function(node, parent) {
     const keys = node.keys;
     const values = node.values;
@@ -526,7 +508,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           '@items': keys.length,
         });
   };
-  // For ForElse ok
   pythonToBlock.prototype['pythonToBlockFor'] = function(node, parent) {
     const target = node.target;
     const iter = node.iter;
@@ -547,7 +528,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
   pythonToBlock.
       prototype['pythonToBlockForElse'] = pythonToBlock
           .prototype['pythonToBlockFor'];
-  // FunctionDef ok
   pythonToBlock.
       prototype.parseArg = function(arg, type, lineno, values, node) {
         const settings = {
@@ -916,7 +896,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
         values, {inline: true}, argumentsMutation);
     return pythonToBlock.xmlToString(newBlock);
   };
-  // Global NAME0！！！！！！！！
   pythonToBlock.prototype['pythonToBlockGlobal'] = function(node, parent) {
     const names = node.names;
 
@@ -932,7 +911,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           '@names': names.length,
         });
   };
-  // If ok
   pythonToBlock.prototype['pythonToBlockIf'] = function(node, parent) {
     const test = node.test;
     const body = node.body;
@@ -964,13 +942,12 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
       orelse = orelse[0].orelse;
     }
 
-    return pythonToBlock.create_block('If', node.lineno, {},
+    return pythonToBlock.create_block('if', node.lineno, {},
         values, {}, {
           '@orelse': hasOrelse,
           '@elifs': elifCount,
         }, statements);
   };
-  // IfExp ok
   pythonToBlock.prototype['pythonToBlockIfExp'] = function(node, parent) {
     const test = node.test;
     const body = node.body;
@@ -981,7 +958,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
       'ORELSE': this.convert(orelse, node),
     });
   };
-  // Import ok ImportFrom ok
   pythonToBlock.prototype['pythonToBlockImport'] = function(node, parent) {
     const names = node.names;
     const fields = {};
@@ -1015,7 +991,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
   pythonToBlock
       .prototype['pythonToBlockImportFrom'] = pythonToBlock
           .prototype['pythonToBlockImport'];
-  // Lambda ok
   pythonToBlock.prototype['pythonToBlockLambda'] = function(node, parent) {
     const args = node.args;
     const body = node.body;
@@ -1034,7 +1009,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           '@returns': false,
         });
   };
-  // List 内置 ok
   pythonToBlock.prototype['pythonToBlockList'] = function(node, parent) {
     const elts = node.elts;
     return pythonToBlock.create_block('lists_create_with', node.lineno, {},
@@ -1045,7 +1019,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           '@items': elts.length,
         });
   };
-  // Name ok
   pythonToBlock.prototype['pythonToBlockName'] = function(node, parent) {
     const id = node.id;
     if (id.v == Blockly.Python.blank) {
@@ -1056,7 +1029,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
       });
     }
   };
-  // NameConstant ok
   pythonToBlock.prototype['pythonToBlockNameConstant'] = function(node, parent) {
     const value = node.value;
 
@@ -1075,7 +1047,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           });
     }
   };
-  // Nonlocal 打不出来！！！
   pythonToBlock.prototype['pythonToBlockNonlocal'] = function(node, parent) {
     const names = node.names;
     const fields = {};
@@ -1090,14 +1061,12 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           '@names': names.length,
         });
   };
-  // Num ok
   pythonToBlock.prototype['pythonToBlockNum'] = function(node, parent) {
     const n = node.n;
     return pythonToBlock.create_block('math_number', node.lineno, {
       'NUM': Sk.ffi.remapToJs(n),
     });
   };
-  // Raise ok
   pythonToBlock.prototype['pythonToBlockRaise'] = function(node, parent) {
     const exc = node.exc;
     const cause = node.cause;
@@ -1117,7 +1086,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           '@cause': hasCause,
         });
   };
-  // Return ok
   pythonToBlock.prototype['pythonToBlockReturn'] = function(node, parent) {
     const value = node.value;
     if (value == null) {
@@ -1129,7 +1097,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           });
     }
   };
-  // Set ok
   pythonToBlock.prototype['pythonToBlockSet'] = function(node, parent) {
     const elts = node.elts;
     return pythonToBlock.create_block('sets_create_with', node.lineno, {},
@@ -1140,7 +1107,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           '@items': elts.length,
         });
   };
-  // Starred ok
   pythonToBlock.prototype['pythonToBlockStarred'] = function(node, parent) {
     const value = node.value;
     return pythonToBlock.create_block('starred', node.lineno, {}, {
@@ -1149,7 +1115,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
       'inline': true,
     });
   };
-  // Str Image删除了！
   pythonToBlock.prototype.isSingleChar = function(text) {
     return text === '\n' || text === '\t';
   };
@@ -1196,17 +1161,16 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
     } else if (this.isDocString(node, parent)) {
       const dedented = this.dedent(text, this.levelIndex - 1, true);
       return [pythonToBlock
-          .create_block('type_doc_string', node.lineno, {'TEXT': dedented})];
+          .create_block('doc_string', node.lineno, {'TEXT': dedented})];
     } else if (text.indexOf('\n') === -1) {
       return pythonToBlock
-          .create_block('type_string', node.lineno, {'TEXT': text});
+          .create_block('string', node.lineno, {'TEXT': text});
     } else {
       const dedented = this.dedent(text, this.levelIndex - 1, false);
       return pythonToBlock
-          .create_block('type_multiline_string', node.lineno, {'TEXT': dedented});
+          .create_block('multiline_string', node.lineno, {'TEXT': dedented});
     }
   };
-  // Subscript ok
   pythonToBlock.prototype.
       addSliceDim = function(slice, i, values, mutations, node) {
         const sliceKind = slice._astname;
@@ -1247,7 +1211,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
     return pythonToBlock.create_block('Subscript', node.lineno, {},
         values, {'inline': 'true'}, {'arg': mutations});
   };
-  // Try 有问题
   pythonToBlock.prototype['pythonToBlockTry'] = function(node, parent) {
     const body = node.body;
     const handlers = node.handlers;
@@ -1287,7 +1250,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
     return pythonToBlock.create_block('try', node.lineno, fields,
         values, {}, mutations, statements);
   };
-  // Tuple ok
   pythonToBlock.prototype['pythonToBlockTuple'] = function(node, parent) {
     const elts = node.elts;
     return pythonToBlock.create_block('tuples_create_with', node.lineno, {},
@@ -1298,9 +1260,8 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           '@items': elts.length,
         });
   };
-  // UnaryOp ok
   pythonToBlock.prototype['pythonToBlockUnaryOp'] = function(node, parent) {
-    const op = node.op.name;
+    const op = node.op.prototype._astname;
     const operand = node.operand;
     return pythonToBlock
         .create_block('UnaryOp' + op, node.lineno, {}, {
@@ -1309,7 +1270,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           'inline': false,
         });
   };
-  // While ok
   pythonToBlock.prototype['pythonToBlockWhile'] = function(node, parent) {
     const test = node.test;
     const body = node.body;
@@ -1326,7 +1286,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           '@orelse': hasOrelse,
         }, statements);
   };
-  // With ok
   pythonToBlock.prototype['pythonToBlockWith'] = function(node, parent) {
     const items = node.items;
     const body = node.body;
@@ -1357,7 +1316,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           'BODY': this.convertBody(body, node),
         });
   };
-  // Yield ok
   pythonToBlock.prototype['pythonToBlockYield'] = function(node, parent) {
     const value = node.value;
     if (value == null) {
@@ -1370,7 +1328,6 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
           });
     }
   };
-  // YieldFrom ok
   pythonToBlock.prototype['pythonToBlockYieldFrom'] = function(node, parent) {
     const value = node.value;
     return pythonToBlock
