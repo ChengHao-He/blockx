@@ -6,6 +6,71 @@
  * @param {any} Blockly
  */
 function globalConst(Blockly) {
+  /**
+   * Initialise the database of variable names.
+   * @param {!Blockly.Workspace} workspace Workspace to generate code from.
+   */
+  Blockly.Python.init = function(workspace) {
+    Blockly.Python.PASS = this.INDENT + 'pass\n';
+    Blockly.Python.definitions_ = Object.create(null);
+    Blockly.Python.functionNames_ = Object.create(null);
+    Blockly.Python.imported_ = Object.create(null);
+    if (!Blockly.Python.nameDB_) {
+      Blockly.Python.nameDB_ = new Blockly.Names(Blockly.Python.RESERVED_WORDS_);
+    } else {
+      Blockly.Python.nameDB_.reset();
+    }
+    Blockly.Python.nameDB_.setVariableMap(workspace.getVariableMap());
+    const defvars = [];
+
+    // Add developer variables (not created or named by the user).
+    const devVarList = Blockly.Variables.allDeveloperVariables(workspace);
+    for (let i = 0; i < devVarList.length; i++) {
+      defvars.push(Blockly.Python.nameDB_.getName(devVarList[i],
+          Blockly.Names.DEVELOPER_VARIABLE_TYPE));
+    }
+    // Add user variables, but only ones that are being used.
+    const variables = Blockly.Variables.allUsedVarModels(workspace);
+    for (let i = 0; i < variables.length; i++) {
+      defvars.push(Blockly.Python.nameDB_.getName(variables[i].getId(),
+          Blockly.Variables.NAME_TYPE));
+    }
+    Blockly.Python.definitions_['variables'] = defvars.join('\n');
+  };
+  /**
+   * Prepend the generated code with the variable definitions.
+   * @param {string} code Generated code.
+   * @return {string} Completed code.
+   */
+  Blockly.Python.finish = function(code) {
+  // Convert the definitions dictionary into a list.
+    const imports = [];
+    const definitions = [];
+    // eslint-disable-next-line guard-for-in
+    for (const name in Blockly.Python.definitions_) {
+      const def = Blockly.Python.definitions_[name];
+      if (name in Blockly.Python.imported_) {
+        continue;
+      }
+      if (def.match(/^(from\s+\S+\s+)?import\s+\S+/)) {
+        imports.push(def);
+      } else {
+        definitions.push(def);
+      }
+    }
+    // Clean up temporary data.
+    delete Blockly.Python.definitions_;
+    delete Blockly.Python.functionNames_;
+    Blockly.Python.nameDB_.reset();
+    // acbart: Don't actually inject initializations - we don't need 'em.
+    // if (imports.length) {
+    //   return imports.join('\n') + '\n\n' + code;
+    // } else {
+    //   return code;
+    // }
+    return code;
+  };
+
   Blockly.Python.blank = '__';
 
   Blockly.COMPREHENSION_SETTINGS = {

@@ -36,7 +36,7 @@ function importBlocks(Blockly) {
           input.removeField('ASNAME' + i);
         } else if (!this.regulars_[i] && !this.getField('AS' + i)) {
           input.appendField(Blockly.Msg.IMPORT_AS_BLOCK_TITLE, 'AS' + i)
-              .appendField(new Blockly.FieldVariable('alias'), 'ASNAME' + i);
+              .appendField(new Blockly.FieldTextInput('alias'), 'ASNAME' + i);
         }
       }
       // Remove deleted inputs.
