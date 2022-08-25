@@ -84,7 +84,7 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
       });
     } else {
       return pythonToBlock
-          .create_block('assertFull', node.lineno, {}, {
+          .create_block('assert_full', node.lineno, {}, {
             'TEST': this.convert(test, node),
             'MSG': this.convert(msg, node),
           });
