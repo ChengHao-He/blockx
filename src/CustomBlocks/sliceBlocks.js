@@ -109,10 +109,12 @@ function sliceBlocks(Blockly) {
    */
     mutationToDom() {
       const container = Blockly.utils.xml.createElement('mutation');
-      const hasAt1 = this.getInput('AT1').type === Blockly.INPUT_VALUE;
-      container.setAttribute('at1', hasAt1);
-      const hasAt2 = this.getInput('AT2').type === Blockly.INPUT_VALUE;
-      container.setAttribute('at2', hasAt2);
+      const isAt1 =
+      this.getInput('AT1').type === Blockly.ConnectionType.INPUT_VALUE;
+      container.setAttribute('at1', isAt1);
+      const isAt2 =
+      this.getInput('AT2').type === Blockly.ConnectionType.INPUT_VALUE;
+      container.setAttribute('at2', isAt2);
       return container;
     },
     /**
@@ -149,14 +151,14 @@ function sliceBlocks(Blockly) {
       } else {
         this.appendDummyInput(`AT${n}`);
       }
-      const that = this;
       const menu = new Blockly.FieldDropdown(this[`WHERE_OPTIONS_${n}`],
           function(value) {
             const newAt = (value === 'FROM_START') || (value === 'FROM_END');
             // The 'isAt' variable is available due to this function being a
             // closure.
             if (newAt !== isAt) {
-              const block = that.getSourceBlock();
+              // eslint-disable-next-line no-invalid-this
+              const block = this.getSourceBlock();
               block.updateAt_(n, newAt);
               // This menu has been destroyed and replaced.
               // Update the replacement.
