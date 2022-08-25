@@ -346,11 +346,6 @@ function controlsBlocks(Blockly) {
           this.appendValueInput('TYPE' + i)
               .setCheck(null)
               .appendField('except');
-          if (this.handlers_[i] === Blockly.TRY_SETTINGS.HANDLERS_COMPLETE) {
-            this.appendDummyInput()
-                .appendField('as')
-                .appendField(new Blockly.FieldVariable('item'), 'NAME'+i);
-          }
         }
         this.appendStatementInput('HANDLER'+i)
             .setCheck(null);
@@ -378,11 +373,6 @@ function controlsBlocks(Blockly) {
       container.setAttribute('orelse', this.hasElse_);
       container.setAttribute('finalbody', this.hasFinally_);
       container.setAttribute('handlers', this.handlersCount_);
-      for (let i = 0; i < this.handlersCount_; i++) {
-        const parameter = document.createElement('arg');
-        parameter.setAttribute('name', this.handlers_[i]);
-        container.appendChild(parameter);
-      }
       return container;
     },
     /**
@@ -394,13 +384,6 @@ function controlsBlocks(Blockly) {
       this.hasElse_ = 'true' === xmlElement.getAttribute('orelse');
       this.hasFinally_ = 'true' === xmlElement.getAttribute('finalbody');
       this.handlersCount_ = parseInt(xmlElement.getAttribute('handlers'), 10);
-      this.handlers_ = [];
-      const that = this;
-      xmlElement.childNodes.forEach(function(childNode) {
-        if (childNode.nodeName.toLowerCase() === 'arg') {
-          that.handlers_.push(parseInt(childNode.getAttribute('name'), 10));
-        }
-      });
       this.updateShape_();
     },
   };
