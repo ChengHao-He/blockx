@@ -12,10 +12,6 @@
     "lint-staged": "^13.0.3"
   },
   "dependencies": {
-    "blockly": "^8.0.5",
-    "codemirror": "^6.0.1",
-    "stylelint": "^14.11.0",
-    "stylelint-config-standard": "^26.0.0",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
   },
@@ -30,15 +26,15 @@
     "lint-staged": "lint-staged",
     "commitlint": "commitlint --config commitlint.config.js -e -V"
   },
-  "name": "blockx",
+  "name": "blockx-drag",
   "description": "",
   "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "git@se.jisuanke.com:project1/dawnWarrior/blockx.git"
   },
-  "author": "",
+  "author": "黎明战士",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "module": "./src/blockx.js"
 }
