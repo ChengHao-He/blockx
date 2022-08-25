@@ -24,7 +24,6 @@ import iteratorGenerate from './CodeGenerators/iteratorGenerate';
 import keywordGenerate from './CodeGenerators/keywordGenerate';
 import lambdaGenerate from './CodeGenerators/lambdaGenerate';
 import nameGenerate from './CodeGenerators/nameGenerate';
-// import numberGenerate from './CodeGenerators/number';
 import rawBlockGenerate from './CodeGenerators/rawBlockGenerate';
 import returnGenerate from './CodeGenerators/returnGenerate';
 import sliceGenerate from './CodeGenerators/sliceGenerate';
@@ -51,7 +50,6 @@ import iteratorBlocks from './CustomBlocks/iteratorBlocks';
 import keywordBlocks from './CustomBlocks/keywordBlocks';
 import lambdaBlocks from './CustomBlocks/lambdaBlocks';
 import nameBlocks from './CustomBlocks/nameBlocks';
-// import numberBlocks from './CustomBlocks/number';
 import rawBlockBlocks from './CustomBlocks/rawBlockBlocks';
 import returnBlocks from './CustomBlocks/returnBlocks';
 import sliceBlocks from './CustomBlocks/sliceBlocks';
@@ -125,9 +123,6 @@ Blockx.initBlockly = function(blockly) {
     // name
     nameBlocks(getBlockly());
     nameGenerate(getBlockly());
-    // number
-    // numberBlocks(getBlockly());
-    // numberGenerate(getBlockly());
     // rawBlock
     rawBlockBlocks(getBlockly());
     rawBlockGenerate(getBlockly());
