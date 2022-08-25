@@ -11,7 +11,7 @@ function comprehensionGenerate(Blockly) {
       let elt;
       if (kind === 'dict_comp') {
         const child = block.getInputTargetBlock('ELT');
-        if (child === null || child.type !== 'dict_item') {
+        if (child === null || child.type !== 'dicts_pair') {
           elt = (Blockly.Python.blank + ': ' + Blockly.Python.blank);
         } else {
           const key = Blockly.Python

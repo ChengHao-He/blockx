@@ -163,9 +163,16 @@ function comprehensionBlocks(Blockly) {
         let connection = containerBlock.getInput('STACK').connection;
         for (let i = 1; i < this.itemCount_; i++) {
           const generator = this.getInput('GENERATOR' + i).connection;
-          const createName =
-            this.getNameRefType(
-                generator.targetConnection.getSourceBlock().type);
+          const createName = function(type) {
+            switch (type) {
+              case 'comprehension_if':
+                return 'comp_create_with_if';
+              case 'comprehension_for':
+                return 'comp_create_with_for';
+              default:
+                throw Error('Unknown block type:' + type);
+            }
+          }(generator.targetConnection.getSourceBlock().type);
           const itemBlock = workspace.newBlock(createName);
           itemBlock.initSvg();
           connection.connect(itemBlock.previousConnection);
@@ -198,13 +205,13 @@ function comprehensionBlocks(Blockly) {
             switch (connectedBlock.type) {
               case 'comprehension_if':
                 const testField = connectedBlock.getInput('TEST');
-                disconnectNextWith(testField);
+                this.disconnectNextWith(testField);
                 break;
               case 'comprehension_for':
                 const iterField = connectedBlock.getInput('ITERATOR');
-                disconnectNextWith(iterField);
+                this.disconnectNextWith(iterField);
                 const targetField = connectedBlock.getInput('TARGET');
-                disconnectNextWith(targetField);
+                this.disconnectNextWith(targetField);
                 break;
               default:
                 throw Error('Unknown block type: ' + connectedBlock.type);
