@@ -59,7 +59,7 @@ function controlsGenerate(Blockly) {
     }
     // Orelse:
     let orelse = '';
-    if (this.orelse_) {
+    if (this.else_) {
       orelse = 'else:\n' +
         (Blockly.Python.statementToCode(block, 'ORELSEBODY') ||
         Blockly.Python.PASS);

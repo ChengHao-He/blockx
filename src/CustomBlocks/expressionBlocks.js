@@ -22,7 +22,7 @@ function expressionBlocks(Blockly) {
     },
   };
 
-  const ifExpConnfig = {
+  const ifExpConfig = {
     'message0': '%{BKY_IF_EXPRESSION_CREATE_TITLE}',
     'args0': [
       {
@@ -44,7 +44,7 @@ function expressionBlocks(Blockly) {
   };
   Blockly.Blocks['if_expr'] = {
     init: function() {
-      this.jsonInit(ifExpConnfig);
+      this.jsonInit(ifExpConfig);
     },
   };
 }

@@ -22,7 +22,7 @@ function callBlocks(Blockly) {
       this.isMethod_ = false;
       this.name_ = null;
       this.message_ = 'function';
-      this.premessage_ = '';
+      this.preMessage_ = '';
       this.module_ = '';
       this.updateShape_();
     },
@@ -177,8 +177,8 @@ function callBlocks(Blockly) {
     updateShape_: function() {
       if (this.isMethod_ && !this.getInput('FUNC')) {
         const func = this.appendValueInput('FUNC');
-        if (this.premessage_ !== '') {
-          func.appendField(this.premessage_);
+        if (this.preMessage_ !== '') {
+          func.appendField(this.preMessage_);
         }
       } else if (!this.isMethod_ && this.getInput('FUNC')) {
         this.removeInput('FUNC');
@@ -214,7 +214,7 @@ function callBlocks(Blockly) {
       container.setAttribute('parameters', this.showParameterNames_);
       container.setAttribute('method', this.isMethod_);
       container.setAttribute('message', this.message_);
-      container.setAttribute('premessage', this.premessage_);
+      container.setAttribute('premessage', this.preMessage_);
       container.setAttribute('module', this.module_);
       container.setAttribute('colour', this.givenColour_);
       for (const setArguments of this.arguments_) {
@@ -238,7 +238,7 @@ function callBlocks(Blockly) {
       this.returns_ = 'true' === xmlElement.getAttribute('returns');
       this.isMethod_ = 'true' === xmlElement.getAttribute('method');
       this.message_ = xmlElement.getAttribute('message');
-      this.premessage_ = xmlElement.getAttribute('premessage');
+      this.preMessage_ = xmlElement.getAttribute('premessage');
       this.module_ = xmlElement.getAttribute('module');
       this.givenColour_ = parseInt(xmlElement.getAttribute('colour'), 10);
 

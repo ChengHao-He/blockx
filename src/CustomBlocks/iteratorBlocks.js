@@ -1,5 +1,5 @@
 /**
- * 创建interator块
+ * 创建iterator块
  * 字典、集合、元组（列表使用Blockly内置）的写法大同小异，
  * 故利用forEach遍历减少代码冗余，本实现参考了blockly源码
  * 关于 iterators_create_with 的写法。

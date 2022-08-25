@@ -90,7 +90,7 @@ function controlsBlocks(Blockly) {
 
   Blockly.Blocks['if'] = {
     init: function() {
-      this.orelse_ = 0;
+      this.else_ = 0;
       this.elifs_ = 0;
       this.appendValueInput('TEST')
           .appendField(Blockly.Msg.CONTROLS_IF_MSG_IF);
@@ -121,18 +121,18 @@ function controlsBlocks(Blockly) {
         i++;
       }
 
-      if (this.orelse_ && !this.getInput('ELSE')) {
+      if (this.else_ && !this.getInput('ELSE')) {
         this.appendDummyInput('ORELSETEST')
             .appendField(Blockly.Msg.CONTROLS_IF_MSG_ELSE);
         this.appendStatementInput('ORELSEBODY')
             .setCheck(null);
-      } else if (!this.orelse_ && this.getInput('ELSE')) {
+      } else if (!this.else_ && this.getInput('ELSE')) {
         block.removeInput('ORELSETEST');
         block.removeInput('ORELSEBODY');
       }
 
       for (i = 0; i < this.elifs_; i++) {
-        if (this.orelse_) {
+        if (this.else_) {
           this.moveInputBefore('ELIFTEST' + i, 'ORELSETEST');
           this.moveInputBefore('ELIFBODY' + i, 'ORELSETEST');
         } else if (i + 1 < this.elifs_) {
@@ -148,7 +148,7 @@ function controlsBlocks(Blockly) {
    */
     mutationToDom: function() {
       const container = document.createElement('mutation');
-      container.setAttribute('orelse', this.orelse_);
+      container.setAttribute('orelse', this.else_);
       container.setAttribute('elifs', this.elifs_);
       return container;
     },
@@ -158,7 +158,7 @@ function controlsBlocks(Blockly) {
    * @this Blockly.Block
    */
     domToMutation: function(xmlElement) {
-      this.orelse_ = 'true' === xmlElement.getAttribute('orelse');
+      this.else_ = 'true' === xmlElement.getAttribute('orelse');
       this.elifs_ = parseInt(xmlElement.getAttribute('elifs'), 10) || 0;
       this.updateShape_();
     },

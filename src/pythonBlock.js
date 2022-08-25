@@ -161,8 +161,7 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
   };
   pythonToBlock.prototype['pythonToBlockBinOp'] = function(node, parent) {
     const left = node.left;
-    console.log('binop node', node);
-    const op = node.op.name;
+    const op = node.op.prototype._astname;
     const right = node.right;
     return pythonToBlock.create_block('BinOp', node.lineno, {
       'OP': op,
@@ -452,13 +451,15 @@ function pythonBlock(pythonToBlock, Blockly, Sk) {
   });
   pythonToBlock.prototype['pythonToBlockCompare'] = function(node, parent) {
     const ops = node.ops;
+    console.log('node:', node);
+    console.log('ops:', ops);
     const left = node.left;
     const values = node.comparators;
     let resultBlock = this.convert(left, node);
     for (let i = 0; i < values.length; i += 1) {
       resultBlock = pythonToBlock
           .create_block('Compare', node.lineno, {
-            'OP': ops[i].name,
+            'OP': ops[i].prototype._astname,
           }, {
             'A': resultBlock,
             'B': this.convert(values[i], node),

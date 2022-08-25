@@ -4,7 +4,7 @@
  * @param {any} Blockly
  */
 function functionBlocks(Blockly) {
-  const functionHeaderMutatorCofig = {
+  const functionHeaderMutatorConfig = {
     'message0': 'Setup parameters below: %1 %2 returns %3',
     'args0': [
       {'type': 'input_dummy'},
@@ -17,7 +17,7 @@ function functionBlocks(Blockly) {
   };
   Blockly.Blocks['FunctionHeaderMutator'] = ({
     init: function() {
-      this.jsonInit(functionHeaderMutatorCofig);
+      this.jsonInit(functionHeaderMutatorConfig);
     },
   });
 
@@ -231,7 +231,7 @@ function functionBlocks(Blockly) {
    * @date 2022-08-21
    * @param {any} containerBlock
    */
-    showOrhideReturns: function(containerBlock) {
+    showOrHideReturns: function(containerBlock) {
       let hasReturns = containerBlock.getFieldValue('RETURNS');
       if (hasReturns !== null) {
         hasReturns = hasReturns === 'TRUE';
@@ -300,7 +300,7 @@ function functionBlocks(Blockly) {
         }
       }
       // Show/hide the returns annotation
-      this.showOrhideReturns(containerBlock);
+      this.showOrHideReturns(containerBlock);
     },
     /**
    * Store pointers to any connected child blocks.
